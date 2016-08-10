@@ -5,4 +5,4 @@ Strafe in a circle around fractal-based bosses with parts that have parts on the
 
 Left turns counter-clockwise, right turns clockwise.
 
-Each enemy is a Regex Fractal, determined by a list of integers (representing the polygon degree at each subsequent layer), a render depth, and a regular expression representing the subset of polygons the fractal consists of.
+Each enemy is a Regex Fractal, determined by a list of integers (representing the polygon degree at each subsequent layer), and a regular expression representing the subset of polygons the fractal consists of.
