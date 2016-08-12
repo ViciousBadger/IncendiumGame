@@ -1,0 +1,35 @@
+[gd_scene format=1]
+
+[node name="Game" type="Node"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+transform/pos = Vector2( 500, 300 )
+polygon = Vector2Array( -20, -12, 20, -12, 0, 22 )
+uv = Vector2Array(  )
+color = Color( 0.921875, 0, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = null
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+
+[node name="Label" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 460.0
+margin/top = 33.0
+margin/right = 540.0
+margin/bottom = 47.0
+text = "Hello World!"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+
