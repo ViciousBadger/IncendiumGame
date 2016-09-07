@@ -15,7 +15,9 @@ func _ready():
 	for i in range(0,n):
 		vectors.append(Vector2(cos(2 * PI * i / n) * size,sin(2 * PI * i / n) * size))
 	set_polygon(vectors)
-	get_child(0).get_child(0).set_polygon(vectors)
+	var collisionShape = ConvexPolygonShape2D.new()
+	collisionShape.set_points(vectors)
+	get_child(0).add_shape(collisionShape)
 	set_color(Color(1.0,0.0,0.0))
 	
 func _process(delta):

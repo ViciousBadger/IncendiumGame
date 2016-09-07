@@ -34,11 +34,4 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-
-build_mode = 0
-polygon = Vector2Array( -20, -12, 20, -12, 0, 22 )
-shape_range = Vector2( 0, 0 )
-trigger = false
-
 
