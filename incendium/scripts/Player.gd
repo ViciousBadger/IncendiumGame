@@ -2,7 +2,7 @@
 extends Node2D
 
 var speed = 420
-var bullet_p = preload("res://Bullet.tscn")
+var bullet_p = preload("res://objects/Bullet.tscn")
 var fire_timer = 0
 const FIRE_TIME = 0.05
 
