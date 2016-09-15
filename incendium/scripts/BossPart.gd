@@ -5,7 +5,7 @@ extends Node2D
 # var a=2
 # var b="textvar"
 
-const max_health = 20
+const max_health = 40
 var health = max_health
 var health_fade = 0.0
 
@@ -25,6 +25,7 @@ func _process(delta):
 		update()
 	
 func _on_RegularPolygon_area_enter( area ):
+	area.queue_free()
 	health -= 1
 	health_fade = 1.0
 	if health <= 0:
@@ -35,6 +36,5 @@ func _draw():
 	var colors = Array()
 	for i in range(0,pgon.size()):
 		pgon[i] = pgon[i] * (1.0 - float(health) / max_health)
-		print(health / max_health)
 		colors.append(Color(1,1,1,health_fade))
 	draw_polygon(pgon,colors)
