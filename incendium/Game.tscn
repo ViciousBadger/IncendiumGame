@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=1]
 
-[ext_resource path="res://scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://objects/RegularPolygon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://objects/BossPart.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scripts/Rotate.gd" type="Script" id=4]
+[ext_resource path="res://objects/BossPart.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Rotate.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=3]
+[ext_resource path="res://objects/RegularPolygon.tscn" type="PackedScene" id=4]
 
 [node name="Game" type="Node"]
 
@@ -22,21 +22,21 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="BossPart" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 513.538, 323.986 )
+script/script = ExtResource( 2 )
+sides = 5
+
 [node name="Player" type="Node2D" parent="."]
 
 transform/pos = Vector2( 249.307, 219.39 )
-script/script = ExtResource( 1 )
+script/script = ExtResource( 3 )
 
-[node name="RegularPolygon" parent="Player" instance=ExtResource( 2 )]
+[node name="RegularPolygon" parent="Player" instance=ExtResource( 4 )]
 
 size = 20
 circle_collision = false
-
-[node name="BossPart" parent="." instance=ExtResource( 3 )]
-
-transform/pos = Vector2( 513.538, 323.986 )
-script/script = ExtResource( 4 )
-sides = 5
 
 [connection signal="area_enter" from="Player/RegularPolygon" to="Player" method="_on_RegularPolygon_area_enter"]
 

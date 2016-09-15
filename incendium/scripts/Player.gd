@@ -1,26 +1,37 @@
 
 extends Node2D
 
-var speed = 420
+const SPEED = 420
+const FIRE_TIME = 0.05
+
+var angle = 0
+var dist = 100
 var bullet_p = preload("res://objects/Bullet.tscn")
 var fire_timer = 0
-const FIRE_TIME = 0.05
 
 func _ready():
 	set_process(true)
 
 func _process(delta):
 	if Input.is_key_pressed(KEY_LEFT):
-		translate(Vector2(-delta,0) * speed)
+		angle += (delta / dist) * SPEED
+		# translate(Vector2(-delta,0) * SPEED)
 	if Input.is_key_pressed(KEY_RIGHT):
-		translate(Vector2(delta,0) * speed)
+		angle -= (delta / dist) * SPEED
+		# translate(Vector2(delta,0) * SPEED)
 	if Input.is_key_pressed(KEY_UP):
-		translate(Vector2(0,-delta) * speed)
+		dist -= delta * SPEED
+		if dist < 0.1:
+			dist = 0.1
+		# translate(Vector2(0,-delta) * SPEED)
 	if Input.is_key_pressed(KEY_DOWN):
-		translate(Vector2(0,delta) * speed)
-
-
+		dist += delta * SPEED 
+		# translate(Vector2(0,delta) * SPEED)
+		
 	var center = Vector2(1024/2,600/2)
+	
+	set_pos(center + Vector2(cos(angle),sin(angle)) * dist)
+
 	var towards_center =  (center - get_pos()).normalized()
 	
 	if fire_timer > 0:
