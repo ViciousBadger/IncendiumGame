@@ -2,7 +2,6 @@
 
 [ext_resource path="res://scripts/RegularPolygon.gd" type="Script" id=1]
 
-
 [node name="RegularPolygon" type="Area2D"]
 
 input/pickable = true

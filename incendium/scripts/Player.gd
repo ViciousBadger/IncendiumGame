@@ -14,23 +14,23 @@ func _ready():
 
 func _process(delta):
 	if Input.is_key_pressed(KEY_LEFT):
-		angle += (delta / dist) * SPEED
-		# translate(Vector2(-delta,0) * SPEED)
+		# angle += (delta / dist) * SPEED
+		translate(Vector2(-delta,0) * SPEED)
 	if Input.is_key_pressed(KEY_RIGHT):
-		angle -= (delta / dist) * SPEED
-		# translate(Vector2(delta,0) * SPEED)
+		# angle -= (delta / dist) * SPEED
+		translate(Vector2(delta,0) * SPEED)
 	if Input.is_key_pressed(KEY_UP):
-		dist -= delta * SPEED
-		if dist < 0.1:
-			dist = 0.1
-		# translate(Vector2(0,-delta) * SPEED)
+		# dist -= delta * SPEED
+		# if dist < 0.1:
+		# 	dist = 0.1
+		translate(Vector2(0,-delta) * SPEED)
 	if Input.is_key_pressed(KEY_DOWN):
-		dist += delta * SPEED 
-		# translate(Vector2(0,delta) * SPEED)
+		# dist += delta * SPEED 
+		translate(Vector2(0,delta) * SPEED)
 		
-	var center = Vector2(1024/2,600/2)
+	var center = Vector2(720/2,720/2)
 	
-	set_pos(center + Vector2(cos(angle),sin(angle)) * dist)
+	# set_pos(center + Vector2(cos(angle),sin(angle)) * dist)
 
 	var towards_center =  (center - get_pos()).normalized()
 	
