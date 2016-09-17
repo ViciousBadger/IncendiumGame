@@ -23,9 +23,9 @@ max_lines_visible = -1
 
 [node name="Player" type="Node2D" parent="."]
 
-editor/display_folded = true
 transform/pos = Vector2( 249.307, 219.39 )
 script/script = ExtResource( 1 )
+polar_controls = true
 
 [node name="RegularPolygon" parent="Player" instance=ExtResource( 2 )]
 
@@ -37,15 +37,9 @@ circle_collision = false
 
 transform/pos = Vector2( 360, 360 )
 
-[node name="RegularPolygon" parent="BossPart"]
-
-visibility/behind_parent = true
-
 [connection signal="area_enter" from="Player/RegularPolygon" to="Player" method="_on_RegularPolygon_area_enter"]
 
 [connection signal="area_exit" from="Player/RegularPolygon" to="Player" method="_on_RegularPolygon_area_exit"]
-
-[connection signal="area_enter" from="BossPart/RegularPolygon" to="BossPart" method="_on_RegularPolygon_area_enter"]
 
 
 [editable path="BossPart"]
