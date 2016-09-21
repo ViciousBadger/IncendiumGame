@@ -10,6 +10,6 @@ script/script = ExtResource( 1 )
 [node name="RegularPolygon" parent="." groups=[ "damage_enemy" ] instance=ExtResource( 2 )]
 
 sides = 16
-size = 3
+size = 4
 
 

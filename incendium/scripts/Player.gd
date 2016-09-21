@@ -10,6 +10,8 @@ var dist = 200
 var bullet_p = preload("res://objects/Bullet.tscn")
 var fire_timer = 0
 
+var hits = 0
+
 func _ready():
 	set_process(true)
 
@@ -59,6 +61,8 @@ func _on_RegularPolygon_area_enter( area ):
 	get_node("RegularPolygon/Polygon2D").set_color(Color(0,1,0))
 	if area.get_groups().has("damage_player"):
 		area.get_parent().queue_free()
+		hits += 1
+		get_node("../Label").set_text("Hits: " + str(hits))
 
 func _on_RegularPolygon_area_exit( area ):
 	get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1))

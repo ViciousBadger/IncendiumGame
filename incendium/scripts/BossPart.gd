@@ -43,7 +43,7 @@ func _ready():
 			subpart_instance.set_pos(dir * mysize)
 	
 func _process(delta):
-	rotate(delta)
+	rotate(delta * 0.3)
 	
 	if (health_fade > 0):
 		health_fade -= delta * 4
@@ -53,8 +53,12 @@ func _process(delta):
 	var velocity = get_global_pos() - last_pos
 	last_pos = get_global_pos()
 	
+	var pos = get_global_pos()
+
+
+	
 	shoot_timer -= delta
-	if shoot_timer <= 0 and create_subparts < 4:
+	if shoot_timer <= 0 and get_child_count() <= 1:
 		var bullet_instance = bullet.instance()
 		var rot = get_rot()
 		bullet_instance.velocity = velocity.normalized() * 100
@@ -63,12 +67,13 @@ func _process(delta):
 		bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
 		bullet_instance.set_pos(get_global_pos())
 		get_tree().get_root().add_child(bullet_instance)
-		shoot_timer = 1
+		# var angle_towards_center = atan2(pos.x - 720/2, pos.y - 720/2)
+		shoot_timer = 2 # + (angle_towards_center * 0.4)
 	
 	
 	
 func _on_RegularPolygon_area_enter(area):
-	if area.get_groups().has("damage_enemy"):
+	if area.get_groups().has("damage_enemy") and get_child_count() <= 1:
 		area.get_parent().queue_free()
 		health -= 1
 		health_fade = 1.0
