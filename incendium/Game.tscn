@@ -25,12 +25,12 @@ max_lines_visible = -1
 
 transform/pos = Vector2( 249.307, 219.39 )
 script/script = ExtResource( 1 )
-polar_controls = true
+polar_controls = false
 
 [node name="RegularPolygon" parent="Player" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 0.902496, 0 )
-size = 20
+size = 10
 circle_collision = false
 
 [node name="BossPart" parent="." instance=ExtResource( 3 )]

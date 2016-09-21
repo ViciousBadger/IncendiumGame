@@ -13,3 +13,8 @@ func _ready():
 
 func _process(delta):
 	translate(velocity * delta)
+	var root = get_tree().get_root()
+	var rect = root.get_rect()
+	var pos = get_pos()
+	if pos.x < rect.pos.x or pos.y < rect.pos.y or pos.x > rect.size.x or pos.y > rect.size.y:
+		queue_free()

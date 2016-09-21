@@ -1,7 +1,7 @@
 
 extends Node2D
 
-const SPEED = 420
+const SPEED = 420 /1.42
 const FIRE_TIME = 0.05
 
 export var polar_controls = false
@@ -57,6 +57,8 @@ func _process(delta):
 
 func _on_RegularPolygon_area_enter( area ):
 	get_node("RegularPolygon/Polygon2D").set_color(Color(0,1,0))
+	if area.get_groups().has("damage_player"):
+		area.get_parent().queue_free()
 
 func _on_RegularPolygon_area_exit( area ):
 	get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1))
