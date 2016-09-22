@@ -48,7 +48,7 @@ func _process(delta):
 	if fire_timer > 0:
 		fire_timer -= delta
 	
-	if Input.is_key_pressed(KEY_SPACE) and fire_timer <= 0:
+	if (Input.is_key_pressed(KEY_SPACE) or Input.is_key_pressed(KEY_F)) and fire_timer <= 0:
 		var bullet = bullet_p.instance()
 		bullet.set_pos(get_pos())
 		bullet.velocity = towards_center * 800
@@ -61,7 +61,8 @@ func _on_RegularPolygon_area_enter( area ):
 	get_node("RegularPolygon/Polygon2D").set_color(Color(0,1,0))
 	if area.get_groups().has("damage_player"):
 		area.get_parent().queue_free()
-		hits += 1
+		var size = area.size
+		hits += size
 		get_node("../Label").set_text("Hits: " + str(hits))
 
 func _on_RegularPolygon_area_exit( area ):
