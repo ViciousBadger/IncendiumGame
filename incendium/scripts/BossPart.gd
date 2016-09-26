@@ -1,24 +1,22 @@
 
 extends Node2D
 
-# member variables here, example:
-# var a=2
-# var b="textvar"
-
-var max_health = 100
+# Set by Boss
+var rot_speed
+var color
+var max_health
+var bullet_size
+var bullet_count
+var bullet_speed
+var shoot_interval
+# Health
 var health
 var health_fade = 0.0
-
-var create_subparts = 4
-var subpart = preload("res://objects/BossPart.tscn")
-var color = Color(1,0,1)
-
+# Shooting
 var bullet = preload("res://objects/Bullet.tscn")
 var shoot_timer = 1
-
+# Misc
 var last_pos
-
-var rot_speed = 0.3
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -27,23 +25,6 @@ func _ready():
 	get_node("RegularPolygon/Polygon2D").set_color(color)
 	health = max_health
 	last_pos = get_global_pos()
-	var mysize = get_node("RegularPolygon").size
-	if create_subparts > 0:
-		for i in range(0,3):
-			var subpart_instance = subpart.instance()
-			subpart_instance.get_node("RegularPolygon").size = mysize * 0.6
-			subpart_instance.create_subparts = create_subparts - 1
-			subpart_instance.color = Color(color.r - 0.2, color.g + 0.2, color.b)
-			subpart_instance.max_health = max_health / 3.0
-			subpart_instance.rot_speed = rot_speed + PI * 0.1
-			# subpart_instance.shoot_timer = 1.0 + (i / 3.0)
-			subpart_instance.set_draw_behind_parent(true)
-			
-			add_child(subpart_instance)
-			
-			var angle = (i / 3.0) * PI * 2.0
-			var dir = Vector2(cos(angle),sin(angle))
-			subpart_instance.set_pos(dir * mysize)
 	
 func _process(delta):
 	rotate(delta * rot_speed)
@@ -60,29 +41,28 @@ func _process(delta):
 	
 	shoot_timer -= delta
 	if shoot_timer <= 0 and get_child_count() <= 1:
-		var bullets_to_create = create_subparts * 2 + 1
-		for i in range(0,bullets_to_create):
+		for i in range(0,bullet_count):
 			var bullet_instance = bullet.instance()
 			
-			var velocityAngle = atan2(velocity.y,velocity.x)
+			# Calculate bullet direction
+			var velocityAngle
 			if velocity.x == 0 and velocity.y == 0:
+				# Use rotation if no velocity
 				velocityAngle = get_rot() * 3
-			
-			if create_subparts > 0:
-				velocityAngle += (i / float(bullets_to_create)) * PI * 2
-			
-			var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (100 + 50 * create_subparts)
+			else:
+				velocityAngle = atan2(velocity.y,velocity.x)
+			velocityAngle += (i / float(bullet_count)) * PI * 2
+			var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
 			
 			bullet_instance.velocity = bulletVelocity
-			bullet_instance.get_node("RegularPolygon").size = 2 + create_subparts * 2
+			bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4+6))
+			bullet_instance.get_node("RegularPolygon").size = bullet_size
 			bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
 			bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
 			bullet_instance.set_pos(get_global_pos())
 			get_tree().get_root().add_child(bullet_instance)
 			# var angle_towards_center = atan2(pos.x - 720/2, pos.y - 720/2)
-			shoot_timer = 2 - (create_subparts * 0.45) # + (angle_towards_center * 0.4)
-	
-	
+			shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
 	
 func _on_RegularPolygon_area_enter(area):
 	if area.get_groups().has("damage_enemy") and get_child_count() <= 1:
