@@ -55,7 +55,7 @@ func _process(delta):
 			var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
 			
 			bullet_instance.velocity = bulletVelocity
-			bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4+6))
+			bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
 			bullet_instance.get_node("RegularPolygon").size = bullet_size
 			bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
 			bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
