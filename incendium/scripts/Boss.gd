@@ -6,13 +6,13 @@ extends Node2D
 # var b="textvar"
 
 var part = preload("res://objects/BossPart.tscn")
-var layers = [4,3,3,5]
+var layers = [3,3,3,3,3]
 
 var base_size = 100
-var size_dropoff = 0.5
+var size_dropoff = 0.6
 
-var base_health = 60
-var min_health = 5
+var base_health = 100
+var health_dropoff = 0.4
 
 var base_rot_speed = 0.3
 var rot_speed_inc = PI * 0.1
@@ -37,7 +37,7 @@ func create_part(parent, pos, layer):
 	part_instance.get_node("RegularPolygon").size = size
 	part_instance.rot_speed = base_rot_speed + rot_speed_inc * layer
 	part_instance.color = start_color.linear_interpolate(end_color, a)
-	part_instance.max_health = lerp(base_health, min_health, a)
+	part_instance.max_health = base_health * pow(health_dropoff, layer)
 	part_instance.shoot_interval = lerp(0.1, 2, a) # 2 - (power * 0.45)
 	var power = layers.size() - layer
 	part_instance.bullet_size = power * 2
