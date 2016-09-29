@@ -17,6 +17,7 @@ var bullet = preload("res://objects/Bullet.tscn")
 var shoot_timer = 1
 # Misc
 var last_pos
+var explosion = preload("res://objects/Explosion.tscn")
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -70,6 +71,11 @@ func _on_RegularPolygon_area_enter(area):
 		health -= 1
 		health_fade = 1.0
 		if health <= 0:
+			for i in range(0,5):
+				var explosion_instance = explosion.instance()
+				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(color)
+				get_tree().get_root().add_child(explosion_instance)
+				explosion_instance.set_global_pos(get_global_pos())
 			queue_free()
 
 func _draw():
