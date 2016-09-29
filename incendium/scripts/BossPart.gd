@@ -2,7 +2,6 @@
 extends Node2D
 
 # Set by Boss
-var id
 var rot_speed
 var color
 var max_health

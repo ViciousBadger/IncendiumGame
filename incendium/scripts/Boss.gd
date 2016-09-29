@@ -38,7 +38,6 @@ func create_part(parent, id, pos, layer):
 	# Set values
 	part_instance.get_node("RegularPolygon").sides = sides
 	part_instance.get_node("RegularPolygon").size = size
-	part_instance.id = id
 	part_instance.rot_speed = base_rot_speed + rot_speed_inc * layer
 	part_instance.color = start_color.linear_interpolate(end_color, a)
 	part_instance.max_health = base_health * pow(health_dropoff, layer)
