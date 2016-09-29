@@ -7,6 +7,7 @@ extends Node2D
 
 var part = preload("res://objects/BossPart.tscn")
 var layers = [3,3,3,3,3]
+var regex = "(0|1)"
 
 var base_size = 100
 var size_dropoff = 0.6
@@ -20,13 +21,15 @@ var rot_speed_inc = PI * 0.1
 var start_color = Color(0,0,1)
 var end_color = Color(1,0,0.5)
 
+var expr
+
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	create_part(self, Vector2(0,0), 0)
+	expr = RegEx.new()
+	expr.compile(regex)
+	create_part(self, "", Vector2(0,0), 0)
 	pass
 
-func create_part(parent, pos, layer):
+func create_part(parent, id, pos, layer):
 	var sides = layers[layer]
 	var a = layer / float(layers.size() - 1)
 	var size = base_size * pow(size_dropoff, layer)
@@ -35,6 +38,7 @@ func create_part(parent, pos, layer):
 	# Set values
 	part_instance.get_node("RegularPolygon").sides = sides
 	part_instance.get_node("RegularPolygon").size = size
+	part_instance.id = id
 	part_instance.rot_speed = base_rot_speed + rot_speed_inc * layer
 	part_instance.color = start_color.linear_interpolate(end_color, a)
 	part_instance.max_health = base_health * pow(health_dropoff, layer)
@@ -55,5 +59,8 @@ func create_part(parent, pos, layer):
 			var angle = (i / float(sides)) * PI * 2.0
 			var dir = Vector2(cos(angle),sin(angle))
 			var pos = dir * size
-			create_part(part_instance, pos, layer + 1)
+			var newid = id + str(i)
+			var find = expr.find(newid)
+			if find > -1:
+				create_part(part_instance, newid, pos, layer + 1)
 			pass

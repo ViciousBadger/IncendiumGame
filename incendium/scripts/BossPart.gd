@@ -2,6 +2,7 @@
 extends Node2D
 
 # Set by Boss
+var id
 var rot_speed
 var color
 var max_health
@@ -71,8 +72,9 @@ func _on_RegularPolygon_area_enter(area):
 		health -= 1
 		health_fade = 1.0
 		if health <= 0:
-			for i in range(0,5):
+			for i in range(0,8):
 				var explosion_instance = explosion.instance()
+				explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 2
 				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(color)
 				get_tree().get_root().add_child(explosion_instance)
 				explosion_instance.set_global_pos(get_global_pos())
