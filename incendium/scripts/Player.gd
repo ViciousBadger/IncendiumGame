@@ -56,6 +56,10 @@ func _process(delta):
 		fire_timer = FIRE_TIME
 
 	set_rot(atan2(towards_center.x,towards_center.y) - PI/2)
+	
+	# Limit position to circle
+	if center.distance_to(get_pos()) > 720/2:
+		set_pos((get_pos() - center).normalized() * 720/2 + center)
 
 func _on_RegularPolygon_area_enter( area ):
 	get_node("RegularPolygon/Polygon2D").set_color(Color(0,1,0))
