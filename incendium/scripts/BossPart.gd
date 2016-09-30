@@ -17,6 +17,7 @@ var bullet = preload("res://objects/Bullet.tscn")
 var shoot_timer = 1
 # Misc
 var last_pos
+var velocity
 var explosion = preload("res://objects/Explosion.tscn")
 
 func _ready():
@@ -35,7 +36,7 @@ func _process(delta):
 		if (health_fade < 0): health_fade = 0
 		update()
 	
-	var velocity = get_global_pos() - last_pos
+	velocity = get_global_pos() - last_pos
 	last_pos = get_global_pos()
 	
 	var pos = get_global_pos()
@@ -75,6 +76,7 @@ func _on_RegularPolygon_area_enter(area):
 				var explosion_instance = explosion.instance()
 				explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 2
 				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(color)
+				explosion_instance.velocity = velocity * 100
 				get_tree().get_root().add_child(explosion_instance)
 				explosion_instance.set_global_pos(get_global_pos())
 			queue_free()

@@ -5,19 +5,19 @@ extends Node2D
 # var a=2
 # var b="textvar"
 
-var velocity
+var velocity = Vector2(0,0)
 var scale = 1
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
-	var maxspd = 120
-	velocity = Vector2(rand_range(-maxspd,maxspd),rand_range(-maxspd,maxspd))
+	var maxspd = 150
+	velocity += Vector2(rand_range(-maxspd,maxspd),rand_range(-maxspd,maxspd))
 	pass
 
 func _process(delta):
-	translate(velocity * delta)
+	translate(velocity * scale * delta)
 	scale -= delta * 2
 	set_scale(Vector2(scale,scale))
 	if scale <= 0:

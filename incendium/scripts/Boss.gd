@@ -1,13 +1,9 @@
 
 extends Node2D
 
-# member variables here, example:
-# var a=2
-# var b="textvar"
-
 var part = preload("res://objects/BossPart.tscn")
 var layers = [3,3,3,3,3]
-var regex = "(0|1)"
+var regex = "."
 
 var base_size = 100
 var size_dropoff = 0.6
@@ -16,10 +12,10 @@ var base_health = 100
 var health_dropoff = 0.4
 
 var base_rot_speed = 0.3
-var rot_speed_inc = PI * 0.1
+var rot_speed_inc = - PI * 0.1
 
 var start_color = Color(0,0,1)
-var end_color = Color(1,0,0.5)
+var end_color = Color(0,1,0)
 
 var expr
 
