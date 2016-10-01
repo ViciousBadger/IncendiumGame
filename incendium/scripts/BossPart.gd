@@ -2,6 +2,7 @@
 extends Node2D
 
 # Set by Boss
+var enabled
 var rot_speed
 var color
 var max_health
@@ -24,7 +25,10 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
-	get_node("RegularPolygon/Polygon2D").set_color(color)
+	if enabled:
+		get_node("RegularPolygon/Polygon2D").set_color(color)
+	else:
+		get_node("RegularPolygon/Polygon2D").set_color(Color(0,0,0,0))
 	health = max_health
 	last_pos = get_global_pos()
 	
@@ -41,8 +45,10 @@ func _process(delta):
 	
 	var pos = get_global_pos()
 	
-	shoot_timer -= delta
-	if shoot_timer <= 0 and get_child_count() <= 1:
+	if enabled:
+		shoot_timer -= delta
+	
+	if shoot_timer <= 0 and !any_active_child_parts():
 		for i in range(0,bullet_count):
 			var bullet_instance = bullet.instance()
 			
@@ -67,7 +73,7 @@ func _process(delta):
 			shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
 	
 func _on_RegularPolygon_area_enter(area):
-	if area.get_groups().has("damage_enemy") and get_child_count() <= 1:
+	if area.get_groups().has("damage_enemy") and !any_active_child_parts() and enabled:
 		area.get_parent().queue_free()
 		health -= 1
 		health_fade = 1.0
@@ -80,6 +86,15 @@ func _on_RegularPolygon_area_enter(area):
 				get_tree().get_root().add_child(explosion_instance)
 				explosion_instance.set_global_pos(get_global_pos())
 			queue_free()
+
+func any_active_child_parts():
+	for child in get_children():
+		if child.get("enabled") == true:
+			return true
+		if child.get("enabled") == false:
+			if child.any_active_child_parts():
+				return true
+	return false
 
 func _draw():
 	if health_fade > 0:
