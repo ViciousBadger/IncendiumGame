@@ -10,7 +10,8 @@ var dist = 200
 var bullet_p = preload("res://objects/Bullet.tscn")
 var fire_timer = 0
 
-var hits = 0
+const MAX_HEALTH = 100
+var health = MAX_HEALTH
 
 func _ready():
 	set_process(true)
@@ -66,8 +67,10 @@ func _on_RegularPolygon_area_enter( area ):
 	if area.get_groups().has("damage_player"):
 		area.get_parent().queue_free()
 		var size = area.size
-		hits += size
-		get_node("../Label").set_text("Hits: " + str(hits))
+		health -= size
+		get_node("../Label").set_text("HP: " + str(health) + "/" + str(MAX_HEALTH))
+		if health <= 0:
+			queue_free()
 
 func _on_RegularPolygon_area_exit( area ):
 	get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1))

@@ -32,7 +32,7 @@ func gen_boss():
 		layers.append(floor(rand_range(3,6)))
 	boss_instance.layers = layers
 	
-	boss_instance.regex = gen_regex(layer_count-1, layers)
+	boss_instance.regex = gen_regex(layer_count - 1, layers)
 	print(boss_instance.regex)
 	
 	boss_instance.base_size = rand_range(70,100)
