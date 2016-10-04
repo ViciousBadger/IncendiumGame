@@ -20,6 +20,7 @@ var shoot_timer = 1
 var last_pos
 var velocity
 var explosion = preload("res://objects/Explosion.tscn")
+var scale = 0
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -35,7 +36,11 @@ func _ready():
 func _process(delta):
 	rotate(delta * rot_speed)
 	
-	if (health_fade > 0):
+	if scale < 1:
+		scale = min(1,lerp(scale,1,delta * 5))
+		set_scale(Vector2(scale * scale, scale * scale))
+	
+	if health_fade > 0:
 		health_fade -= delta * 4
 		if (health_fade < 0): health_fade = 0
 		update()
