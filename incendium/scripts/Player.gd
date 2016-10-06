@@ -52,7 +52,7 @@ func _process(delta):
 	if (Input.is_key_pressed(KEY_SPACE) or Input.is_key_pressed(KEY_F)) and fire_timer <= 0:
 		var bullet = bullet_p.instance()
 		bullet.set_pos(get_pos())
-		bullet.velocity = towards_center * 800
+		bullet.velocity = towards_center * 600
 		get_tree().get_root().add_child(bullet)
 		fire_timer = FIRE_TIME
 

@@ -36,9 +36,12 @@ func gen_boss():
 	var layer_count = floor(rand_range(3,5))
 	
 	var layers = []
+	var bullettypes = []
 	for i in range(0,layer_count):
 		layers.append(floor(rand_range(3,6)))
+		bullettypes.append(floor(rand_range(0,3)))
 	boss_instance.layers = layers
+	boss_instance.bullettypes = bullettypes
 	
 	# boss_instance.regex = gen_regex(layer_count - 1, layers)
 	print(boss_instance.regex)

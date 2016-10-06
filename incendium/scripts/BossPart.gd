@@ -9,6 +9,7 @@ var max_health
 var bullet_size
 var bullet_count
 var bullet_speed
+var bullet_type
 var shoot_interval
 # Health
 var health
@@ -67,6 +68,7 @@ func _process(delta):
 			velocityAngle += (i / float(bullet_count)) * PI * 2
 			var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
 			
+			bullet_instance.type = bullet_type
 			bullet_instance.velocity = bulletVelocity
 			bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
 			bullet_instance.get_node("RegularPolygon").size = bullet_size

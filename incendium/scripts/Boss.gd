@@ -3,12 +3,13 @@ extends Node2D
 
 var part = preload("res://objects/BossPart.tscn")
 var layers = [3,3,3,3,3]
+var bullettypes = [0,0,0,0,0]
 var regex = ".*"
 
 var base_size = 100
 var size_dropoff = 0.6
 
-var base_health = 100
+var base_health = 80
 var health_dropoff = 0.4
 
 var base_rot_speed = 0.3
@@ -47,6 +48,7 @@ func create_part(parent, id, pos, layer, enabled):
 	part_instance.bullet_size = power * 2
 	part_instance.bullet_count = 1 + (power-1) * 3
 	part_instance.bullet_speed = 50 + 50 * power
+	part_instance.bullet_type = bullettypes[layer]
 
 	# part_instance.shoot_timer = 1.0 + (i / 3.0)
 	part_instance.set_draw_behind_parent(true)
