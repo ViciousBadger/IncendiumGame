@@ -4,11 +4,13 @@ extends Node
 var boss = preload("res://objects/Boss.tscn")
 
 var last_boss
+var last_boss_wr
 
 var bgcol = Color(0,0,0)
 var target_bgcol = Color(0,0,0)
 
-const POLYGON_DEGREE = 3
+var bossnum = 0
+var bossdepth = 3
 
 func _ready():
 	set_process_input(true)
@@ -21,19 +23,29 @@ func _input(event):
 		if event.scancode == KEY_R and event.pressed == true:
 			if last_boss != null:
 				last_boss.queue_free()
-			gen_boss()
 
 func _process(delta):
 	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 10)
-	VisualServer.set_default_clear_color(bgcol)
+	get_node("Background/Polygon2D").set_color(bgcol)
+	
+	if !last_boss_wr.get_ref():
+		#No boss, spawn a new one
+		if bossdepth < 5:
+			bossdepth += 1
+		gen_boss()
+		#also increase player health
+		var player = get_node("Player")
+		player.health = floor(lerp(player.health,player.MAX_HEALTH,0.5))
+		get_node("Label").set_text("HP: " + str(player.health) + "/" + str(player.MAX_HEALTH))
 
 func gen_boss():
 	var boss_instance = boss.instance()
 	last_boss = boss_instance
+	last_boss_wr = weakref(boss_instance)
 	
 	randomize() # Randomize random seed
 	
-	var layer_count = floor(rand_range(3,5))
+	var layer_count = bossdepth # floor(rand_range(3,5))
 	
 	var layers = []
 	var bullettypes = []
@@ -70,6 +82,9 @@ func gen_boss():
 	
 	add_child(boss_instance)
 	boss_instance.set_pos(Vector2(360,360))
+	
+	bossnum += 1
+	get_node("Label1").set_text("Boss " + str(bossnum))
 
 func gen_regex(depth, layers):
 	if depth == 0:

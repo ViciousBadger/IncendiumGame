@@ -16,7 +16,7 @@ var health
 var health_fade = 0.0
 # Shooting
 var bullet = preload("res://objects/Bullet.tscn")
-var shoot_timer = 1
+var shoot_timer = 2
 # Misc
 var last_pos
 var velocity
@@ -34,11 +34,13 @@ func _ready():
 	health = max_health
 	last_pos = get_global_pos()
 	
+	set_scale(Vector2(0,0))
+	
 func _process(delta):
 	rotate(delta * rot_speed)
 	
 	if scale < 1:
-		scale = min(1,lerp(scale,1,delta * 5))
+		scale = min(1,lerp(scale,1,delta * 4))
 		set_scale(Vector2(scale * scale, scale * scale))
 	
 	if health_fade > 0:

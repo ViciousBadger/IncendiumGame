@@ -28,7 +28,14 @@ func _ready():
 		print ("invalid regex!")
 	
 	create_part(self, "", Vector2(0,0), 0, true)
+	
+	set_process(true)
 	pass
+	
+func _process(delta):
+	if get_child_count() == 0:
+		# Boss is a goner
+		queue_free()
 
 func create_part(parent, id, pos, layer, enabled):
 	var sides = layers[layer]

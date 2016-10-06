@@ -34,12 +34,15 @@ func _process(delta):
 	translate(velocity * delta)
 	
 	if scale < 1:
-		scale = min(scale + delta / 0.1,1)
+		scale = min(1,lerp(scale,1,delta * 16))
 		set_scale(Vector2(scale,scale))
 	
 	lifetime -= delta
 	var pos = get_pos()
-	if pos.x < 0 or pos.y < 0 or pos.x > Globals.get("display/width") or pos.y > Globals.get("display/height") or lifetime <= 0:
+	
+	var dist_to_center = pos.distance_to(Vector2(720/2,720/2))
+	
+	if dist_to_center > 720/2 or lifetime <= 0:
 		queue_free()
 		
 # func _exit_tree():
