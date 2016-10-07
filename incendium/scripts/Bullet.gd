@@ -16,6 +16,7 @@ var lifetime = 6
 var actiontime = 2
 
 var scale = 0
+var explosion = preload("res://objects/explosion.tscn")
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -66,7 +67,9 @@ func _process(delta):
 	if dist_to_center > 720/2 or lifetime <= 0:
 		queue_free()
 		
-# func _exit_tree():
-# 	var explosion_instance = explosion.instance()
-# 	get_tree().get_root().add_child(explosion_instance)
-# 	explosion_instance.set_global_pos(get_global_pos())
+func _exit_tree():
+	var explosion_instance = explosion.instance()
+	explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size
+	explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
+	get_tree().get_root().add_child(explosion_instance)
+	explosion_instance.set_global_pos(get_global_pos())

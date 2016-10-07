@@ -35,8 +35,9 @@ func _process(delta):
 		gen_boss()
 		#also increase player health
 		var player = get_node("Player")
-		player.health = floor(lerp(player.health,player.MAX_HEALTH,0.5))
-		get_node("Label").set_text("HP: " + str(player.health) + "/" + str(player.MAX_HEALTH))
+		if player != null:
+			player.health = floor(lerp(player.health,player.MAX_HEALTH,0.5))
+			get_node("Label").set_text("HP: " + str(player.health) + "/" + str(player.MAX_HEALTH))
 
 func gen_boss():
 	var boss_instance = boss.instance()
@@ -51,7 +52,7 @@ func gen_boss():
 	var bullettypes = []
 	for i in range(0,layer_count):
 		layers.append(floor(rand_range(3,6)))
-		bullettypes.append(floor(rand_range(0,3)))
+		bullettypes.append(floor(rand_range(0,4)))
 	boss_instance.layers = layers
 	boss_instance.bullettypes = bullettypes
 	
