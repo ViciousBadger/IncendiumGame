@@ -9,7 +9,7 @@ var base_size = 100
 var size_dropoff = 0.6
 
 var base_health = 100
-var health_dropoff = 0.4
+var health_dropoff = 0.6
 
 var base_rot_speed = 0.3
 var rot_speed_inc = - PI * 0.1
@@ -26,10 +26,10 @@ func _ready():
 	if !expr.is_valid():
 		print ("invalid regex!")
 	
-	create_part(self, "", Vector2(0,0), 0, true)
+	create_part(self, "", Vector2(0,0), 0, 1, true)
 	pass
 
-func create_part(parent, id, pos, layer, enabled):
+func create_part(parent, id, pos, layer, parentsides, enabled):
 	var sides = layers[layer]
 	var a = layer / float(layers.size() - 1)
 	var size = base_size * pow(size_dropoff, layer)
@@ -41,7 +41,7 @@ func create_part(parent, id, pos, layer, enabled):
 	part_instance.enabled = enabled
 	part_instance.rot_speed = base_rot_speed + rot_speed_inc * layer
 	part_instance.color = start_color.linear_interpolate(end_color, a)
-	part_instance.max_health = base_health * pow(health_dropoff, layer)
+	part_instance.max_health = (base_health * pow(health_dropoff, layer)) / parentsides
 	part_instance.shoot_interval = lerp(0.1, 2, a) # 2 - (power * 0.45)
 	var power = layers.size() - layer
 	part_instance.bullet_size = power * 2
@@ -61,5 +61,5 @@ func create_part(parent, id, pos, layer, enabled):
 			var pos = dir * size
 			var newid = id + str(i)
 			var find = expr.find(newid)
-			create_part(part_instance, newid, pos, layer + 1, find > -1)
+			create_part(part_instance, newid, pos, layer + 1, sides, find > -1)
 			pass

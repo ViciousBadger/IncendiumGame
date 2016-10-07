@@ -40,6 +40,7 @@ func gen_boss():
 		layers.append(floor(rand_range(3,6)))
 	boss_instance.layers = layers
 	
+	print("generating regex")
 	# boss_instance.regex = gen_regex(layer_count - 1, layers)
 	print(boss_instance.regex)
 	
@@ -54,7 +55,7 @@ func gen_boss():
 		boss_instance.base_rot_speed = -boss_instance.base_rot_speed
 	
 	var neg_rot_inc = randi() % 2 == 0
-	boss_instance.rot_speed_inc = rand_range(0.1,0.3) * PI
+	boss_instance.rot_speed_inc = boss_instance.base_rot_speed + rand_range(0.1,0.2) * PI
 	if neg_rot_inc:
 		boss_instance.rot_speed_inc = -boss_instance.rot_speed_inc
 	
@@ -69,6 +70,7 @@ func gen_boss():
 	boss_instance.set_pos(Vector2(360,360))
 
 func gen_regex(depth, layers):
+	print(depth)
 	if depth == 0:
 		return str(floor(rand_range(0, layers[depth])))
 		
