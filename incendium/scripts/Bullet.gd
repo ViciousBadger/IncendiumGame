@@ -15,9 +15,12 @@ var lifetime = 6
 
 var actiontime = 2
 
+var scale = 0
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	set_scale(Vector2(0,0))
 	set_process(true)
 
 func _process(delta):
@@ -32,6 +35,10 @@ func _process(delta):
 		velocity = Vector2(cos(angle),sin(angle)) * length
 	
 	translate(velocity * delta)
+	
+	if scale < 1:
+		scale = min(1,lerp(scale,1,delta * 16))
+		set_scale(Vector2(scale,scale))
 	
 	lifetime -= delta
 	
@@ -53,7 +60,10 @@ func _process(delta):
 				queue_free()
 	
 	var pos = get_pos()
-	if pos.x < 0 or pos.y < 0 or pos.x > Globals.get("display/width") or pos.y > Globals.get("display/height") or lifetime <= 0:
+	
+	var dist_to_center = pos.distance_to(Vector2(720/2,720/2))
+	
+	if dist_to_center > 720/2 or lifetime <= 0:
 		queue_free()
 		
 # func _exit_tree():

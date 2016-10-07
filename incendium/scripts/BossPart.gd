@@ -9,17 +9,19 @@ var max_health
 var bullet_size
 var bullet_count
 var bullet_speed
+var bullet_type
 var shoot_interval
 # Health
 var health
 var health_fade = 0.0
 # Shooting
 var bullet = preload("res://objects/Bullet.tscn")
-var shoot_timer = 1
+var shoot_timer = 2
 # Misc
 var last_pos
 var velocity
 var explosion = preload("res://objects/Explosion.tscn")
+var scale = 0
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -32,10 +34,16 @@ func _ready():
 	health = max_health
 	last_pos = get_global_pos()
 	
+	set_scale(Vector2(0,0))
+	
 func _process(delta):
 	rotate(delta * rot_speed)
 	
-	if (health_fade > 0):
+	if scale < 1:
+		scale = min(1,lerp(scale,1,delta * 4))
+		set_scale(Vector2(scale * scale, scale * scale))
+	
+	if health_fade > 0:
 		health_fade -= delta * 4
 		if (health_fade < 0): health_fade = 0
 		update()
@@ -62,6 +70,7 @@ func _process(delta):
 			velocityAngle += (i / float(bullet_count)) * PI * 2
 			var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
 			
+			bullet_instance.type = bullet_type
 			bullet_instance.velocity = bulletVelocity
 			bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
 			bullet_instance.get_node("RegularPolygon").size = bullet_size
