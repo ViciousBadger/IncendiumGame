@@ -110,7 +110,7 @@ func any_active_child_parts():
 	return false
 
 func _draw():
-	if health < max_health: # if health_fade > 0: 
+	if health < max_health and health > 0: # if health_fade > 0: 
 		var pgon = Vector2Array(get_node("RegularPolygon/Polygon2D").get_polygon())
 		var colors = Array()
 		for i in range(0,pgon.size()):
