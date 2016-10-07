@@ -48,6 +48,10 @@ func _process(delta):
 		if (health_fade < 0): health_fade = 0
 		update()
 	
+	if health < max_health:
+		health += delta
+		update()
+	
 	velocity = get_global_pos() - last_pos
 	last_pos = get_global_pos()
 	
