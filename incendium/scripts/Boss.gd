@@ -26,7 +26,7 @@ func _ready():
 	if !expr.is_valid():
 		print ("invalid regex!")
 	
-	create_part(self, "", Vector2(0,0), 0, 1, true)
+	create_part(self, "", Vector2(0,0), 0, 1, base_health, true)
 	set_process(true)
 	pass
 	
@@ -35,7 +35,7 @@ func _process(delta):
 		# Boss is a goner
 		queue_free()
 
-func create_part(parent, id, pos, layer, parentsides, enabled):
+func create_part(parent, id, pos, layer, parentsides, health, enabled):
 	var sides = layers[layer]
 	var a = layer / float(layers.size() - 1)
 	var size = base_size * pow(size_dropoff, layer)
@@ -47,7 +47,8 @@ func create_part(parent, id, pos, layer, parentsides, enabled):
 	part_instance.enabled = enabled
 	part_instance.rot_speed = base_rot_speed + rot_speed_inc * layer
 	part_instance.color = start_color.linear_interpolate(end_color, a)
-	part_instance.max_health = (base_health * pow(size_dropoff, layer)) / parentsides
+	part_instance.max_health = health
+	# part_instance.max_health = (base_health * pow(size_dropoff, layer)) / parentsides
 	part_instance.shoot_interval = lerp(0.3, 3, a) # 2 - (power * 0.45)
 	var power = layers.size() - layer
 	part_instance.bullet_size = power * 2
@@ -68,5 +69,5 @@ func create_part(parent, id, pos, layer, parentsides, enabled):
 			var pos = dir * size
 			var newid = id + str(i)
 			var find = expr.find(newid)
-			create_part(part_instance, newid, pos, layer + 1, sides, find > -1)
+			create_part(part_instance, newid, pos, layer + 1, sides, (health * size_dropoff) / parentsides, find > -1)
 			pass

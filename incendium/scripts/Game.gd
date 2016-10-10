@@ -10,7 +10,7 @@ var bgcol = Color(0,0,0)
 var target_bgcol = Color(0,0,0)
 
 var bossnum = 0
-var bossdepth = 3
+var bossdepth = 2
 
 func _ready():
 	set_process_input(true)
@@ -60,10 +60,10 @@ func gen_boss():
 	# boss_instance.regex = gen_regex(layer_count - 1, layers)
 	print(boss_instance.regex)
 	
-	boss_instance.base_size = rand_range(90,110)
-	boss_instance.size_dropoff = rand_range(0.45,0.55)
+	boss_instance.base_size = 100
+	boss_instance.size_dropoff = 0.5
 	
-	boss_instance.base_health = 50 + (25 * bossnum)
+	boss_instance.base_health = 20 + (10 * bossnum)
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 	
 	var neg_base_rot_speed = randi() % 2 == 0
