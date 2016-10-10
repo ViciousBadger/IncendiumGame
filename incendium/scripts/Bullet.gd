@@ -69,6 +69,7 @@ func _process(delta):
 		
 func _exit_tree():
 	var explosion_instance = explosion.instance()
+	explosion_instance.velocity = -velocity * 0.5
 	explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size
 	explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
 	get_tree().get_root().add_child(explosion_instance)
