@@ -16,7 +16,7 @@ var lifetime = 6
 var actiontime = 2
 
 var scale = 0
-var explosion = preload("res://objects/explosion.tscn")
+var explosion = preload("res://objects/Explosion.tscn")
 
 func _ready():
 	# Called every time the node is added to the scene.

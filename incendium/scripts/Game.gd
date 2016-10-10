@@ -30,7 +30,7 @@ func _process(delta):
 	
 	if !last_boss_wr.get_ref():
 		#No boss, spawn a new one
-		if bossdepth < 5:
+		if bossdepth < 4:
 			bossdepth += 1
 		gen_boss()
 		#also increase player health
@@ -60,9 +60,10 @@ func gen_boss():
 	# boss_instance.regex = gen_regex(layer_count - 1, layers)
 	print(boss_instance.regex)
 	
-	boss_instance.base_size = rand_range(70,100)
-	boss_instance.size_dropoff = rand_range(0.5,0.6)
+	boss_instance.base_size = rand_range(90,110)
+	boss_instance.size_dropoff = rand_range(0.45,0.55)
 	
+	boss_instance.base_health = 50 + (25 * bossnum)
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 	
 	var neg_base_rot_speed = randi() % 2 == 0

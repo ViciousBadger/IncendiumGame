@@ -10,7 +10,6 @@ var base_size = 100
 var size_dropoff = 0.6
 
 var base_health = 80
-var health_dropoff = 0.6
 
 var base_rot_speed = 0.3
 var rot_speed_inc = - PI * 0.1
@@ -48,8 +47,8 @@ func create_part(parent, id, pos, layer, parentsides, enabled):
 	part_instance.enabled = enabled
 	part_instance.rot_speed = base_rot_speed + rot_speed_inc * layer
 	part_instance.color = start_color.linear_interpolate(end_color, a)
-	part_instance.max_health = (base_health * pow(health_dropoff, layer)) / parentsides
-	part_instance.shoot_interval = lerp(0.1, 2, a) # 2 - (power * 0.45)
+	part_instance.max_health = (base_health * pow(size_dropoff, layer)) / parentsides
+	part_instance.shoot_interval = lerp(0.3, 3, a) # 2 - (power * 0.45)
 	var power = layers.size() - layer
 	part_instance.bullet_size = power * 2
 	part_instance.bullet_count = 1 + (power-1) * 3
