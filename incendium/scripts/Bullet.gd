@@ -71,6 +71,7 @@ func _exit_tree():
 	var explosion_instance = explosion.instance()
 	explosion_instance.velocity = -velocity * 0.5
 	explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size
-	explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
+	var col = get_node("RegularPolygon/Polygon2D").get_color()
+	explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(col.r,col.g,col.b,0.5))
 	get_tree().get_root().add_child(explosion_instance)
 	explosion_instance.set_global_pos(get_global_pos())
