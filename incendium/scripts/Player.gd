@@ -9,6 +9,8 @@ var angle = 0
 var dist = 200
 var bullet_p = preload("res://objects/Bullet.tscn")
 var explosion = preload("res://objects/Explosion.tscn")
+var shield_p = preload("res://objects/PlayerShield.tscn")
+var shield_cooldown = 0
 var fire_timer = 0
 
 const MAX_HEALTH = 100
@@ -56,6 +58,16 @@ func _process(delta):
 		bullet.velocity = towards_center * 600
 		get_tree().get_root().add_child(bullet)
 		fire_timer = FIRE_TIME
+		
+	if shield_cooldown > 0:
+		shield_cooldown -= delta
+	
+	if Input.is_key_pressed(KEY_D) and shield_cooldown <= 0:
+		var shield = shield_p.instance()
+		shield.node_to_follow = get_path()
+		get_tree().get_root().add_child(shield)
+		shield.set_global_pos(get_global_pos())
+		shield_cooldown = 3
 
 	set_rot(atan2(towards_center.x,towards_center.y) - PI/2)
 	
