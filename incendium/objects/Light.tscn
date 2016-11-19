@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://gfx/circle.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Light.gd" type="Script" id=2]
+
+[node name="Light" type="Sprite"]
+
+transform/pos = Vector2( 236.994, 240.362 )
+transform/scale = Vector2( 0.227603, 0.227603 )
+texture = ExtResource( 1 )
+script/script = ExtResource( 2 )
+
+

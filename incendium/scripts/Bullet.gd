@@ -18,13 +18,24 @@ var actiontime = 2
 var scale = 0
 var explosion = preload("res://objects/Explosion.tscn")
 
+var light_instance
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_scale(Vector2(0,0))
 	set_process(true)
+	
+	# Light
+	var light = preload("res://objects/Light.tscn")
+	light_instance = light.instance()
+	var s = get_node("RegularPolygon").size * 0.05
+	light_instance.set_scale(Vector2(s,s))
+	light_instance.set_modulate(get_node("RegularPolygon/Polygon2D").get_color())
+	get_tree().get_root().add_child(light_instance)
 
 func _process(delta):
+	light_instance.set_global_pos(get_global_pos())
 	if type == BTYPE_ACCELERATING:
 		var length = velocity.length()
 		length += delta * 100
@@ -75,3 +86,4 @@ func _exit_tree():
 	explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(col.r,col.g,col.b,0.5))
 	get_tree().get_root().add_child(explosion_instance)
 	explosion_instance.set_global_pos(get_global_pos())
+	light_instance.despawn()
