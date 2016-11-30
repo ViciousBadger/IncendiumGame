@@ -2,6 +2,7 @@
 extends Sprite
 
 var a = 0
+var despawn_a = 0.2
 var despawn = false
 
 func _ready():
@@ -22,4 +23,4 @@ func _process(delta):
 
 func despawn():
 	despawn = true
-	a = 0.2
+	a = despawn_a

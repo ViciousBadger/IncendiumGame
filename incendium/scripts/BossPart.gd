@@ -98,6 +98,16 @@ func _on_RegularPolygon_area_enter(area):
 				explosion_instance.velocity = velocity * 100
 				get_tree().get_root().add_child(explosion_instance)
 				explosion_instance.set_global_pos(get_global_pos())
+			
+			var light_instance = preload("res://objects/Light.tscn").instance()
+			var s = get_node("RegularPolygon").size * 0.01
+			light_instance.despawn_a = 1
+			light_instance.set_scale(Vector2(s,s))
+			light_instance.set_modulate(get_node("RegularPolygon/Polygon2D").get_color())
+			get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
+			light_instance.set_global_pos(get_global_pos())
+			light_instance.despawn()
+			
 			queue_free()
 
 func any_active_child_parts():

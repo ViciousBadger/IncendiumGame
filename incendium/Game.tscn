@@ -65,8 +65,6 @@ circle_collision = false
 
 [node name="Smokes" type="Node" parent="."]
 
-editor/display_folded = true
-
 [node name="Smoke" parent="Smokes" instance=ExtResource( 5 )]
 
 [node name="Smoke1" parent="Smokes" instance=ExtResource( 5 )]
@@ -93,7 +91,7 @@ transform/rot = 59.7045
 
 [node name="Smoke3" parent="Smokes" instance=ExtResource( 5 )]
 
-transform/pos = Vector2( 479.347, 80.9969 )
+transform/pos = Vector2( 481.347, 81.9969 )
 transform/rot = 114.849
 
 [node name="Smoke4" parent="Smokes" instance=ExtResource( 5 )]

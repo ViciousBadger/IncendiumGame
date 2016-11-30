@@ -8,6 +8,8 @@ var last_boss_wr
 
 var bgcol = Color(0,0,0)
 var target_bgcol = Color(0,0,0)
+var fgcol = Color(0,0,0)
+var target_fgcol = Color(0,0,0)
 
 var bossnum = 0
 var bossdepth = 2
@@ -25,8 +27,10 @@ func _input(event):
 				last_boss.queue_free()
 
 func _process(delta):
-	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 10)
+	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 0.5)
+	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 3)
 	get_node("Background/Polygon2D").set_color(bgcol)
+	#tag("Smoke").set_modulate(bgcol)
 	
 	if !last_boss_wr.get_ref():
 		#No boss, spawn a new one
@@ -77,11 +81,13 @@ func gen_boss():
 		boss_instance.rot_speed_inc = -boss_instance.rot_speed_inc
 	
 	var boss_start_col = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
+	var boss_end_col = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
 	
 	boss_instance.start_color = boss_start_col
-	boss_instance.end_color = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
+	boss_instance.end_color = boss_end_col
 	
 	target_bgcol = boss_start_col.linear_interpolate(Color(0,0,0), 0.8)
+	target_fgcol = boss_end_col
 	
 	add_child(boss_instance)
 	boss_instance.set_pos(Vector2(360,360))
