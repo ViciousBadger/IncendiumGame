@@ -16,6 +16,8 @@ transform/pos = Vector2( 360, 360 )
 sides = 64
 size = 360
 
+[node name="Lights" type="Node" parent="."]
+
 [node name="Label" type="Label" parent="."]
 
 focus/ignore_mouse = true
