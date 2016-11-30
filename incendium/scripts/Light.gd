@@ -15,10 +15,11 @@ func _process(delta):
 	if !despawn:
 		a = lerp(a, 0.1, delta * 2)
 	else:
-		a = lerp(a, 0, delta * 2)
+		a = lerp(a, 0, delta * 10)
 		if a <= 0.01:
 			queue_free()
 	set_opacity(a)
 
 func despawn():
 	despawn = true
+	a = 0.2

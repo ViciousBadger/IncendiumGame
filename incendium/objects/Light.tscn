@@ -5,6 +5,7 @@
 
 [node name="Light" type="Sprite"]
 
+visibility/blend_mode = 1
 transform/pos = Vector2( 236.994, 240.362 )
 transform/scale = Vector2( 0.227603, 0.227603 )
 texture = ExtResource( 1 )
