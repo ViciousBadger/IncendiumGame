@@ -86,8 +86,8 @@ func gen_boss():
 	boss_instance.start_color = boss_start_col
 	boss_instance.end_color = boss_end_col
 	
-	target_bgcol = boss_start_col.linear_interpolate(Color(0,0,0), 0.8)
-	target_fgcol = boss_end_col
+	target_bgcol = boss_start_col.linear_interpolate(Color(0,0,0), 0.5)
+	target_fgcol = boss_end_col.linear_interpolate(Color(0,0,0), rand_range(0,0.8))
 	
 	add_child(boss_instance)
 	boss_instance.set_pos(Vector2(360,360))
