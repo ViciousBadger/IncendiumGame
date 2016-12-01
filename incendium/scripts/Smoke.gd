@@ -3,24 +3,25 @@ extends Sprite
 
 # member variables here, example:
 # var a=2
-# var b="textvar"
+# var b="textvar"'
 
-var move = 0
+var rot
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	rot = rand_range(-0.05,0.05)
 	set_process(true)
 	
 func _process(delta):
-	rotate(delta * 0.05)
+	rotate(delta * rot)
 	var c = get_tree().get_root().get_node("Game").fgcol
 	set_modulate(Color(c.r,c.g,c.b,get_modulate().a))
 	
-	move += delta * 0.2
-	var move_sin = sin(move) * 5
+	var towards_center = Vector2(720,720)/2 - get_global_pos()
 	
-	var away_from_center = get_global_pos() - Vector2(720,720)/2
-	translate(away_from_center.normalized() * delta * move_sin)
+	var move = Vector2(towards_center.y,-towards_center.x).normalized()
+	
+	translate(move * delta * 10)
 
 

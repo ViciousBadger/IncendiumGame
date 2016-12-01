@@ -100,7 +100,7 @@ func _on_RegularPolygon_area_enter(area):
 				explosion_instance.set_global_pos(get_global_pos())
 			
 			var light_instance = preload("res://objects/Light.tscn").instance()
-			var s = get_node("RegularPolygon").size * 0.01
+			var s = get_node("RegularPolygon").size * 0.008
 			light_instance.despawn_a = 1
 			light_instance.set_scale(Vector2(s,s))
 			light_instance.set_modulate(get_node("RegularPolygon/Polygon2D").get_color())

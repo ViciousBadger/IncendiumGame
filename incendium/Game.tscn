@@ -2,8 +2,8 @@
 
 [ext_resource path="res://scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://objects/RegularPolygon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scripts/Player.gd" type="Script" id=3]
-[ext_resource path="res://objects/Smoke.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/Smoke.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://gfx/border.png" type="Texture" id=5]
 [ext_resource path="res://uitheme.tres" type="Theme" id=6]
 
@@ -19,61 +19,51 @@ size = 360
 
 [node name="Lights" type="Node" parent="."]
 
-[node name="Player" type="Node2D" parent="."]
-
-editor/display_folded = true
-script/script = ExtResource( 3 )
-polar_controls = false
-
-[node name="RegularPolygon" parent="Player" instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 0.902496, 0 )
-size = 10
-circle_collision = false
-
 [node name="Smokes" type="Node" parent="."]
 
-editor/display_folded = true
+[node name="Smoke" parent="Smokes" instance=ExtResource( 3 )]
 
-[node name="Smoke" parent="Smokes" instance=ExtResource( 4 )]
-
-[node name="Smoke1" parent="Smokes" instance=ExtResource( 4 )]
+[node name="Smoke1" parent="Smokes" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 69.914, 60.0638 )
 transform/rot = 51.2565
 
-[node name="Smoke2" parent="Smokes" instance=ExtResource( 4 )]
+[node name="Smoke2" parent="Smokes" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 98.4818, 521.232 )
 transform/rot = 27.6413
 transform/scale = Vector2( 0.5, 0.5 )
 
-[node name="Smoke5" parent="Smokes" instance=ExtResource( 4 )]
+[node name="Smoke5" parent="Smokes" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 359.675, 309.013 )
 transform/rot = 70.3916
 transform/scale = Vector2( 0.5, 0.5 )
 
-[node name="Smoke 2" parent="Smokes" instance=ExtResource( 4 )]
+[node name="Smoke 2" parent="Smokes" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 517.475, 312.95 )
 transform/rot = 59.7045
 
-[node name="Smoke3" parent="Smokes" instance=ExtResource( 4 )]
+[node name="Smoke3" parent="Smokes" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 481.347, 81.9969 )
 transform/rot = 114.849
 
-[node name="Smoke4" parent="Smokes" instance=ExtResource( 4 )]
+[node name="Smoke4" parent="Smokes" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 393.289, 666.826 )
 transform/rot = 154.974
 
-[node name="Smoke6" parent="Smokes" instance=ExtResource( 4 )]
+[node name="Smoke6" parent="Smokes" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 668.839, 334.003 )
 transform/rot = 19.0317
 transform/scale = Vector2( 0.5, 0.5 )
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 360, 600 )
 
 [node name="Border" type="Sprite" parent="."]
 
@@ -112,9 +102,5 @@ text = "INCENDIUM"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-
-[connection signal="area_enter" from="Player/RegularPolygon" to="Player" method="_on_RegularPolygon_area_enter"]
-
-[connection signal="area_exit" from="Player/RegularPolygon" to="Player" method="_on_RegularPolygon_area_exit"]
 
 

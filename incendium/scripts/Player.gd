@@ -94,7 +94,7 @@ func lose_health(hp):
 			# explosion_instance.velocity = Vector2(0,0)
 			get_tree().get_root().add_child(explosion_instance)
 			explosion_instance.set_global_pos(get_global_pos())
-		OS.set_time_scale(0.1)
+		OS.set_time_scale(0.02)
 		queue_free()
 
 func _on_RegularPolygon_area_exit( area ):

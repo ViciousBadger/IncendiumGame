@@ -32,6 +32,14 @@ func _process(delta):
 	get_node("Background/Polygon2D").set_color(bgcol)
 	#tag("Smoke").set_modulate(bgcol)
 	
+	var player = get_node("Player")
+	if player == null:
+		OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
+		if OS.get_time_scale() >= 1:
+			var p = preload("res://objects/Player.tscn").instance()
+			add_child(p)
+			p.set_global_pos(Vector2(360,600))
+	
 	if !last_boss_wr.get_ref():
 		#No boss, spawn a new one
 		if bossdepth < 4:
@@ -87,7 +95,7 @@ func gen_boss():
 	boss_instance.end_color = boss_end_col
 	
 	target_bgcol = boss_start_col.linear_interpolate(Color(0,0,0), 0.5)
-	target_fgcol = boss_end_col.linear_interpolate(Color(0,0,0), rand_range(0,0.8))
+	target_fgcol = boss_end_col.linear_interpolate(Color(0,0,0), 0)
 	
 	add_child(boss_instance)
 	boss_instance.set_pos(Vector2(360,360))
