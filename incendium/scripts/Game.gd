@@ -14,11 +14,12 @@ var target_fgcol = Color(0,0,0)
 var bossnum = 0
 var bossdepth = 2
 
+var score = 0
+
 func _ready():
 	set_process_input(true)
 	set_process(true)
 	gen_boss()
-
 	
 func _input(event):
 	if event.type == InputEvent.KEY:
@@ -50,6 +51,10 @@ func _process(delta):
 		if player != null:
 			player.health = floor(lerp(player.health,player.MAX_HEALTH,0.5))
 			get_node("Label").set_text("HP: " + str(player.health) + "/" + str(player.MAX_HEALTH))
+
+func add_score(amount):
+	score += amount
+	get_node("Score").set_text("Score: " + str(floor(score)))
 
 func gen_boss():
 	var boss_instance = boss.instance()

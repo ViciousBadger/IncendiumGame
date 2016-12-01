@@ -21,7 +21,7 @@ var shoot_timer = 2
 var last_pos
 var velocity
 var explosion = preload("res://objects/Explosion.tscn")
-var scale = 0
+var scale = 0.01
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -60,30 +60,32 @@ func _process(delta):
 	if enabled:
 		shoot_timer -= delta
 	
-	if shoot_timer <= 0 and !any_active_child_parts():
-		for i in range(0,bullet_count):
-			var bullet_instance = bullet.instance()
+	if shoot_timer <= 0:
+		shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
+		if !any_active_child_parts():
+			for i in range(0,bullet_count):
+				var bullet_instance = bullet.instance()
+				
+				# Calculate bullet direction
+				var velocityAngle
+				if velocity.x == 0 and velocity.y == 0:
+					# Use rotation if no velocity
+					velocityAngle = get_rot() * 3
+				else:
+					velocityAngle = atan2(velocity.y,velocity.x)
+				velocityAngle += (i / float(bullet_count)) * PI * 2
+				var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
+				
+				bullet_instance.type = bullet_type
+				bullet_instance.velocity = bulletVelocity
+				bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
+				bullet_instance.get_node("RegularPolygon").size = bullet_size
+				bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
+				bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
+				bullet_instance.set_pos(get_global_pos())
+				get_tree().get_root().add_child(bullet_instance)
+				# var angle_towards_center = atan2(pos.x - 720/2, pos.y - 720/2)
 			
-			# Calculate bullet direction
-			var velocityAngle
-			if velocity.x == 0 and velocity.y == 0:
-				# Use rotation if no velocity
-				velocityAngle = get_rot() * 3
-			else:
-				velocityAngle = atan2(velocity.y,velocity.x)
-			velocityAngle += (i / float(bullet_count)) * PI * 2
-			var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
-			
-			bullet_instance.type = bullet_type
-			bullet_instance.velocity = bulletVelocity
-			bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
-			bullet_instance.get_node("RegularPolygon").size = bullet_size
-			bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
-			bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
-			bullet_instance.set_pos(get_global_pos())
-			get_tree().get_root().add_child(bullet_instance)
-			# var angle_towards_center = atan2(pos.x - 720/2, pos.y - 720/2)
-			shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
 	
 func _on_RegularPolygon_area_enter(area):
 	if area.get_groups().has("damage_enemy") and !any_active_child_parts() and enabled:
@@ -107,6 +109,9 @@ func _on_RegularPolygon_area_enter(area):
 			get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
 			light_instance.set_global_pos(get_global_pos())
 			light_instance.despawn()
+			
+			var game = get_tree().get_root().get_node("Game")
+			game.add_score(get_node("RegularPolygon").size)
 			
 			queue_free()
 

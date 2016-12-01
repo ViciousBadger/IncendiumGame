@@ -58,14 +58,16 @@ func _process(delta):
 		actiontime -= delta
 		if actiontime <= 0:
 			if type == BTYPE_SPLITTING:
-				for i in range(0,3):
+				for i in range(0,2):
 					var bullet_instance = load("res://objects/Bullet.tscn").instance()
 					bullet_instance.type = BTYPE_BASIC
 					bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
 					bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
 					bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
 					bullet_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 2.0
-					var angle = atan2(velocity.y,velocity.x) + (i / 3.0) * PI * 2
+					var angleoffset = -0.3
+					if i == 1: angleoffset = 0.3
+					var angle = atan2(velocity.y,velocity.x) + angleoffset
 					bullet_instance.velocity = Vector2(cos(angle),sin(angle)) * velocity.length()
 					get_tree().get_root().add_child(bullet_instance)
 					bullet_instance.set_global_pos(get_global_pos())
