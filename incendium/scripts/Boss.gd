@@ -1,7 +1,6 @@
 
 extends Node2D
 
-var part = preload("res://objects/BossPart.tscn")
 var layers = [3,3,3,3,3]
 var bullettypes = [0,0,0,0,0]
 var regex = ".*"
@@ -40,7 +39,7 @@ func create_part(parent, id, pos, layer, index, parentsides, health, enabled):
 	var a = layer / float(layers.size() - 1)
 	var size = base_size * pow(size_dropoff, layer)
 	
-	var part_instance = part.instance()
+	var part_instance = preload("res://objects/BossPart.tscn").instance()
 	# Set values
 	part_instance.get_node("RegularPolygon").sides = sides
 	part_instance.get_node("RegularPolygon").size = size

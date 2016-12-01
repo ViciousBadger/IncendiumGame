@@ -7,9 +7,6 @@ const FIRE_TIME = 0.05
 export var polar_controls = false
 var angle = 0
 var dist = 200
-var bullet_p = preload("res://objects/Bullet.tscn")
-var explosion = preload("res://objects/Explosion.tscn")
-var shield_p = preload("res://objects/PlayerShield.tscn")
 var shield_cooldown = 0
 var fire_timer = 0
 
@@ -53,7 +50,7 @@ func _process(delta):
 		fire_timer -= delta
 	
 	if (Input.is_key_pressed(KEY_SPACE) or Input.is_key_pressed(KEY_F)) and fire_timer <= 0:
-		var bullet = bullet_p.instance()
+		var bullet = preload("res://objects/Bullet.tscn").instance()
 		bullet.set_pos(get_pos())
 		bullet.velocity = towards_center * 600
 		get_tree().get_root().add_child(bullet)
@@ -63,7 +60,7 @@ func _process(delta):
 		shield_cooldown -= delta
 	
 	if Input.is_key_pressed(KEY_D) and shield_cooldown <= 0:
-		var shield = shield_p.instance()
+		var shield = preload("res://objects/PlayerShield.tscn").instance()
 		shield.node_to_follow = get_path()
 		get_tree().get_root().add_child(shield)
 		shield.set_global_pos(get_global_pos())
@@ -88,7 +85,7 @@ func lose_health(hp):
 	get_node("../Label").set_text("HP: " + str(health) + "/" + str(MAX_HEALTH))
 	if health <= 0:
 		for i in range(0,8):
-			var explosion_instance = explosion.instance()
+			var explosion_instance = preload("res://objects/Explosion.tscn").instance()
 			explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size
 			explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
 			# explosion_instance.velocity = Vector2(0,0)

@@ -1,8 +1,6 @@
 
 extends Node
 
-var boss = preload("res://objects/Boss.tscn")
-
 var last_boss
 var last_boss_wr
 
@@ -57,7 +55,7 @@ func add_score(amount):
 	get_node("Score").set_text("Score: " + str(floor(score)))
 
 func gen_boss():
-	var boss_instance = boss.instance()
+	var boss_instance = preload("res://objects/Boss.tscn").instance()
 	last_boss = boss_instance
 	last_boss_wr = weakref(boss_instance)
 	

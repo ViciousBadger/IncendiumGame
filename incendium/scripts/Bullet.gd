@@ -16,8 +16,6 @@ var lifetime = 6
 var actiontime = 2
 
 var scale = 0
-var explosion = preload("res://objects/Explosion.tscn")
-
 var light_instance
 
 func _ready():
@@ -59,7 +57,7 @@ func _process(delta):
 		if actiontime <= 0:
 			if type == BTYPE_SPLITTING:
 				for i in range(0,2):
-					var bullet_instance = load("res://objects/Bullet.tscn").instance()
+					var bullet_instance = preload("res://objects/Bullet.tscn").instance()
 					bullet_instance.type = BTYPE_BASIC
 					bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
 					bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
@@ -81,7 +79,7 @@ func _process(delta):
 		queue_free()
 		
 func _exit_tree():
-	var explosion_instance = explosion.instance()
+	var explosion_instance = preload("res://objects/Explosion.tscn").instance()
 	explosion_instance.velocity = -velocity * 0.5
 	explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size
 	var col = get_node("RegularPolygon/Polygon2D").get_color()

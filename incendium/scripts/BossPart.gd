@@ -15,12 +15,10 @@ var shoot_interval
 var health
 var health_fade = 0.0
 # Shooting
-var bullet = preload("res://objects/Bullet.tscn")
 var shoot_timer = 2
 # Misc
 var last_pos
 var velocity
-var explosion = preload("res://objects/Explosion.tscn")
 var scale = 0.01
 
 func _ready():
@@ -64,7 +62,7 @@ func _process(delta):
 		shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
 		if !any_active_child_parts():
 			for i in range(0,bullet_count):
-				var bullet_instance = bullet.instance()
+				var bullet_instance = preload("res://objects/Bullet.tscn").instance()
 				
 				# Calculate bullet direction
 				var velocityAngle
@@ -94,7 +92,7 @@ func _on_RegularPolygon_area_enter(area):
 		health_fade = 1.0
 		if health <= 0:
 			for i in range(0,8):
-				var explosion_instance = explosion.instance()
+				var explosion_instance = preload("res://objects/Explosion.tscn").instance()
 				explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 2
 				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(color)
 				explosion_instance.velocity = velocity * 100
