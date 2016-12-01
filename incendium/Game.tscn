@@ -77,7 +77,7 @@ transform/scale = Vector2( 0.5, 0.5 )
 
 [node name="Border" type="Sprite" parent="."]
 
-transform/pos = Vector2( 360, 360 )
+transform/pos = Vector2( 357.784, 366.648 )
 texture = ExtResource( 5 )
 
 [node name="Label1" type="Label" parent="."]
@@ -109,6 +109,22 @@ margin/top = 680.0
 margin/right = 136.0
 margin/bottom = 704.0
 text = "INCENDIUM"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Score" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+theme/theme = ExtResource( 6 )
+margin/left = 17.0
+margin/top = 22.0
+margin/right = 138.0
+margin/bottom = 46.0
+text = "Score"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
