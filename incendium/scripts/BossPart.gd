@@ -14,6 +14,7 @@ var shoot_interval
 # Health
 var health
 var health_fade = 0.0
+var health_size = 0
 # Shooting
 var shoot_timer = 2
 # Misc
@@ -38,13 +39,15 @@ func _process(delta):
 	rotate(delta * rot_speed)
 	
 	if scale < 1:
-		scale = min(1,lerp(scale,1,delta * 4))
+		scale = min(1,lerp(scale, 1, delta * 4))
 		set_scale(Vector2(scale * scale, scale * scale))
 	
 	if health_fade > 0:
 		health_fade -= delta * 4
 		if (health_fade < 0): health_fade = 0
 		update()
+	
+	health_size = lerp(health_size, (1.0 - float(health) / max_health), delta * 12)
 	
 	if health < max_health:
 		health += delta
@@ -127,6 +130,6 @@ func _draw():
 		var pgon = Vector2Array(get_node("RegularPolygon/Polygon2D").get_polygon())
 		var colors = Array()
 		for i in range(0,pgon.size()):
-			pgon[i] = pgon[i] * (1.0 - float(health) / max_health)
+			pgon[i] = pgon[i] * health_size
 			colors.append(Color(1,1,1,lerp(0.5,1,health_fade)))
 		draw_polygon(pgon,colors)

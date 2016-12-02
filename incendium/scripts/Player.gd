@@ -75,7 +75,7 @@ func _process(delta):
 func _on_RegularPolygon_area_enter( area ):
 	if area.get_groups().has("damage_player"):
 		area.get_parent().queue_free()
-		var size = area.size
+		var size = area.size * 2
 		lose_health(size)
 	if area.get_groups().has("damage_player_solid"):
 		lose_health(100)

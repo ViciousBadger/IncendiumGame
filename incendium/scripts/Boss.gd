@@ -48,12 +48,12 @@ func create_part(parent, id, pos, layer, index, parentsides, health, enabled):
 	part_instance.color = start_color.linear_interpolate(end_color, a)
 	part_instance.max_health = health
 	# part_instance.max_health = (base_health * pow(size_dropoff, layer)) / parentsides
-	part_instance.shoot_interval = lerp(0.3, 3, a) # 2 - (power * 0.45)
+	part_instance.shoot_interval = lerp(0.3, 2, a) # 2 - (power * 0.45)
 	part_instance.shoot_timer = 1 + (index/parentsides) * part_instance.shoot_interval
 	var power = layers.size() - layer
 	part_instance.bullet_size = power * 2
-	part_instance.bullet_count = 1 + (power-1) * 3
-	part_instance.bullet_speed = 50 + 50 * power
+	part_instance.bullet_count = 1 + (power-1) * 5
+	part_instance.bullet_speed = 50 + 40 * power
 	part_instance.bullet_type = bullettypes[layer]
 
 	# part_instance.shoot_timer = 1.0 + (i / 3.0)

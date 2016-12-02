@@ -26,8 +26,8 @@ func _input(event):
 				last_boss.queue_free()
 
 func _process(delta):
-	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 0.5)
-	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 3)
+	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 3)
+	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 0.5)
 	get_node("Background/Polygon2D").set_color(bgcol)
 	#tag("Smoke").set_modulate(bgcol)
 	

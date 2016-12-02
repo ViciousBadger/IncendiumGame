@@ -12,7 +12,7 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
-	var maxspd = 150
+	var maxspd = get_node("RegularPolygon").size * 7
 	velocity += Vector2(rand_range(-maxspd,maxspd),rand_range(-maxspd,maxspd))
 	pass
 
