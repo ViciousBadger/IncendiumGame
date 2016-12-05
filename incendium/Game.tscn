@@ -21,6 +21,8 @@ size = 360
 
 [node name="Smokes" type="Node" parent="."]
 
+editor/display_folded = true
+
 [node name="Smoke" parent="Smokes" instance=ExtResource( 3 )]
 
 [node name="Smoke1" parent="Smokes" instance=ExtResource( 3 )]

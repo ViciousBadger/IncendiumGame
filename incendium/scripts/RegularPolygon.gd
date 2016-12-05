@@ -25,7 +25,8 @@ func _ready():
 		collisionShape.set_points(vectors)
 		add_shape(collisionShape)
 	# Set visual polygon look
-	get_child(0).set_polygon(vectors)
+	get_node("Polygon2D").set_uv(vectors)
+	get_node("Polygon2D").set_polygon(vectors)
 	pass
 
 
