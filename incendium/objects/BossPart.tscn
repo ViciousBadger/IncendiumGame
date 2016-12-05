@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://scripts/BossPart.gd" type="Script" id=1]
 [ext_resource path="res://objects/RegularPolygon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gfx/concrete.tex" type="Texture" id=3]
 
 [node name="BossPart" type="Node2D"]
 
@@ -13,6 +14,12 @@ visibility/behind_parent = true
 z/z = 10
 circle_collision = false
 
+[node name="Polygon2D" parent="RegularPolygon"]
+
+texture/texture = ExtResource( 3 )
+texture/scale = Vector2( 2, 2 )
+
 [connection signal="area_enter" from="RegularPolygon" to="." method="_on_RegularPolygon_area_enter"]
 
 
+[editable path="RegularPolygon"]
