@@ -40,8 +40,8 @@ func _process(delta):
 		velocity = velocity.normalized() * length
 	if type == BTYPE_CURVESHOT:
 		var angle = atan2(velocity.y,velocity.x)
-		angle += delta * 0.3
 		var length = velocity.length()
+		angle += delta * length * 0.005
 		velocity = Vector2(cos(angle),sin(angle)) * length
 	
 	translate(velocity * delta)
