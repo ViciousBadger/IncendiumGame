@@ -31,8 +31,7 @@ func _process(delta):
 	get_node("Background/Polygon2D").set_color(bgcol)
 	#tag("Smoke").set_modulate(bgcol)
 	
-	var player = get_node("Player")
-	if player == null:
+	if (!has_node("Player")):
 		OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
 		if OS.get_time_scale() >= 1:
 			var p = preload("res://objects/Player.tscn").instance()
