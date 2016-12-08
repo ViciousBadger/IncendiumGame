@@ -11,6 +11,7 @@ var bullet_count
 var bullet_speed
 var bullet_type
 var shoot_interval
+var usebeam = false
 # Health
 var health
 var health_fade = 0.0
@@ -32,6 +33,7 @@ func _ready():
 		get_node("RegularPolygon/Polygon2D").set_color(Color(0,0,0,0))
 	health = max_health
 	last_pos = get_global_pos()
+	usebeam = bullet_type == -1
 	
 	set_scale(Vector2(0,0))
 	
@@ -53,7 +55,7 @@ func _process(delta):
 		health += delta
 		update()
 	
-	velocity = get_global_pos() - last_pos
+	velocity = (get_global_pos() - last_pos) * delta
 	last_pos = get_global_pos()
 	
 	var pos = get_global_pos()
@@ -65,28 +67,43 @@ func _process(delta):
 		shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
 		if !any_active_child_parts():
 			for i in range(0,bullet_count):
-				var bullet_instance = preload("res://objects/Bullet.tscn").instance()
-				
-				# Calculate bullet direction
-				var velocityAngle
-				if velocity.x == 0 and velocity.y == 0:
-					# Use rotation if no velocity
-					velocityAngle = get_rot() * 3
+				if !usebeam:
+					var bullet_instance = preload("res://objects/Bullet.tscn").instance()
+					
+					# Calculate bullet direction
+					var velocityAngle
+					if velocity.x == 0 and velocity.y == 0:
+						# Use rotation if no velocity
+						velocityAngle = get_rot() * 3
+					else:
+						velocityAngle = atan2(velocity.y,velocity.x)
+					velocityAngle += (i / float(bullet_count)) * PI * 2
+					var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
+					
+					bullet_instance.type = bullet_type
+					bullet_instance.velocity = bulletVelocity
+					bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
+					bullet_instance.get_node("RegularPolygon").size = bullet_size
+					bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
+					bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
+					bullet_instance.set_pos(get_global_pos())
+					get_tree().get_root().add_child(bullet_instance)
 				else:
-					velocityAngle = atan2(velocity.y,velocity.x)
-				velocityAngle += (i / float(bullet_count)) * PI * 2
-				var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
-				
-				bullet_instance.type = bullet_type
-				bullet_instance.velocity = bulletVelocity
-				bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
-				bullet_instance.get_node("RegularPolygon").size = bullet_size
-				bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
-				bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
-				bullet_instance.set_pos(get_global_pos())
-				get_tree().get_root().add_child(bullet_instance)
-				# var angle_towards_center = atan2(pos.x - 720/2, pos.y - 720/2)
-			
+					var beam = preload("res://objects/Beam.tscn").instance()
+					beam.follow = weakref(self)
+					beam.set_pos(get_global_pos())
+					beam.get_node("Sprite").set_modulate(get_node("RegularPolygon/Polygon2D").get_color().linear_interpolate(Color(1,1,1),0.5))
+					
+					var velocityAngle
+					if velocity.x == 0 and velocity.y == 0:
+						# Use rotation if no velocity
+						velocityAngle = get_rot() * 3
+					else:
+						velocityAngle = atan2(velocity.y,velocity.x)
+					velocityAngle += (i / float(bullet_count)) * PI * 2
+					#var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
+					beam.set_rot(velocityAngle)
+					get_tree().get_root().add_child(beam)
 	
 func _on_RegularPolygon_area_enter(area):
 	if area.get_groups().has("damage_enemy") and !any_active_child_parts() and enabled:

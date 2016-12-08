@@ -66,7 +66,7 @@ func gen_boss():
 	var bullettypes = []
 	for i in range(0,layer_count):
 		layers.append(floor(rand_range(3,6)))
-		bullettypes.append(floor(rand_range(0,4)))
+		bullettypes.append(floor(rand_range(-1,4)))
 		#bullettypes.append(2)
 	boss_instance.layers = layers
 	boss_instance.bullettypes = bullettypes
