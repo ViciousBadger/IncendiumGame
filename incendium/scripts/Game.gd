@@ -75,7 +75,7 @@ func gen_boss():
 	# boss_instance.regex = gen_regex(layer_count - 1, layers)
 	print(boss_instance.regex)
 	
-	boss_instance.base_size = 100
+	boss_instance.base_size = layer_count * 25
 	boss_instance.size_dropoff = 0.5
 	
 	boss_instance.base_health = 20 + (10 * bossnum)

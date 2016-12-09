@@ -34,6 +34,7 @@ func _ready():
 	health = max_health
 	last_pos = get_global_pos()
 	usebeam = bullet_type == -1
+	#usebeam = true
 	
 	set_scale(Vector2(0,0))
 	
@@ -99,14 +100,14 @@ func _process(delta):
 						# Use rotation if no velocity
 						velocityAngle = get_rot() * 3
 					else:
-						velocityAngle = atan2(velocity.y,velocity.x)
+						velocityAngle = atan2(velocity.x,velocity.y)
 					velocityAngle += (i / float(bullet_count)) * PI * 2
 					#var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
 					beam.set_rot(velocityAngle)
 					get_tree().get_root().add_child(beam)
 	
 func _on_RegularPolygon_area_enter(area):
-	if area.get_groups().has("damage_enemy") and !any_active_child_parts() and enabled:
+	if area.get_groups().has("damage_enemy") and !any_active_child_parts() and enabled and scale > 0.5:
 		area.get_parent().queue_free()
 		health -= 1
 		health_fade = 1.0
