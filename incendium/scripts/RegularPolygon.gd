@@ -1,3 +1,5 @@
+# REGULAR POLYGON class
+# Generates a regular polygon for looks and as a collider
 
 extends Area2D
 

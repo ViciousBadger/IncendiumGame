@@ -1,3 +1,5 @@
+# SMOKE class
+# Background smoke
 
 extends Sprite
 

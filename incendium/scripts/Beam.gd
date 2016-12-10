@@ -27,7 +27,7 @@ func _ready():
 
 func _process(delta):
 	if charge < 1:
-		charge += delta
+		charge += delta * 0.8
 		set_scale(Vector2(lerp(0,size/2,charge),1))
 		set_opacity(charge / 4)
 		

@@ -1,3 +1,5 @@
+# PLAYER SHIELD class
+# A shield that blocks bullets
 
 extends Node2D
 

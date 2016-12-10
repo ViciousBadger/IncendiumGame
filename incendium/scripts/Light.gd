@@ -1,3 +1,5 @@
+# LIGHT class
+# Light that follows an object and flashes when told to despawn
 
 extends Sprite
 

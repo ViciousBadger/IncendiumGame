@@ -1,3 +1,5 @@
+# EXPLOSION class
+# a circle that gets smaller
 
 extends Node2D
 

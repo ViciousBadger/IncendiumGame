@@ -1,3 +1,5 @@
+# BULLET class
+# wow a bullet
 
 extends Node2D
 

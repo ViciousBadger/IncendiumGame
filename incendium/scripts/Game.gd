@@ -1,3 +1,7 @@
+# GAME class
+# This class handles the core game loop.
+# It generates new random bosses as the player defeats them,
+# and also respawns the player when dead.
 
 extends Node
 

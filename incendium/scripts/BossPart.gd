@@ -1,3 +1,5 @@
+# BOSS PART class
+# Handles shooting, health, movement and visual effects for a boss part.
 
 extends Node2D
 
@@ -67,6 +69,7 @@ func _process(delta):
 	if shoot_timer <= 0:
 		shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
 		if !any_active_child_parts():
+			scale = 0.95
 			for i in range(0,bullet_count):
 				if !usebeam:
 					var bullet_instance = preload("res://objects/Bullet.tscn").instance()

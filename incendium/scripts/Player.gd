@@ -1,3 +1,5 @@
+# PLAYER class
+# Moves n shoots
 
 extends Node2D
 
@@ -52,7 +54,15 @@ func _process(delta):
 	if (Input.is_key_pressed(KEY_SPACE) or Input.is_key_pressed(KEY_F)) and fire_timer <= 0:
 		var bullet = preload("res://objects/Bullet.tscn").instance()
 		bullet.set_pos(get_pos())
-		bullet.velocity = towards_center * 600
+		
+		var dir = atan2(towards_center.y,towards_center.x)
+		var len = 600
+		
+		var spread = 0.1
+		var rot = rand_range(-spread,spread)
+		var final = dir + rot
+		
+		bullet.velocity = Vector2(cos(final),sin(final)) * len
 		get_tree().get_root().add_child(bullet)
 		fire_timer = FIRE_TIME
 		
@@ -64,7 +74,7 @@ func _process(delta):
 		shield.node_to_follow = get_path()
 		get_tree().get_root().add_child(shield)
 		shield.set_global_pos(get_global_pos())
-		shield_cooldown = 3
+		shield_cooldown = 6
 
 	set_rot(atan2(towards_center.x,towards_center.y) - PI/2)
 	
