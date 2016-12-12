@@ -14,13 +14,16 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
-	var maxspd = get_node("RegularPolygon").size * 7
+	var maxspd = get_node("RegularPolygon").size * 20
 	velocity += Vector2(rand_range(-maxspd,maxspd),rand_range(-maxspd,maxspd))
 	pass
 
 func _process(delta):
 	translate(velocity * scale * delta)
-	scale -= delta * 2
+	scale = lerp(scale, 0, delta * 4) #delta * 0.2
 	set_scale(Vector2(scale,scale))
-	if scale <= 0:
+	var speed = velocity.length()
+	speed = lerp(speed, 0, delta * 4)
+	velocity = velocity.normalized() * speed
+	if scale <= 0.01:
 		queue_free()

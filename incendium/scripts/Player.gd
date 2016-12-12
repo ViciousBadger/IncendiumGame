@@ -3,8 +3,7 @@
 
 extends Node2D
 
-const SPEED = 420 /1.42
-const FIRE_TIME = 0.05
+const SPEED = 420 / 1.42
 
 export var polar_controls = false
 var angle = 0
@@ -54,17 +53,19 @@ func _process(delta):
 	if (Input.is_key_pressed(KEY_SPACE) or Input.is_key_pressed(KEY_F)) and fire_timer <= 0:
 		var bullet = preload("res://objects/Bullet.tscn").instance()
 		bullet.set_pos(get_pos())
+		#bullet.get_node("RegularPolygon").size = 1
+		bullet.damage = 1
 		
 		var dir = atan2(towards_center.y,towards_center.x)
 		var len = 600
 		
-		var spread = 0.1
+		var spread = 0.05
 		var rot = rand_range(-spread,spread)
 		var final = dir + rot
 		
 		bullet.velocity = Vector2(cos(final),sin(final)) * len
 		get_tree().get_root().add_child(bullet)
-		fire_timer = FIRE_TIME
+		fire_timer = 0.05
 		
 	if shield_cooldown > 0:
 		shield_cooldown -= delta
@@ -84,9 +85,10 @@ func _process(delta):
 
 func _on_RegularPolygon_area_enter( area ):
 	if area.get_groups().has("damage_player"):
-		area.get_parent().queue_free()
-		var size = area.size * 2
-		lose_health(size)
+		var bullet = area.get_parent()
+		bullet.queue_free()
+		var dmgtotake = bullet.damage * 2
+		lose_health(dmgtotake)
 	if area.get_groups().has("damage_player_solid"):
 		lose_health(100)
 

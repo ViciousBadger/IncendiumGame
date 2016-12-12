@@ -44,4 +44,15 @@ func _process(delta):
 
 func _on_RegularPolygon_area_enter( area ):
 	if area.get_groups().has("damage_player") and !done:
-		area.get_parent().queue_free()
+		var bullet = area.get_parent()
+		
+		var away_from_me = area.get_global_pos() - get_global_pos()
+		
+		var speed = bullet.velocity.length()
+		
+		
+		bullet.velocity = away_from_me.normalized() * speed * 2 #-bullet.velocity
+		area.get_node("Polygon2D").set_color(Color(1,1,1))
+		area.remove_from_group("damage_player")
+		area.add_to_group("damage_enemy")
+		#area.get_parent().velocity = -area#queue_free()

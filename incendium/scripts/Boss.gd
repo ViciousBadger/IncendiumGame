@@ -35,6 +35,7 @@ func _ready():
 func _process(delta):
 	if get_child_count() == 0:
 		# Boss is a goner
+		OS.set_time_scale(0.2)
 		queue_free()
 
 func create_part(parent, id, pos, layer, index, parentsides, health, enabled):
@@ -72,5 +73,5 @@ func create_part(parent, id, pos, layer, index, parentsides, health, enabled):
 			var pos = dir * size
 			var newid = id + str(i)
 			var find = expr.find(newid)
-			create_part(part_instance, newid, pos, layer + 1, i, sides, (health * size_dropoff) / parentsides, find > -1)
+			create_part(part_instance, newid, pos, layer + 1, i, sides, health / parentsides, find > -1)
 			pass

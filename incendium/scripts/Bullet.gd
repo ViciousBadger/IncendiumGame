@@ -20,6 +20,8 @@ var actiontime = 2
 var scale = 0
 var light_instance
 
+var damage = 1
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -63,8 +65,9 @@ func _process(delta):
 					bullet_instance.type = BTYPE_BASIC
 					bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
 					bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
+					bullet_instance.get_node("RegularPolygon").size = damage/2
 					bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
-					bullet_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 2.0
+					bullet_instance.damage = damage/2
 					var angleoffset = -0.3
 					if i == 1: angleoffset = 0.3
 					var angle = atan2(velocity.y,velocity.x) + angleoffset

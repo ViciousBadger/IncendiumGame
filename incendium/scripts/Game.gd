@@ -35,12 +35,14 @@ func _process(delta):
 	get_node("Background/Polygon2D").set_color(bgcol)
 	#tag("Smoke").set_modulate(bgcol)
 	
-	if (!has_node("Player")):
+	
+	if OS.get_time_scale() < 1:
 		OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
 		if OS.get_time_scale() >= 1:
-			var p = preload("res://objects/Player.tscn").instance()
-			add_child(p)
-			p.set_global_pos(Vector2(360,600))
+			if (!has_node("Player")):
+				var p = preload("res://objects/Player.tscn").instance()
+				add_child(p)
+				p.set_global_pos(Vector2(360,600))
 	
 	if !last_boss_wr.get_ref():
 		#No boss, spawn a new one
@@ -70,7 +72,7 @@ func gen_boss():
 	var bullettypes = []
 	for i in range(0,layer_count):
 		layers.append(floor(rand_range(3,6)))
-		bullettypes.append(floor(rand_range(-1,4)))
+		bullettypes.append(floor(rand_range(0,4)))
 		#bullettypes.append(2)
 	boss_instance.layers = layers
 	boss_instance.bullettypes = bullettypes
@@ -82,7 +84,7 @@ func gen_boss():
 	boss_instance.base_size = layer_count * 25
 	boss_instance.size_dropoff = 0.5
 	
-	boss_instance.base_health = 20 + (10 * bossnum)
+	boss_instance.base_health = 20 + (5 * bossnum)
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 	
 	var neg_base_rot_speed = randi() % 2 == 0

@@ -85,6 +85,7 @@ func _process(delta):
 					var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
 					
 					bullet_instance.type = bullet_type
+					bullet_instance.damage = bullet_size
 					bullet_instance.velocity = bulletVelocity
 					bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
 					bullet_instance.get_node("RegularPolygon").size = bullet_size
@@ -112,7 +113,7 @@ func _process(delta):
 func _on_RegularPolygon_area_enter(area):
 	if area.get_groups().has("damage_enemy") and !any_active_child_parts() and enabled and scale > 0.5:
 		area.get_parent().queue_free()
-		health -= 1
+		health -= area.get_parent().damage
 		health_fade = 1.0
 		if health <= 0:
 			for i in range(0,8):
