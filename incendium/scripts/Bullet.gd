@@ -9,7 +9,8 @@ const BTYPE_COUNT = 2
 const BTYPE_BASIC = 0
 const BTYPE_ACCELERATING = 1
 const BTYPE_CURVESHOT = 2
-const BTYPE_SPLITTING = 3
+const BTYPE_CURVESHOT_CCW = 3
+const BTYPE_SPLITTING = 4
 
 var velocity = Vector2(1000,0)
 var type = BTYPE_BASIC
@@ -42,10 +43,13 @@ func _process(delta):
 		var length = velocity.length()
 		length += delta * 100
 		velocity = velocity.normalized() * length
-	if type == BTYPE_CURVESHOT:
+	if type == BTYPE_CURVESHOT or type == BTYPE_CURVESHOT_CCW:
 		var angle = atan2(velocity.y,velocity.x)
 		var length = velocity.length()
+		var inc = 0.005
+		if type == BTYPE_CURVESHOT_CCW: inc = -inc
 		angle += delta * length * 0.005
+		
 		velocity = Vector2(cos(angle),sin(angle)) * length
 	
 	translate(velocity * delta)

@@ -73,5 +73,4 @@ func create_part(parent, id, pos, layer, index, parentsides, health, enabled):
 			var pos = dir * size
 			var newid = id + str(i)
 			var find = expr.find(newid)
-			create_part(part_instance, newid, pos, layer + 1, i, sides, health / parentsides, find > -1)
-			pass
+			create_part(part_instance, newid, pos, layer + 1, i, sides, (health * 0.8) / parentsides, find > -1)

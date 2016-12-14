@@ -72,7 +72,7 @@ func gen_boss():
 	var bullettypes = []
 	for i in range(0,layer_count):
 		layers.append(floor(rand_range(3,6)))
-		bullettypes.append(floor(rand_range(0,4)))
+		bullettypes.append(floor(rand_range(0,5)))
 		#bullettypes.append(2)
 	boss_instance.layers = layers
 	boss_instance.bullettypes = bullettypes
@@ -100,10 +100,13 @@ func gen_boss():
 	var boss_start_col = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
 	var boss_end_col = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
 	
+	#var boss_start_col = Color(0,0,0)
+	#var boss_end_col = Color(0,0,0)
+	
 	boss_instance.start_color = boss_start_col
 	boss_instance.end_color = boss_end_col
 	
-	target_bgcol = boss_start_col.linear_interpolate(Color(0,0,0), 0.5)
+	target_bgcol = boss_start_col.linear_interpolate(Color(0,0,0), 0.8)
 	target_fgcol = boss_end_col.linear_interpolate(Color(0,0,0), 0)
 	
 	add_child(boss_instance)
