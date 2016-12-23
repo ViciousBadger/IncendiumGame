@@ -16,7 +16,6 @@ func _ready():
 	set_process(true)
 	var maxspd = get_node("RegularPolygon").size * 20
 	velocity += Vector2(rand_range(-maxspd,maxspd),rand_range(-maxspd,maxspd))
-	pass
 
 func _process(delta):
 	translate(velocity * scale * delta)
