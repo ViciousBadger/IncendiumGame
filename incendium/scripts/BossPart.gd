@@ -115,7 +115,7 @@ func _on_RegularPolygon_area_enter(area):
 		area.get_parent().queue_free()
 		health -= area.get_parent().damage
 		health_fade = 1.0
-		get_node("SamplePlayer").set_default_pitch_scale(rand_range(0.4,1.6) + (health / max_health) * 5)
+		get_node("SamplePlayer").set_default_pitch_scale(rand_range(0.2,0.6) + (health / max_health))
 		get_node("SamplePlayer").play("Hit_Hurt4")
 		if health <= 0:
 			for i in range(0,8):
