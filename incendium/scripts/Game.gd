@@ -5,6 +5,8 @@
 
 extends Node
 
+var playing = false
+
 var last_boss
 var last_boss_wr
 
@@ -86,16 +88,20 @@ func gen_boss():
 	
 	boss_instance.base_health = 20 + (5 * bossnum)
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
+
+	var speed = 1
+
+	var min_base_rot = 0.5
+	var max_base_rot = 1.5
+	var min_rot_inc = 0.05
+	var max_rot_inc = 0.15
 	
-	var neg_base_rot_speed = randi() % 2 == 0
-	boss_instance.base_rot_speed = rand_range(0.2,0.8)
-	if neg_base_rot_speed:
-		boss_instance.base_rot_speed = -boss_instance.base_rot_speed
+	var rot_speed_focus = rand_range(0,1)
+	boss_instance.base_rot_speed = lerp(min_base_rot, max_base_rot, rot_speed_focus) * speed
+	boss_instance.rot_speed_inc = lerp(min_rot_inc, max_rot_inc, 1 - rot_speed_focus) * PI * speed
 	
-	var neg_rot_inc = randi() % 2 == 0
-	boss_instance.rot_speed_inc = boss_instance.base_rot_speed + rand_range(0.1,0.2) * PI
-	if neg_rot_inc:
-		boss_instance.rot_speed_inc = -boss_instance.rot_speed_inc
+	if randi() % 2 == 0: boss_instance.base_rot_speed = -boss_instance.base_rot_speed
+	if randi() % 2 == 0: boss_instance.rot_speed_inc = -boss_instance.rot_speed_inc
 	
 	var boss_start_col = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
 	var boss_end_col = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))

@@ -56,7 +56,7 @@ func create_part(parent, id, pos, layer, index, parentsides, health, enabled):
 	part_instance.shoot_timer = 1 + (index/parentsides) * part_instance.shoot_interval
 	var power = layers.size() - layer
 	part_instance.bullet_size = power * 2
-	part_instance.bullet_count = 1 + (power-1) * 4
+	part_instance.bullet_count = 1 + (power-1) * 3
 	part_instance.bullet_speed = 40 + 40 * power
 	part_instance.bullet_type = bullettypes[layer]
 
