@@ -20,10 +20,13 @@ var bossdepth = 2
 
 var score = 0
 
+func start_game():
+	playing = true
+	gen_boss()
+
 func _ready():
 	set_process_input(true)
 	set_process(true)
-	gen_boss()
 	
 func _input(event):
 	if event.type == InputEvent.KEY:
@@ -31,31 +34,54 @@ func _input(event):
 			if last_boss != null:
 				last_boss.queue_free()
 
+func random_regex(size):
+	var r = abs(randi())%10
+	if(r == 0):
+		return "0*1*"
+	if(r == 1):
+		return ".*"
+	if(r == 2):
+		return "(0|2)*1"
+	if(r == 3):
+		return ".*0.*"
+	if(r == 4):
+		return "2*(00|11)*2*"
+	if(r == 5):
+		return "1.*0"
+	if(r == 6):
+		return "(3.1)*"
+	if(r == 7):
+		return "10*1.*"
+	if(r == 8):
+		return "2*10*"
+	if(r == 9):
+		return "2*"
+
 func _process(delta):
 	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 3)
 	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 0.5)
 	get_node("Background/Polygon2D").set_color(bgcol)
 	#tag("Smoke").set_modulate(bgcol)
 	
-	
-	if OS.get_time_scale() < 1:
-		OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
-		if OS.get_time_scale() >= 1:
-			if (!has_node("Player")):
-				var p = preload("res://objects/Player.tscn").instance()
-				add_child(p)
-				p.set_global_pos(Vector2(360,600))
-	
-	if !last_boss_wr.get_ref():
-		#No boss, spawn a new one
-		if bossdepth < 4:
-			bossdepth += 1
-		gen_boss()
-		#also increase player health
-		var player = get_node("Player")
-		if player != null:
-			player.health = floor(lerp(player.health,player.MAX_HEALTH,0.5))
-			get_node("Label").set_text("HP: " + str(player.health) + "/" + str(player.MAX_HEALTH))
+	if playing:
+		if OS.get_time_scale() < 1:
+			OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
+			if OS.get_time_scale() >= 1:
+				if (!has_node("Player")):
+					var p = preload("res://objects/Player.tscn").instance()
+					add_child(p)
+					p.set_global_pos(Vector2(360,600))
+		
+		if !last_boss_wr.get_ref():
+			#No boss, spawn a new one
+			if bossdepth < 4:
+				bossdepth += 1
+			gen_boss()
+			#also increase player health
+			var player = get_node("Player")
+			if player != null:
+				player.health = floor(lerp(player.health,player.MAX_HEALTH,0.5))
+				get_node("Label").set_text("HP: " + str(player.health) + "/" + str(player.MAX_HEALTH))
 
 func add_score(amount):
 	score += amount
@@ -68,19 +94,19 @@ func gen_boss():
 	
 	randomize() # Randomize random seed
 	
-	var layer_count = bossdepth # floor(rand_range(3,5))
+	var layer_count = floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
 	
 	var layers = []
 	var bullettypes = []
 	for i in range(0,layer_count):
-		layers.append(floor(rand_range(3,6)))
+		layers.append(floor(rand_range(3,3)))
 		bullettypes.append(floor(rand_range(0,5)))
 		#bullettypes.append(2)
 	boss_instance.layers = layers
 	boss_instance.bullettypes = bullettypes
 	
 	print("generating regex")
-	# boss_instance.regex = gen_regex(layer_count - 1, layers)
+	boss_instance.regex = random_regex(1 + (abs(randi())%3))
 	print(boss_instance.regex)
 	
 	boss_instance.base_size = layer_count * 25

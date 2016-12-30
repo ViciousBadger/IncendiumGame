@@ -5,7 +5,9 @@ extends Node2D
 
 # Set by Boss
 var enabled
+var parent_part
 var rot_speed
+var id
 var color
 var max_health
 var bullet_size
@@ -42,6 +44,7 @@ func _ready():
 	
 func _process(delta):
 	rotate(delta * rot_speed)
+	set_pos(get_parent().get_pos(id))
 	
 	if scale < 1:
 		scale = min(1,lerp(scale, 1, delta * 4))
@@ -68,7 +71,7 @@ func _process(delta):
 	
 	if shoot_timer <= 0:
 		shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
-		if !any_active_child_parts():
+		if !get_parent().has_children(id):
 			scale = 0.95
 			for i in range(0,bullet_count):
 				if !usebeam:
@@ -111,7 +114,7 @@ func _process(delta):
 					get_tree().get_root().add_child(beam)
 	
 func _on_RegularPolygon_area_enter(area):
-	if area.get_groups().has("damage_enemy") and !any_active_child_parts() and enabled and scale > 0.5:
+	if area.get_groups().has("damage_enemy") and !get_parent().has_children(id) and enabled and scale > 0.5:
 		area.get_parent().queue_free()
 		health -= area.get_parent().damage
 		health_fade = 1.0
@@ -130,6 +133,7 @@ func _on_RegularPolygon_area_enter(area):
 				get_tree().get_root().add_child(explosion_instance)
 				explosion_instance.set_global_pos(get_global_pos())
 			
+			get_parent().dead_map[id] = true
 			var light_instance = preload("res://objects/Light.tscn").instance()
 			var s = get_node("RegularPolygon").size * 0.008
 			light_instance.despawn_a = 1

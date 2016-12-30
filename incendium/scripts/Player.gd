@@ -91,7 +91,7 @@ func _on_RegularPolygon_area_enter( area ):
 		bullet.queue_free()
 		var dmgtotake = bullet.damage * 2
 		lose_health(dmgtotake)
-	if area.get_groups().has("damage_player_solid"):
+	if area.get_groups().has("damage_player_solid") && area.get_parent().enabled:
 		lose_health(100)
 
 func lose_health(hp):
