@@ -36,6 +36,9 @@ func _ready():
 	light_instance.set_scale(Vector2(s,s))
 	light_instance.set_modulate(get_node("RegularPolygon/Polygon2D").get_color())
 	get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
+	
+	if type == BTYPE_SPLITTING && damage == 1:
+		type = BTYPE_BASIC
 
 func _process(delta):
 	light_instance.set_global_pos(get_global_pos())

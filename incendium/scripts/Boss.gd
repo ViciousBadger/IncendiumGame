@@ -78,14 +78,15 @@ func create_part(id, pos, layer, index, parentsides, health):
 	var a = layer / float(layers.size() - 1)
 	var size = base_size * pow(size_dropoff, layer)
 	
+	# Check if any capture group in the boss' regex matches this boss part's entire id
 	var find = expr.find(id)
 	var alive = false
 	for s in expr.get_captures():
 		if(s == id):
 			alive = true
 			break
-			
-	if(alive):
+	
+	if alive:
 		var part_instance = preload("res://objects/BossPart.tscn").instance()
 		# Set values
 		part_instance.get_node("RegularPolygon").sides = sides
@@ -102,9 +103,9 @@ func create_part(id, pos, layer, index, parentsides, health):
 		part_instance.shoot_interval = lerp(0.3, 2, a) # 2 - (power * 0.45)
 		part_instance.shoot_timer = 1 + (index/parentsides) * part_instance.shoot_interval
 		var power = layers.size() - layer
-		part_instance.bullet_size = power * 2
+		part_instance.bullet_size = power
 		part_instance.bullet_count = 1 + (power-1) * 3
-		part_instance.bullet_speed = 40 + 40 * power
+		part_instance.bullet_speed = 40 + 20 * power
 		part_instance.bullet_type = bullettypes[layer]
 
 		# part_instance.shoot_timer = 1.0 + (i / 3.0)
@@ -120,4 +121,4 @@ func create_part(id, pos, layer, index, parentsides, health):
 			var dir = Vector2(cos(angle),sin(angle))
 			var pos = dir * size
 			var newid = id + str(i)
-			create_part(newid, pos, layer + 1, i, sides, (health * 0.8) / parentsides)
+			create_part(newid, pos, layer + 1, i, sides, health / parentsides)
