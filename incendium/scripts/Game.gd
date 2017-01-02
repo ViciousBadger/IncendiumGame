@@ -20,6 +20,20 @@ var bossdepth = 2
 
 var score = 0
 
+var regex_list = [
+"a*b*",
+".*",
+"(a|c)*b",
+".*a.*",
+"c*(aa|bb)*c*",
+"b.*a",
+"(c.b)*",
+"ba*b.*",
+"c*ba*",
+"c*",
+"a*b*c*"
+]
+
 func start_game():
 	playing = true
 	gen_boss()
@@ -34,28 +48,13 @@ func _input(event):
 			if last_boss != null:
 				last_boss.queue_free()
 
-func random_regex(size):
-	var r = abs(randi())%10
-	if(r == 0):
-		return "0*1*"
-	if(r == 1):
-		return ".*"
-	if(r == 2):
-		return "(0|2)*1"
-	if(r == 3):
-		return ".*0.*"
-	if(r == 4):
-		return "2*(00|11)*2*"
-	if(r == 5):
-		return "1.*0"
-	if(r == 6):
-		return "(3.1)*"
-	if(r == 7):
-		return "10*1.*"
-	if(r == 8):
-		return "2*10*"
-	if(r == 9):
-		return "2*"
+func random_regex(size, larg):
+	var string = regex_list[abs(randi()) % regex_list.size()]
+	var base = randi();
+	string = string.replace("a",str(int(base+0)%int(larg)))
+	string = string.replace("b",str(int(base+1)%int(larg)))
+	string = string.replace("c",str(int(base+2)%int(larg)))
+	return string
 
 func _process(delta):
 	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 3)
@@ -94,23 +93,27 @@ func gen_boss():
 	
 	randomize() # Randomize random seed
 	
-	var layer_count = floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
+	var layer_count = 4 #floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
 	
 	var layers = []
 	var bullettypes = []
+	var largest = 3;
 	for i in range(0,layer_count):
-		layers.append(floor(rand_range(3,3)))
+		var l = floor(rand_range(3,5));
+		if(l>largest):
+			largest = l;
+		layers.append(l)
 		bullettypes.append(floor(rand_range(0,5)))
 		#bullettypes.append(2)
 	boss_instance.layers = layers
 	boss_instance.bullettypes = bullettypes
 	
 	print("generating regex")
-	boss_instance.regex = random_regex(1 + (abs(randi())%3))
+	boss_instance.regex = random_regex(1 + (abs(randi())%3), largest)
 	print(boss_instance.regex)
 	
-	boss_instance.base_size = layer_count * 15
-	boss_instance.size_dropoff = 0.6
+	boss_instance.base_size = layer_count * 20
+	boss_instance.size_dropoff = rand_range(0.4,0.8)
 	
 	boss_instance.base_health = 20 + (5 * bossnum)
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)

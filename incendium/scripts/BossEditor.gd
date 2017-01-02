@@ -8,9 +8,12 @@ extends Panel
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	pass
+	set_process_input(true)
 
-
+func _input(event):
+	if event.type == InputEvent.KEY:
+		if event.scancode == KEY_ENTER and event.pressed == true:
+			_on_FightButton_pressed()
 
 func _on_FightButton_pressed():
 	var boss = preload("res://objects/Boss.tscn").instance()

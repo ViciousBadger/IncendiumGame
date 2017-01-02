@@ -4,7 +4,7 @@
 
 extends Node2D
 
-var layers = [3,3,3,3]
+var layers = [4,4,4,4]
 var bullettypes = [0,0,0,0]
 var regex = ".*"
 
@@ -67,7 +67,7 @@ func get_pos(id):
 		return Vector2(0, 0)
 	var c = id[-1]
 	var parent_pos = get_pos(id.substr(0,id.length()-1))
-	var theta = (base_rot_speed + (id.length()-1)*rot_speed_inc)*t + c.to_int() / 3.0 * 2 * PI
+	var theta = (base_rot_speed + (id.length()-1)*rot_speed_inc)*t + c.to_int() / layers[id.length()] * 2 * PI
 	var r = base_size * pow(size_dropoff, id.length()-1)
 	var pos = parent_pos + Vector2(r * cos(-theta), r*sin(-theta)) 
 	map.id = pos
@@ -86,14 +86,13 @@ func create_part(id, pos, layer, index, parentsides, health):
 			alive = true
 			break
 	
-	if alive:
+	if alive || id == "":
 		var part_instance = preload("res://objects/BossPart.tscn").instance()
 		# Set values
 		part_instance.get_node("RegularPolygon").sides = sides
 		part_instance.get_node("RegularPolygon").size = size
 	
-		print(id+"\t"+str(alive))
-		part_instance.enabled = alive && find != -1
+		part_instance.enabled = alive# && find != -1
 		part_instance.rot_speed = base_rot_speed + rot_speed_inc * layer
 		part_instance.color = start_color.linear_interpolate(end_color, a)
 		part_instance.max_health = health
@@ -103,7 +102,7 @@ func create_part(id, pos, layer, index, parentsides, health):
 		part_instance.shoot_interval = lerp(0.3, 2, a) # 2 - (power * 0.45)
 		part_instance.shoot_timer = 1 + (index/parentsides) * part_instance.shoot_interval
 		var power = layers.size() - layer
-		part_instance.bullet_size = power
+		part_instance.bullet_size = power * 2
 		part_instance.bullet_count = 1 + (power-1) * 3
 		part_instance.bullet_speed = 40 + 20 * power
 		part_instance.bullet_type = bullettypes[layer]
