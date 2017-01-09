@@ -54,7 +54,7 @@ func _process(delta):
 		var bullet = preload("res://objects/Bullet.tscn").instance()
 		bullet.set_pos(get_pos())
 		get_node("SamplePlayer").set_default_pitch_scale(rand_range(0.9,1.1))
-		get_node("SamplePlayer").play("Laser_Shoot14")
+		#et_node("SamplePlayer").play("Laser_Shoot14")
 		#bullet.get_node("RegularPolygon").size = 1
 		bullet.damage = 1
 		

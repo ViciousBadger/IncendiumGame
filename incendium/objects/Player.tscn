@@ -11,7 +11,7 @@ samples/Laser_Shoot14 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 3 ) }
 [node name="Player" type="Node2D"]
 
 script/script = ExtResource( 1 )
-polar_controls = true
+polar_controls = false
 
 [node name="RegularPolygon" parent="." instance=ExtResource( 2 )]
 
