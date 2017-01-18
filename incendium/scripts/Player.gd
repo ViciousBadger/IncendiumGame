@@ -53,8 +53,8 @@ func _process(delta):
 	if (Input.is_key_pressed(KEY_SPACE) or Input.is_key_pressed(KEY_F)) and fire_timer <= 0:
 		var bullet = preload("res://objects/Bullet.tscn").instance()
 		bullet.set_pos(get_pos())
-		get_node("SamplePlayer").set_default_pitch_scale(rand_range(0.9,1.1))
-		get_node("SamplePlayer").play("Laser_Shoot14")
+		get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.9,1.1))
+		get_tree().get_root().get_node("Game/SFX").play("Laser_Shoot14")
 		#bullet.get_node("RegularPolygon").size = 1
 		bullet.damage = 1
 		

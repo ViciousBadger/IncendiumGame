@@ -35,4 +35,3 @@ func _on_FightButton_pressed():
 	get_node("..").target_fgcol = boss.end_color.linear_interpolate(Color(0,0,0), 0)
 	get_node("..").playing = true
 	queue_free()
-	pass # replace with function body

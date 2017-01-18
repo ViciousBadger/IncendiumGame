@@ -100,7 +100,7 @@ func gen_boss():
 	var largest = 3;
 	for i in range(0,layer_count):
 		var l = floor(rand_range(3,5));
-		if(l>largest):
+		if (l>largest):
 			largest = l;
 		layers.append(l)
 		bullettypes.append(floor(rand_range(0,5)))
@@ -108,9 +108,7 @@ func gen_boss():
 	boss_instance.layers = layers
 	boss_instance.bullettypes = bullettypes
 	
-	print("generating regex")
 	boss_instance.regex = random_regex(1 + (abs(randi())%3), largest)
-	print(boss_instance.regex)
 	
 	boss_instance.base_size = layer_count * 20
 	boss_instance.size_dropoff = rand_range(0.4,0.8)

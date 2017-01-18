@@ -118,15 +118,14 @@ func _on_RegularPolygon_area_enter(area):
 		area.get_parent().queue_free()
 		health -= area.get_parent().damage
 		health_fade = 1.0
-		get_node("SamplePlayer").set_default_pitch_scale(rand_range(0.2,0.6) + (health / max_health))
-		get_node("SamplePlayer").play("Hit_Hurt4")
+		get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.2,0.6) + (health / max_health))
+		get_tree().get_root().get_node("Game/SFX").play("Hit_Hurt4")
 		if health <= 0:
 			for i in range(0,8):
 				var explosion_instance = preload("res://objects/Explosion.tscn").instance()
 				if i == 0:
-					explosion_instance.get_node("SamplePlayer").set_default_pitch_scale((6 - get_node("RegularPolygon").size / 25) + rand_range(-0.5,0.5))
-					explosion_instance.get_node("SamplePlayer").set_default_volume(get_node("RegularPolygon").size / 50)
-					explosion_instance.get_node("SamplePlayer").play("Explosion21")
+					get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale((6 - get_node("RegularPolygon").size / 25) + rand_range(-0.5,0.5))
+					get_tree().get_root().get_node("Game/SFX").play("Explosion21")
 				explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 2
 				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(color)
 				explosion_instance.velocity = velocity * 100
