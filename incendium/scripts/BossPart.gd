@@ -44,7 +44,7 @@ func _ready():
 	
 func _process(delta):
 	rotate(delta * rot_speed)
-	set_pos(get_parent().get_pos(id))
+	set_pos(get_parent().get_part_pos(id))
 	
 	if scale < 1:
 		scale = min(1,lerp(scale, 1, delta * 4))

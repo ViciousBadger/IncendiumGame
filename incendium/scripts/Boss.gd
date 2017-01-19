@@ -61,15 +61,16 @@ func has_children(id):
 	return false
 	
 
-func get_pos(id):
+func get_part_pos(id):
 	if(map.has(id)):
 		return map.id
 	if(id==""):
 		return Vector2(0, 0)
-	var c = id[-1].to_int()
-	var parent_pos = get_pos(id.substr(0,id.length()-1))
-	var theta = (base_rot_speed + (id.length()-1)*rot_speed_inc) * t + c / layers[id.length()-1] * 2 * PI
-	var r = base_size * pow(size_dropoff, id.length()-1)
+	var c = id[-1].to_float()
+	var depth = id.length() - 1
+	var parent_pos = get_part_pos(id.substr(0,depth))
+	var theta = (base_rot_speed + depth * rot_speed_inc) * t + c / layers[depth] * 2 * PI
+	var r = base_size * pow(size_dropoff, depth)
 	var pos = parent_pos + Vector2(r * cos(-theta), r*sin(-theta)) 
 	map.id = pos
 	return pos
