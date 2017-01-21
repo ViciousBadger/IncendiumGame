@@ -133,9 +133,6 @@ max_lines_visible = -1
 
 [node name="BossEditor" parent="." instance=ExtResource( 7 )]
 
-margin/left = 141.0
-margin/right = 640.0
-
 [node name="SFX" type="SamplePlayer" parent="."]
 
 config/polyphony = 16
