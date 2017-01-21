@@ -70,10 +70,15 @@ func get_part_pos(id):
 	var depth = id.length() - 1
 	var parent_pos = get_part_pos(id.substr(0,depth))
 	var theta = (base_rot_speed + depth * rot_speed_inc) * t + c / layers[depth] * 2 * PI
-	var r = base_size * pow(size_dropoff, depth)
+	var r = base_size * pow(size_dropoff, depth) * get_part_scale(id.substr(0,depth))
 	var pos = parent_pos + Vector2(r * cos(-theta), r*sin(-theta)) 
 	map.id = pos
 	return pos
+
+func get_part_scale(id):
+	if id == "": return 1
+	return 1 #+ sin(t * id.length()) * 0.3
+	
 
 func create_part(id, pos, layer, index, parentsides, health):
 	var sides = layers[layer]
