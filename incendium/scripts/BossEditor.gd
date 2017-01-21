@@ -40,18 +40,29 @@ func _on_FightButton_pressed():
 	get_node("..").playing = true
 	queue_free()
 
+var expr = RegEx.new()
+
 func _draw():
+	expr.compile(get_node("RegexField").get_text())
 	draw_boss_part("")
 	
 func draw_boss_part(id):
-	var col = get_node("StartColorField").get_color().linear_interpolate(get_node("EndColorField").get_color(),id.length() / 4.0)
-	var poly = Vector2Array()
-	var s = get_node("BaseSizeField").get_value() * pow(get_node("SideDropoffField").get_value() / 100, id.length())
-	var base_pos = Vector2(500,360) + get_part_pos(id)
-	for i in range(3):
-		var t = i / 3.0 * 2 * PI
-		poly.append(base_pos + Vector2(cos(t)*s,sin(t)*s))
-	draw_colored_polygon(poly, col)
+	var find = expr.find(id)
+	var alive = false
+	for s in expr.get_captures():
+		if(s == id):
+			alive = true
+			break
+	
+	if alive:
+		var col = get_node("StartColorField").get_color().linear_interpolate(get_node("EndColorField").get_color(),id.length() / 4.0)
+		var poly = Vector2Array()
+		var s = get_node("BaseSizeField").get_value() * pow(get_node("SideDropoffField").get_value() / 100, id.length())
+		var base_pos = Vector2(500,360) + get_part_pos(id)
+		for i in range(3):
+			var t = i / 3.0 * 2 * PI
+			poly.append(base_pos + Vector2(cos(t)*s,sin(t)*s))
+		draw_colored_polygon(poly, col)
 	if id.length() < 4:
 		for i in range(3):
 			draw_boss_part(id + str(i))
