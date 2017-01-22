@@ -4,7 +4,7 @@
 
 extends Node2D
 
-var layers = [4,4,4,4]
+var layers = [3,3,3,3]
 var bullettypes = [0,0,0,0]
 var regex = ".*"
 
@@ -51,7 +51,8 @@ func has_children(id):
 		return false
 	if(dead_map.has(id)):
 		return false
-	for i in range(3):
+	var sides = layers[id.length()-1]
+	for i in range(sides): #Loop though all potential child parts of this part
 		var child_id = id + str(i)
 		if(has_children(child_id)):
 			return true
@@ -60,18 +61,24 @@ func has_children(id):
 	return false
 	
 
-func get_pos(id):
+func get_part_pos(id):
 	if(map.has(id)):
 		return map.id
 	if(id==""):
 		return Vector2(0, 0)
-	var c = id[-1]
-	var parent_pos = get_pos(id.substr(0,id.length()-1))
-	var theta = (base_rot_speed + (id.length()-1)*rot_speed_inc)*t + c.to_int() / layers[id.length()] * 2 * PI
-	var r = base_size * pow(size_dropoff, id.length()-1)
+	var c = id[-1].to_float()
+	var depth = id.length() - 1
+	var parent_pos = get_part_pos(id.substr(0,depth))
+	var theta = (base_rot_speed + depth * rot_speed_inc) * t + c / layers[depth] * 2 * PI
+	var r = base_size * pow(size_dropoff, depth) * get_part_scale(id.substr(0,depth))
 	var pos = parent_pos + Vector2(r * cos(-theta), r*sin(-theta)) 
 	map.id = pos
 	return pos
+
+func get_part_scale(id):
+	if id == "": return 1
+	return 1 #+ sin(t * id.length()) * 0.3
+	
 
 func create_part(id, pos, layer, index, parentsides, health):
 	var sides = layers[layer]

@@ -13,6 +13,9 @@
 [ext_resource path="res://music/pad.smp" type="Sample" id=11]
 [ext_resource path="res://music/synth.smp" type="Sample" id=12]
 [ext_resource path="res://scripts/Music.gd" type="Script" id=13]
+[ext_resource path="res://sound/Explosion21.smp" type="Sample" id=8]
+[ext_resource path="res://sound/Hit_Hurt4.smp" type="Sample" id=9]
+[ext_resource path="res://sound/Laser_Shoot14.smp" type="Sample" id=10]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -21,6 +24,12 @@ samples/cymbal = { "db":0.0, "pitch":1.0, "sample":ExtResource( 9 ) }
 samples/kickdrum = { "db":0.0, "pitch":1.0, "sample":ExtResource( 10 ) }
 samples/pad = { "db":0.0, "pitch":1.0, "sample":ExtResource( 11 ) }
 samples/synth = { "db":0.0, "pitch":1.0, "sample":ExtResource( 12 ) }
+
+[sub_resource type="SampleLibrary" id=1]
+
+samples/Explosion21 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 8 ) }
+samples/Hit_Hurt4 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 9 ) }
+samples/Laser_Shoot14 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 10 ) }
 
 [node name="Game" type="Node"]
 
@@ -138,9 +147,22 @@ max_lines_visible = -1
 
 [node name="BossEditor" parent="." instance=ExtResource( 7 )]
 
-margin/left = 141.0
-margin/right = 640.0
+[node name="SFX" type="SamplePlayer" parent="."]
 
+config/polyphony = 16
+config/samples = SubResource( 1 )
+default/volume_db = 0.0
+default/pitch_scale = 1.0
+default/pan = 0.0
+default/depth = 0.0
+default/height = 0.0
+default/filter/type = 0
+default/filter/cutoff = 5000.0
+default/filter/resonance = 1.0
+default/filter/gain = 1.0
+default/reverb_room = 2
+default/reverb_send = 0.0
+default/chorus_send = 0.0
 [node name="Music" type="SamplePlayer" parent="."]
 
 config/polyphony = 5
@@ -158,5 +180,4 @@ default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
 script/script = ExtResource( 13 )
-
 

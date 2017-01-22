@@ -1,0 +1,19 @@
+- bedre score med komboer
+	- komboer kunne fås af at smadre flere boss dele hurtigt efter hinanden
+	- forsvinder hvis du bliver ramt / efter en timer
+- momentum i bevægelse?
+- powerups til dit våben - kunne virke på flere måder
+	- powerups man kan samle op, som kunne give feks flere, hurtigere eller anderledes skud
+	- ens skjold kunne opsamle fjentlige bullets og gøre dit våben bedre med dem (midlertidigt)
+	- hvis en mængde skud rammer kanten af skærmen, får man bedre våben
+- mere dynamiske variationer i skud
+	- skud "modifiers", der kan kombineres, feks accelerating + rotating + wiggling osv
+	- flere fundamentale skud typer
+		- feks en type, der i stedet dækkede et område, hvori spilleren bevæger sig langsommere
+		- beams?
+- dynamisk difficulty
+	- en måde at bedømme en boss' sværhedsgrad på
+		- kunne dømmes ud fra skud mængde, hastighed, damage
+		- vil også afhænge af mængden af bossdele i alt, som er forskællig pr regex og polygon degree
+	- en måde at bedømme spillerens skills på, så han kan få sværere/nemmere bosser
+	- hvordan vil det hænge sammen med score?
