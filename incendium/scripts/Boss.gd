@@ -4,12 +4,10 @@
 
 extends Node2D
 
-var layers = [3,3,3,3]
-var bullettypes = [0,0,0,0]
-var regex = ".*"
+#Fill out with an instance of BossDesign.gd
+var design
 
-var base_size = 100
-var size_dropoff = 0.6
+########
 
 var base_health = 80
 
@@ -18,6 +16,7 @@ var rot_speed_inc = - PI * 0.1
 
 var start_color = Color(0,0,1)
 var end_color = Color(0,1,0)
+########
 
 var expr
 var map
@@ -27,14 +26,14 @@ var t = 0
 
 func _ready():
 	expr = RegEx.new()
-	expr.compile(regex)
+	expr.compile(design.regex)
 	
 	if !expr.is_valid():
 		print ("invalid regex!")
 	
 	part_map = {}
 	dead_map = {}
-	create_part("", Vector2(0,0), 0, 0, 1, base_health)
+	create_part("", Vector2(0,0), 0, 0, 1, design.base_health)
 	set_process(true)
 	pass
 	
@@ -47,11 +46,11 @@ func _process(delta):
 		queue_free()
 	
 func has_children(id):
-	if(id.length() == layers.size()):
+	if(id.length() == design.layers.size()):
 		return false
 	if(dead_map.has(id)):
 		return false
-	var sides = layers[id.length()-1]
+	var sides = design.layers[id.length()-1]
 	for i in range(sides): #Loop though all potential child parts of this part
 		var child_id = id + str(i)
 		if(has_children(child_id)):
@@ -70,7 +69,7 @@ func get_part_pos(id):
 	var depth = id.length() - 1
 	var parent_pos = get_part_pos(id.substr(0,depth))
 	var theta = (base_rot_speed + depth * rot_speed_inc) * t + c / layers[depth] * 2 * PI
-	var r = base_size * pow(size_dropoff, depth) * get_part_scale(id.substr(0,depth))
+	var r = layers.base_size * pow(layers.size_dropoff, depth) * get_part_scale(id.substr(0,depth))
 	var pos = parent_pos + Vector2(r * cos(-theta), r*sin(-theta)) 
 	map.id = pos
 	return pos
@@ -83,7 +82,7 @@ func get_part_scale(id):
 func create_part(id, pos, layer, index, parentsides, health):
 	var sides = layers[layer]
 	var a = layer / float(layers.size() - 1)
-	var size = base_size * pow(size_dropoff, layer)
+	var size = layers.base_size * pow(layers.size_dropoff, layer)
 	
 	# Check if any capture group in the boss' regex matches this boss part's entire id
 	var find = expr.find(id)
@@ -108,11 +107,11 @@ func create_part(id, pos, layer, index, parentsides, health):
 		# part_instance.max_health = (base_health * pow(size_dropoff, layer)) / parentsides
 		part_instance.shoot_interval = lerp(0.3, 2, a) # 2 - (power * 0.45)
 		part_instance.shoot_timer = 1 + (index/parentsides) * part_instance.shoot_interval
-		var power = layers.size() - layer
+		var power = design.layers.size() - layer
 		part_instance.bullet_size = power * 2
 		part_instance.bullet_count = 1 + (power-1) * 3
 		part_instance.bullet_speed = 40 + 20 * power
-		part_instance.bullet_type = bullettypes[layer]
+		part_instance.bullet_type = layers.bullettypes[layer]
 
 		# part_instance.shoot_timer = 1.0 + (i / 3.0)
 		part_instance.set_draw_behind_parent(true)
