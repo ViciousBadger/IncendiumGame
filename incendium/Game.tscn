@@ -17,13 +17,13 @@
 [ext_resource path="res://music/synth.smp" type="Sample" id=15]
 [ext_resource path="res://scripts/Music.gd" type="Script" id=16]
 
-[sub_resource type="SampleLibrary" id=2]
+[sub_resource type="SampleLibrary" id=1]
 
 samples/Explosion21 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 8 ) }
 samples/Hit_Hurt4 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 9 ) }
 samples/Laser_Shoot14 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 10 ) }
 
-[sub_resource type="SampleLibrary" id=1]
+[sub_resource type="SampleLibrary" id=2]
 
 samples/bass = { "db":0.0, "pitch":1.0, "sample":ExtResource( 11 ) }
 samples/cymbal = { "db":0.0, "pitch":1.0, "sample":ExtResource( 12 ) }
@@ -150,7 +150,7 @@ max_lines_visible = -1
 [node name="SFX" type="SamplePlayer" parent="."]
 
 config/polyphony = 16
-config/samples = SubResource( 2 )
+config/samples = SubResource( 1 )
 default/volume_db = 0.0
 default/pitch_scale = 1.0
 default/pan = 0.0
@@ -167,7 +167,7 @@ default/chorus_send = 0.0
 [node name="Music" type="SamplePlayer" parent="."]
 
 config/polyphony = 5
-config/samples = SubResource( 1 )
+config/samples = SubResource( 2 )
 default/volume_db = 0.0
 default/pitch_scale = 1.0
 default/pan = 0.0
