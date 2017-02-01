@@ -86,10 +86,26 @@ func add_score(amount):
 	score += amount
 	get_node("Score").set_text("Score: " + str(floor(score)))
 
-func gen_boss():
+func spawn_boss(design):
 	var boss_instance = preload("res://objects/Boss.tscn").instance()
 	last_boss = boss_instance
 	last_boss_wr = weakref(boss_instance)
+	
+	boss_instance.design = design
+	
+	target_bgcol = design.start_color.linear_interpolate(Color(0,0,0), 0.8)
+	target_fgcol = design.end_color.linear_interpolate(Color(0,0,0), 0)
+	
+	add_child(boss_instance)
+	boss_instance.set_pos(Vector2(360,360))
+	
+	bossnum += 1
+	get_node("Label1").set_text("Boss " + str(bossnum))
+	
+	playing = true
+
+func gen_boss():
+	var design = preload("res://scripts/datatypes/BossDesign.gd").new()
 	
 	randomize() # Randomize random seed
 	
@@ -105,15 +121,15 @@ func gen_boss():
 		layers.append(l)
 		bullettypes.append(floor(rand_range(0,5)))
 		#bullettypes.append(2)
-	boss_instance.layers = layers
-	boss_instance.bullettypes = bullettypes
+	design.layers = layers
+	design.bullettypes = bullettypes
 	
-	boss_instance.regex = random_regex(1 + (abs(randi())%3), largest)
+	design.regex = random_regex(1 + (abs(randi())%3), largest)
 	
-	boss_instance.base_size = layer_count * 20
-	boss_instance.size_dropoff = rand_range(0.4,0.8)
+	design.base_size = layer_count * 20
+	design.size_dropoff = rand_range(0.4,0.8)
 	
-	boss_instance.base_health = 20 + (5 * bossnum)
+	design.base_health = 20 + (5 * bossnum)
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 
 	var speed = 1
@@ -124,29 +140,19 @@ func gen_boss():
 	var max_rot_inc = 0.15
 	
 	var rot_speed_focus = rand_range(0,1)
-	boss_instance.base_rot_speed = lerp(min_base_rot, max_base_rot, rot_speed_focus) * speed
-	boss_instance.rot_speed_inc = lerp(min_rot_inc, max_rot_inc, 1 - rot_speed_focus) * PI * speed
+	design.base_rot_speed = lerp(min_base_rot, max_base_rot, rot_speed_focus) * speed
+	design.rot_speed_inc = lerp(min_rot_inc, max_rot_inc, 1 - rot_speed_focus) * PI * speed
 	
-	if randi() % 2 == 0: boss_instance.base_rot_speed = -boss_instance.base_rot_speed
-	if randi() % 2 == 0: boss_instance.rot_speed_inc = -boss_instance.rot_speed_inc
+	if randi() % 2 == 0: design.base_rot_speed = -design.base_rot_speed
+	if randi() % 2 == 0: design.rot_speed_inc = -design.rot_speed_inc
 	
 	var boss_start_col = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
 	var boss_end_col = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
 	
-	#var boss_start_col = Color(0,0,0)
-	#var boss_end_col = Color(0,0,0)
+	design.start_color = boss_start_col
+	design.end_color = boss_end_col
 	
-	boss_instance.start_color = boss_start_col
-	boss_instance.end_color = boss_end_col
-	
-	target_bgcol = boss_start_col.linear_interpolate(Color(0,0,0), 0.8)
-	target_fgcol = boss_end_col.linear_interpolate(Color(0,0,0), 0)
-	
-	add_child(boss_instance)
-	boss_instance.set_pos(Vector2(360,360))
-	
-	bossnum += 1
-	get_node("Label1").set_text("Boss " + str(bossnum))
+	spawn_boss(design)
 
 func gen_regex(depth, layers):
 	print(depth)

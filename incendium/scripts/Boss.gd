@@ -7,17 +7,6 @@ extends Node2D
 #Fill out with an instance of BossDesign.gd
 var design
 
-########
-
-var base_health = 80
-
-var base_rot_speed = 0.3
-var rot_speed_inc = - PI * 0.1
-
-var start_color = Color(0,0,1)
-var end_color = Color(0,1,0)
-########
-
 var expr
 var map
 var part_map
@@ -68,8 +57,8 @@ func get_part_pos(id):
 	var c = id[-1].to_float()
 	var depth = id.length() - 1
 	var parent_pos = get_part_pos(id.substr(0,depth))
-	var theta = (base_rot_speed + depth * rot_speed_inc) * t + c / layers[depth] * 2 * PI
-	var r = layers.base_size * pow(layers.size_dropoff, depth) * get_part_scale(id.substr(0,depth))
+	var theta = (design.base_rot_speed + depth * design.rot_speed_inc) * t + c / design.layers[depth] * 2 * PI
+	var r = design.base_size * pow(design.size_dropoff, depth) * get_part_scale(id.substr(0,depth))
 	var pos = parent_pos + Vector2(r * cos(-theta), r*sin(-theta)) 
 	map.id = pos
 	return pos
@@ -80,9 +69,9 @@ func get_part_scale(id):
 	
 
 func create_part(id, pos, layer, index, parentsides, health):
-	var sides = layers[layer]
-	var a = layer / float(layers.size() - 1)
-	var size = layers.base_size * pow(layers.size_dropoff, layer)
+	var sides = design.layers[layer]
+	var a = layer / float(design.layers.size() - 1)
+	var size = design.base_size * pow(design.size_dropoff, layer)
 	
 	# Check if any capture group in the boss' regex matches this boss part's entire id
 	var find = expr.find(id)
@@ -99,8 +88,8 @@ func create_part(id, pos, layer, index, parentsides, health):
 		part_instance.get_node("RegularPolygon").size = size
 	
 		part_instance.enabled = alive# && find != -1
-		part_instance.rot_speed = base_rot_speed + rot_speed_inc * layer
-		part_instance.color = start_color.linear_interpolate(end_color, a)
+		part_instance.rot_speed = design.base_rot_speed + design.rot_speed_inc * layer
+		part_instance.color = design.start_color.linear_interpolate(design.end_color, a)
 		part_instance.max_health = health
 		part_instance.id = id
 		part_map[id] = part_instance
@@ -111,7 +100,7 @@ func create_part(id, pos, layer, index, parentsides, health):
 		part_instance.bullet_size = power * 2
 		part_instance.bullet_count = 1 + (power-1) * 3
 		part_instance.bullet_speed = 40 + 20 * power
-		part_instance.bullet_type = layers.bullettypes[layer]
+		part_instance.bullet_type = design.bullettypes[layer]
 
 		# part_instance.shoot_timer = 1.0 + (i / 3.0)
 		part_instance.set_draw_behind_parent(true)
@@ -120,7 +109,7 @@ func create_part(id, pos, layer, index, parentsides, health):
 		part_instance.set_pos(pos)
 		
 	# Create subparts
-	if layer < layers.size() - 1:
+	if layer < design.layers.size() - 1:
 		for i in range(0,sides):
 			var angle = (i / float(sides)) * PI * 2.0
 			var dir = Vector2(cos(angle),sin(angle))
