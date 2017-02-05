@@ -323,6 +323,8 @@ shortcut = null
 text = "Fight!"
 flat = false
 
+[connection signal="text_changed" from="RegexField" to="." method="_on_RegexField_text_changed"]
+
 [connection signal="pressed" from="FightButton" to="." method="_on_FightButton_pressed"]
 
 

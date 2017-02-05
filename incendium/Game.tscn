@@ -151,7 +151,7 @@ max_lines_visible = -1
 
 config/polyphony = 16
 config/samples = SubResource( 1 )
-default/volume_db = 0.0
+default/volume_db = -1000.0
 default/pitch_scale = 1.0
 default/pan = 0.0
 default/depth = 0.0

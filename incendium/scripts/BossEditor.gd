@@ -7,6 +7,9 @@ extends Panel
 
 var BossDesign = preload("res://scripts/datatypes/BossDesign.gd")
 
+var drawtimer = 0
+const drawtime = 0.2
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -14,7 +17,10 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
-	update()
+	if drawtime > 0:
+		drawtime -= delta
+		if drawtime <= 0:
+			update()
 
 func _input(event):
 	if event.type == InputEvent.KEY:
@@ -77,3 +83,7 @@ func get_part_pos(id):
 	var pos = parent_pos + Vector2(r * cos(-theta), r*sin(-theta)) 
 	#map.id = pos
 	return pos
+
+func _on_RegexField_text_changed( text ):
+	#drawtime = drawtimer
+	update()
