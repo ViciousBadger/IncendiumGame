@@ -5,21 +5,31 @@
 
 extends Node
 
+# As long as this is true, new bosses (and players) will be spawned
 var playing = false
 
+# Strong and weak references to last spawned boss
+# Weak reference is nessecary to check when the boss has been destroyed
 var last_boss
 var last_boss_wr
 
+# Values for current and target fore- and background colors
+# Used for slowly fading into new colors
 var bgcol = Color(0,0,0)
 var target_bgcol = Color(0,0,0)
 var fgcol = Color(0,0,0)
 var target_fgcol = Color(0,0,0)
 
+# Number of bosses spawned, and how many layers the next boss should have
 var bossnum = 0
 var bossdepth = 2
 
+# Those values every game in the known universe have
 var score = 0
+var lives = 3
 
+# List of Nikolaj-curaged regexes for the boss generator to use
+# The letters a, b and c will each be replaced by a random number from 0 to the highest poly degree of the boss
 var regex_list = [
 "a*b*",
 ".*",
@@ -34,6 +44,7 @@ var regex_list = [
 "a*b*c*"
 ]
 
+# Starts the party
 func start_game():
 	playing = true
 	gen_boss()
@@ -48,28 +59,19 @@ func _input(event):
 			if last_boss != null:
 				last_boss.queue_free()
 
-func random_regex(size, larg):
-	var string = regex_list[abs(randi()) % regex_list.size()]
-	var base = randi();
-	string = string.replace("a",str(int(base+0)%int(larg)))
-	string = string.replace("b",str(int(base+1)%int(larg)))
-	string = string.replace("c",str(int(base+2)%int(larg)))
-	return string
-
 func _process(delta):
 	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 3)
 	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 0.5)
 	get_node("Background/Polygon2D").set_color(bgcol)
-	#tag("Smoke").set_modulate(bgcol)
 	
 	if playing:
 		if OS.get_time_scale() < 1:
 			OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
-			if OS.get_time_scale() >= 1:
-				if (!has_node("Player")):
-					var p = preload("res://objects/Player.tscn").instance()
-					add_child(p)
-					p.set_global_pos(Vector2(360,600))
+			if OS.get_time_scale() >= 1 and !has_node("Player") and lives > 0:
+				var p = preload("res://objects/Player.tscn").instance()
+				add_child(p)
+				p.set_global_pos(Vector2(360,600))
+				lives-=1
 		
 		if !last_boss_wr.get_ref():
 			#No boss, spawn a new one
@@ -80,12 +82,22 @@ func _process(delta):
 			var player = get_node("Player")
 			if player != null:
 				player.health = floor(lerp(player.health,player.MAX_HEALTH,0.5))
-				get_node("Label").set_text("HP: " + str(player.health) + "/" + str(player.MAX_HEALTH))
+				
+
+# Generates regexes using the regex list and some info about the boss
+func random_regex(size, larg):
+	var string = regex_list[abs(randi()) % regex_list.size()]
+	var base = randi();
+	string = string.replace("a",str(int(base+0)%int(larg)))
+	string = string.replace("b",str(int(base+1)%int(larg)))
+	string = string.replace("c",str(int(base+2)%int(larg)))
+	return string
 
 func add_score(amount):
 	score += amount
-	get_node("Score").set_text("Score: " + str(floor(score)))
 
+
+# Spawns a boss from a boss design object
 func spawn_boss(design):
 	var boss_instance = preload("res://objects/Boss.tscn").instance()
 	last_boss = boss_instance
@@ -100,10 +112,11 @@ func spawn_boss(design):
 	boss_instance.set_pos(Vector2(360,360))
 	
 	bossnum += 1
-	get_node("Label1").set_text("Boss " + str(bossnum))
+	
 	
 	playing = true
 
+# Generates a random boss design
 func gen_boss():
 	var design = preload("res://scripts/datatypes/BossDesign.gd").new()
 	
@@ -154,6 +167,7 @@ func gen_boss():
 	
 	spawn_boss(design)
 
+# Unused broken regex generator
 func gen_regex(depth, layers):
 	print(depth)
 	if depth == 0:

@@ -96,7 +96,6 @@ func _on_RegularPolygon_area_enter( area ):
 
 func lose_health(hp):
 	health -= hp
-	get_node("../Label").set_text("HP: " + str(health) + "/" + str(MAX_HEALTH))
 	if health <= 0:
 		for i in range(0,8):
 			var explosion_instance = preload("res://objects/Explosion.tscn").instance()
