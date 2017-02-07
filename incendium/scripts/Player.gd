@@ -96,6 +96,8 @@ func _on_RegularPolygon_area_enter( area ):
 
 func lose_health(hp):
 	health -= hp
+	get_parent().score_mult = 1
+	get_parent().score_mult_timer = 0
 	if health <= 0:
 		for i in range(0,8):
 			var explosion_instance = preload("res://objects/Explosion.tscn").instance()
