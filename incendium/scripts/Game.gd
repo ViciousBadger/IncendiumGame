@@ -28,6 +28,10 @@ var bossdepth = 2
 var score = 0
 var lives = 3
 
+var score_mult = 1
+var score_mult_timer = 0
+const score_mult_time = 4
+
 # List of Nikolaj-curaged regexes for the boss generator to use
 # The letters a, b and c will each be replaced by a random number from 0 to the highest poly degree of the boss
 var regex_list = [
@@ -64,6 +68,11 @@ func _process(delta):
 	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 0.5)
 	get_node("Background/Polygon2D").set_color(bgcol)
 	
+	if score_mult_timer > 0:
+		score_mult_timer -= delta
+		if score_mult_timer <= 0:
+			score_mult = 1
+	
 	if playing:
 		if OS.get_time_scale() < 1:
 			OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
@@ -94,8 +103,9 @@ func random_regex(size, larg):
 	return string
 
 func add_score(amount):
-	score += amount
-
+	score += amount * score_mult
+	score_mult += 1
+	score_mult_timer = score_mult_time
 
 # Spawns a boss from a boss design object
 func spawn_boss(design):
