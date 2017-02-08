@@ -14,6 +14,10 @@ var fire_timer = 0
 const MAX_HEALTH = 100
 var health = MAX_HEALTH
 
+var inv_time = 0
+
+var col = Color(1,1,1)
+
 func _ready():
 	set_process(true)
 
@@ -46,6 +50,12 @@ func _process(delta):
 		set_pos(center + Vector2(cos(angle),sin(angle)) * dist)
 
 	var towards_center =  (center - get_pos()).normalized()
+	
+	col = col.linear_interpolate(Color(1,1,1),delta * 10)
+	get_node("RegularPolygon/Polygon2D").set_color(col)
+	
+	if inv_time > 0:
+		inv_time -= delta
 	
 	if fire_timer > 0:
 		fire_timer -= delta
@@ -95,19 +105,22 @@ func _on_RegularPolygon_area_enter( area ):
 		lose_health(100)
 
 func lose_health(hp):
-	health -= hp
-	get_parent().score_mult = 1
-	get_parent().score_mult_timer = 0
-	if health <= 0:
-		for i in range(0,8):
-			var explosion_instance = preload("res://objects/Explosion.tscn").instance()
-			explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size
-			explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
-			# explosion_instance.velocity = Vector2(0,0)
-			get_tree().get_root().add_child(explosion_instance)
-			explosion_instance.set_global_pos(get_global_pos())
-		OS.set_time_scale(0.02)
-		queue_free()
+	if inv_time <= 0:
+		health -= hp
+		inv_time = 1
+		col = Color(1,0,0)
+		get_parent().score_mult = 1
+		get_parent().score_mult_timer = 0
+		if health <= 0:
+			for i in range(0,8):
+				var explosion_instance = preload("res://objects/Explosion.tscn").instance()
+				explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size
+				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
+				# explosion_instance.velocity = Vector2(0,0)
+				get_tree().get_root().add_child(explosion_instance)
+				explosion_instance.set_global_pos(get_global_pos())
+			OS.set_time_scale(0.02)
+			queue_free()
 
 func _on_RegularPolygon_area_exit( area ):
 	pass
