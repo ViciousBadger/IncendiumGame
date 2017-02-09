@@ -27,12 +27,15 @@ var last_pos
 var velocity
 var scale = 0.01
 
+# Color alpha
+var a = 0.5
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
 	if enabled:
-		get_node("RegularPolygon/Polygon2D").set_color(color)
+		get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b,a))
 	else:
 		get_node("RegularPolygon/Polygon2D").set_color(Color(0,0,0,0))
 	health = max_health
@@ -69,6 +72,10 @@ func _process(delta):
 	
 	if enabled:
 		shoot_timer -= delta
+	
+	if !get_parent().has_children(id):
+		a = lerp(a,1,delta * 5)
+		get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b,a))
 	
 	if shoot_timer <= 0:
 		shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
@@ -158,10 +165,18 @@ func any_active_child_parts():
 	return false
 
 func _draw():
+	var pgon = Vector2Array(get_node("RegularPolygon/Polygon2D").get_polygon())
+	
+	# Draw health polygon
 	if health < max_health and health > 0: # if health_fade > 0: 
-		var pgon = Vector2Array(get_node("RegularPolygon/Polygon2D").get_polygon())
-		var colors = Array()
-		for i in range(0,pgon.size()):
-			pgon[i] = pgon[i] * health_size
-			colors.append(Color(1,1,1,lerp(0.5,1,health_fade)))
-		draw_polygon(pgon,colors)
+		var hp_pgon = Vector2Array(pgon)
+		for i in range(0,hp_pgon.size()):
+			hp_pgon[i] = hp_pgon[i] * health_size
+		draw_colored_polygon(hp_pgon,Color(1,1,1,lerp(0.5,1,health_fade)))
+	
+	# Draw outline
+	for i in range(0,pgon.size()):
+		var start = i
+		var end = i+1
+		if end >= pgon.size(): end = 0
+		draw_line(pgon[start],pgon[end],Color(0,0,0).linear_interpolate(color,0.2),2)

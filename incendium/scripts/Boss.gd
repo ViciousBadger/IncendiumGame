@@ -22,7 +22,7 @@ func _ready():
 	
 	part_map = {}
 	dead_map = {}
-	create_part("", Vector2(0,0), 0, 0, 1, design.base_health)
+	create_part("", Vector2(0,0), 0, 0, 1)
 	set_process(true)
 	pass
 	
@@ -68,7 +68,7 @@ func get_part_scale(id):
 	return 1 #+ sin(t * id.length()) * 0.3
 	
 
-func create_part(id, pos, layer, index, parentsides, health):
+func create_part(id, pos, layer, index, parentsides):
 	var sides = design.layers[layer]
 	var a = layer / float(design.layers.size() - 1)
 	var size = design.base_size * pow(design.size_dropoff, layer)
@@ -90,10 +90,9 @@ func create_part(id, pos, layer, index, parentsides, health):
 		part_instance.enabled = alive# && find != -1
 		part_instance.rot_speed = design.base_rot_speed + design.rot_speed_inc * layer
 		part_instance.color = design.start_color.linear_interpolate(design.end_color, a)
-		part_instance.max_health = health
 		part_instance.id = id
 		part_map[id] = part_instance
-		# part_instance.max_health = (base_health * pow(size_dropoff, layer)) / parentsides
+		part_instance.max_health = (design.base_health * pow(design.size_dropoff, layer)) / parentsides
 		part_instance.shoot_interval = lerp(0.3, 2, a) # 2 - (power * 0.45)
 		part_instance.shoot_timer = 1 + (index/parentsides) * part_instance.shoot_interval
 		var power = design.layers.size() - layer
@@ -115,4 +114,4 @@ func create_part(id, pos, layer, index, parentsides, health):
 			var dir = Vector2(cos(angle),sin(angle))
 			var pos = dir * size
 			var newid = id + str(i)
-			create_part(newid, pos, layer + 1, i, sides, health / parentsides)
+			create_part(newid, pos, layer + 1, i, sides)

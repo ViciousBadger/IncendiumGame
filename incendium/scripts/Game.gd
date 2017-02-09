@@ -105,7 +105,7 @@ func random_regex(size, larg):
 func add_score(amount):
 	score += amount * score_mult
 	score_mult += 1
-	score_mult_timer = score_mult_time
+	#score_mult_timer = score_mult_time
 
 # Spawns a boss from a boss design object
 func spawn_boss(design):
@@ -138,7 +138,7 @@ func gen_boss():
 	var bullettypes = []
 	var largest = 3;
 	for i in range(0,layer_count):
-		var l = floor(rand_range(3,5));
+		var l = floor(rand_range(3,6));
 		if (l>largest):
 			largest = l;
 		layers.append(l)
@@ -150,9 +150,9 @@ func gen_boss():
 	design.regex = random_regex(1 + (abs(randi())%3), largest)
 	
 	design.base_size = layer_count * 20
-	design.size_dropoff = rand_range(0.4,0.8)
+	design.size_dropoff = rand_range(0.5,0.8)
 	
-	design.base_health = 20 + (5 * bossnum)
+	design.base_health = 20 + (2.5 * bossnum)
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 
 	var speed = 1
