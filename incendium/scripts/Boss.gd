@@ -9,8 +9,8 @@ var design
 
 var expr
 var map
-var part_map
-var dead_map
+var part_map = {}
+var dead_map = {}
 var t = 0
 
 func _ready():
@@ -20,11 +20,22 @@ func _ready():
 	if !expr.is_valid():
 		print ("invalid regex!")
 	
-	part_map = {}
-	dead_map = {}
 	create_part("", Vector2(0,0), 0, 0, 1)
+	
+	#var part_depth_map = {}
+	
+	var parts = part_map.values()
+	var highest = 0
+	for part in parts:
+		var d = part.id.length()
+		if d > highest:
+			move_child(part,0)
+			#remove_child(part)
+			#add_child(part)
+			highest = d
+		#part_depth_map[part] = d
+	
 	set_process(true)
-	pass
 	
 func _process(delta):
 	t += delta
@@ -35,10 +46,11 @@ func _process(delta):
 		queue_free()
 	
 func has_children(id):
+	# Outermost parts always return false
 	if(id.length() == design.layers.size()):
 		return false
-	if(dead_map.has(id)):
-		return false
+	#if(dead_map.has(id)):
+		#return false
 	var sides = design.layers[id.length()-1]
 	for i in range(sides): #Loop though all potential child parts of this part
 		var child_id = id + str(i)

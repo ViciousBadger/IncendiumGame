@@ -26,17 +26,18 @@ var shoot_timer = 2
 var last_pos
 var velocity
 var scale = 0.01
+var outline_width = 0
 
-# Color alpha
-var a = 0.5
+# Outline alpha
+var a = 0
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
 	if enabled:
-		get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b,a))
-	else:
+		get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b))
+	if !enabled:
 		get_node("RegularPolygon/Polygon2D").set_color(Color(0,0,0,0))
 	health = max_health
 	last_pos = get_global_pos()
@@ -74,8 +75,8 @@ func _process(delta):
 		shoot_timer -= delta
 	
 	if !get_parent().has_children(id):
-		a = lerp(a,1,delta * 5)
-		get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b,a))
+		a = lerp(a, 1, delta * 5)
+		update()
 	
 	if shoot_timer <= 0:
 		shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
@@ -175,8 +176,10 @@ func _draw():
 		draw_colored_polygon(hp_pgon,Color(1,1,1,lerp(0.5,1,health_fade)))
 	
 	# Draw outline
-	for i in range(0,pgon.size()):
-		var start = i
-		var end = i+1
-		if end >= pgon.size(): end = 0
-		draw_line(pgon[start],pgon[end],Color(0,0,0).linear_interpolate(color,0.2),2)
+	if a > 0:
+		for i in range(0,pgon.size()):
+			var start = i
+			var end = i+1
+			if end >= pgon.size(): end = 0
+			var col = Color(1,1,1,a).linear_interpolate(color, 0.5)
+			draw_line(pgon[start], pgon[end], col, 2)
