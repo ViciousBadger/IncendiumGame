@@ -56,6 +56,7 @@ func start_game():
 func _ready():
 	set_process_input(true)
 	set_process(true)
+	start_game()
 	
 func _input(event):
 	if event.type == InputEvent.KEY:
@@ -66,7 +67,8 @@ func _input(event):
 func _process(delta):
 	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 3)
 	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 0.5)
-	get_node("Background/Polygon2D").set_color(bgcol)
+	#get_node("Background/Polygon2D").set_color(bgcol)
+	get_node("Background").set_modulate(bgcol)
 	
 	if score_mult_timer > 0:
 		score_mult_timer -= delta
