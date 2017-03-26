@@ -34,7 +34,7 @@ func _ready():
 	light_instance = light.instance()
 	var s = get_node("RegularPolygon").size * 0.04
 	light_instance.set_scale(Vector2(s,s))
-	light_instance.set_modulate(get_node("RegularPolygon/Polygon2D").get_color())
+	light_instance.set_color(get_node("RegularPolygon/Polygon2D").get_color())
 	get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
 	
 	if type == BTYPE_SPLITTING && damage == 1:

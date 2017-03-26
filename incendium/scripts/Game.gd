@@ -35,17 +35,17 @@ const score_mult_time = 4
 # List of Nikolaj-curaged regexes for the boss generator to use
 # The letters a, b and c will each be replaced by a random number from 0 to the highest poly degree of the boss
 var regex_list = [
-"a*b*",
+#"a*b*",
 ".*",
-"(a|c)*b",
-".*a.*",
-"c*(aa|bb)*c*",
-"b.*a",
-"(c.b)*",
-"ba*b.*",
-"c*ba*",
-"c*",
-"a*b*c*"
+#"(a|c)*b",
+#".*a.*",
+#"c*(aa|bb)*c*",
+#"b.*a",
+#"(c.b)*",
+#"ba*b.*",
+#"c*ba*",
+#"c*",
+#"a*b*c*"
 ]
 
 # Starts the party
