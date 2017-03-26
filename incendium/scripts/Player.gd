@@ -4,12 +4,14 @@
 extends Node2D
 
 const SPEED = 420 / 1.42
+const ACCEL = 3000
 
 export var polar_controls = false
 var angle = 0
 var dist = 200
 var shield_cooldown = 0
 var fire_timer = 0
+var velocity = Vector2(0,0)
 
 const MAX_HEALTH = 100
 var health = MAX_HEALTH
@@ -22,27 +24,38 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
+	var target_velocity = Vector2(0,0)
 	if Input.is_key_pressed(KEY_LEFT):
 		if polar_controls:
 			angle += (delta / dist) * SPEED
 		else:
-			translate(Vector2(-delta,0) * SPEED)
+			target_velocity += Vector2(-1,0)
 	if Input.is_key_pressed(KEY_RIGHT):
 		if polar_controls:
 			angle -= (delta / dist) * SPEED
 		else:
-			translate(Vector2(delta,0) * SPEED)
+			target_velocity += Vector2(1,0)
 	if Input.is_key_pressed(KEY_UP):
 		if polar_controls:
 			dist -= delta * SPEED
 			if dist < 0.1: dist = 0.1
 		else:
-			translate(Vector2(0,-delta) * SPEED)
+			target_velocity += Vector2(0,-1)
 	if Input.is_key_pressed(KEY_DOWN):
 		if polar_controls:
 			dist += delta * SPEED 
 		else:
-			translate(Vector2(0,delta) * SPEED)
+			target_velocity += Vector2(0,1)
+		
+	target_velocity = target_velocity.normalized() * SPEED
+	
+	var towards_target = target_velocity - velocity
+	var dist_to_target = towards_target.length()
+	towards_target = towards_target.normalized()
+	towards_target *= min(ACCEL * delta, dist_to_target)
+	
+	velocity += towards_target
+	translate(velocity * delta)
 	
 	var center = Vector2(720/2,720/2)
 	
