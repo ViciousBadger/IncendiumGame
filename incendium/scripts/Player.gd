@@ -7,6 +7,7 @@ const SPEED = 420 / 1.42
 const ACCEL = 3000
 
 export var polar_controls = false
+var use_mouse = false
 var angle = 0
 var dist = 200
 var shield_cooldown = 0
@@ -22,58 +23,96 @@ var col = Color(1,1,1)
 
 func _ready():
 	set_process(true)
+	set_process_input(true)
+	
+func _input(event):
+	# Input method switching
+	if event.type == InputEvent.KEY:
+		if event.scancode == KEY_M && event.pressed == true:
+			use_mouse = !use_mouse
 
 func _process(delta):
-	var target_velocity = Vector2(0,0)
-	if Input.is_key_pressed(KEY_LEFT):
-		if polar_controls:
-			angle += (delta / dist) * SPEED
-		else:
-			target_velocity += Vector2(-1,0)
-	if Input.is_key_pressed(KEY_RIGHT):
-		if polar_controls:
-			angle -= (delta / dist) * SPEED
-		else:
-			target_velocity += Vector2(1,0)
-	if Input.is_key_pressed(KEY_UP):
-		if polar_controls:
-			dist -= delta * SPEED
-			if dist < 0.1: dist = 0.1
-		else:
-			target_velocity += Vector2(0,-1)
-	if Input.is_key_pressed(KEY_DOWN):
-		if polar_controls:
-			dist += delta * SPEED 
-		else:
-			target_velocity += Vector2(0,1)
+	# Input gathering
+	var input_vec = Vector2(0,0)
+	# Keyboard
+	if !use_mouse:
+		if Input.is_key_pressed(KEY_LEFT):
+			input_vec += Vector2(-1,0)
+		if Input.is_key_pressed(KEY_RIGHT):
+			input_vec += Vector2(1,0)
+		if Input.is_key_pressed(KEY_UP):
+			input_vec += Vector2(0,-1)
+		if Input.is_key_pressed(KEY_DOWN):
+			input_vec += Vector2(0,1)
+	# Mouse
+	else:
+		var mouse_pos = get_viewport().get_mouse_pos()
 		
-	target_velocity = target_velocity.normalized() * SPEED
+		var relative_pos = mouse_pos - get_global_pos()
+		
+		if relative_pos.length() > velocity.length():
+			input_vec = relative_pos.normalized()
 	
-	var towards_target = target_velocity - velocity
-	var dist_to_target = towards_target.length()
-	towards_target = towards_target.normalized()
-	towards_target *= min(ACCEL * delta, dist_to_target)
+	# Normal movement
+	if !polar_controls:
+		var target_velocity = input_vec.normalized() * SPEED
+		
+		var towards_target = target_velocity - velocity
+		var dist_to_target = towards_target.length()
+		towards_target = towards_target.normalized()
+		towards_target *= min(ACCEL * delta, dist_to_target)
+		
+		velocity += towards_target
+		translate(velocity * delta)
 	
-	velocity += towards_target
-	translate(velocity * delta)
+	#TODO: Polar movement
+				#if polar_controls:
+				#angle += (delta / dist) * SPEED
+				
+				#if polar_controls:
+				#angle -= (delta / dist) * SPEED
+				
+				#if polar_controls:
+				#dist -= delta * SPEED
+				#if dist < 0.1: dist = 0.1
+				
+				#if polar_controls:
+				#dist += delta * SPEED 
+				
+				#if polar_controls:
+				#	set_pos(center + Vector2(cos(angle),sin(angle)) * dist)
 	
 	var center = Vector2(720/2,720/2)
-	
-	if polar_controls:
-		set_pos(center + Vector2(cos(angle),sin(angle)) * dist)
-
 	var towards_center =  (center - get_pos()).normalized()
+	
+	# Rotate towards center
+	set_rot(atan2(towards_center.x,towards_center.y) - PI/2)
+	
+	# Limit position to circle
+	if center.distance_to(get_pos()) > 720/2:
+		set_pos((get_pos() - center).normalized() * 720/2 + center)
 	
 	col = col.linear_interpolate(Color(1,1,1),delta * 10)
 	get_node("RegularPolygon/Polygon2D").set_color(col)
 	
+	# Timers
 	if inv_time > 0:
 		inv_time -= delta
 	
 	if fire_timer > 0:
 		fire_timer -= delta
+		
+	if shield_cooldown > 0:
+		shield_cooldown -= delta
 	
-	if (Input.is_key_pressed(KEY_SPACE) or Input.is_key_pressed(KEY_F)) and fire_timer <= 0:
+	# Shooting
+	var shooting = false
+	if use_mouse:
+		shooting = Input.is_mouse_button_pressed(BUTTON_LEFT)
+	else:
+		shooting = Input.is_key_pressed(KEY_SPACE) || Input.is_key_pressed(KEY_F)
+		
+	if shooting && fire_timer <= 0:
 		var bullet = preload("res://objects/Bullet.tscn").instance()
 		bullet.set_pos(get_pos())
 		get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.9,1.1))
@@ -91,22 +130,20 @@ func _process(delta):
 		bullet.velocity = Vector2(cos(final),sin(final)) * len
 		get_tree().get_root().add_child(bullet,false)
 		fire_timer = 0.05
-		
-	if shield_cooldown > 0:
-		shield_cooldown -= delta
 	
-	if Input.is_key_pressed(KEY_D) and shield_cooldown <= 0:
+	# Shield
+	var shielding = false
+	if use_mouse:
+		shielding = Input.is_mouse_button_pressed(BUTTON_RIGHT)
+	else:
+		shielding = Input.is_key_pressed(KEY_D)
+
+	if shielding && shield_cooldown <= 0:
 		var shield = preload("res://objects/PlayerShield.tscn").instance()
 		shield.node_to_follow = get_path()
 		get_tree().get_root().add_child(shield)
 		shield.set_global_pos(get_global_pos())
 		shield_cooldown = 6
-
-	set_rot(atan2(towards_center.x,towards_center.y) - PI/2)
-	
-	# Limit position to circle
-	if center.distance_to(get_pos()) > 720/2:
-		set_pos((get_pos() - center).normalized() * 720/2 + center)
 
 func _on_RegularPolygon_area_enter( area ):
 	if area.get_groups().has("damage_player"):
