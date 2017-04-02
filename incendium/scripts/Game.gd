@@ -51,12 +51,14 @@ var regex_list = [
 # Starts the party
 func start_game():
 	playing = true
+	get_node("Player").set_hidden(false)
 	gen_boss()
 
 func _ready():
 	set_process_input(true)
 	set_process(true)
-	start_game()
+	get_node("GameUI").set_offset(Vector2(0,720))
+	#start_game()
 	
 func _input(event):
 	if event.type == InputEvent.KEY:
@@ -76,6 +78,7 @@ func _process(delta):
 			score_mult = 1
 	
 	if playing:
+		get_node("GameUI").set_offset(Vector2(0,lerp(get_node("GameUI").get_offset().y,0,delta * 10)))
 		if OS.get_time_scale() < 1:
 			OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
 			if OS.get_time_scale() >= 1 and !has_node("Player") and lives > 0:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=1]
+[gd_scene load_steps=24 format=1]
 
 [ext_resource path="res://scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://bg_material.tres" type="CanvasItemMaterial" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://objects/BossEditor.tscn" type="PackedScene" id=18]
 [ext_resource path="res://uitheme.tres" type="Theme" id=19]
 [ext_resource path="res://uithemebig.tres" type="Theme" id=20]
+[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=21]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -49,8 +50,6 @@ texture = ExtResource( 3 )
 script/script = ExtResource( 4 )
 
 [node name="Smokes" type="Node" parent="."]
-
-editor/display_folded = true
 
 [node name="Smoke" parent="Smokes" instance=ExtResource( 5 )]
 
@@ -96,6 +95,7 @@ transform/scale = Vector2( 0.5, 0.5 )
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
 
+visibility/visible = false
 transform/pos = Vector2( 360, 600 )
 
 [node name="Border" type="Sprite" parent="."]
@@ -237,5 +237,7 @@ align = 2
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="MainMenu" parent="." instance=ExtResource( 21 )]
 
 
