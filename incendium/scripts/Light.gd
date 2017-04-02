@@ -18,7 +18,7 @@ func _process(delta):
 	if !despawn:
 		a = lerp(a, 1, delta * 2)
 	else:
-		a = lerp(a, 0, delta * 10)
+		a = lerp(a, 0, delta * 4)
 		if a <= 0.01:
 			queue_free()
 	set_energy(a)

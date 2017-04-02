@@ -36,7 +36,7 @@ func _ready():
 	# Initialization here
 	set_process(true)
 	if enabled:
-		get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b))
+		get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b,0.8))
 	if !enabled:
 		get_node("RegularPolygon/Polygon2D").set_color(Color(0,0,0,0))
 	health = max_health
@@ -144,7 +144,7 @@ func _on_RegularPolygon_area_enter(area):
 			get_parent().dead_map[id] = true
 			var light_instance = preload("res://objects/Light.tscn").instance()
 			var s = get_node("RegularPolygon").size * 0.008
-			light_instance.despawn_a = 1
+			light_instance.despawn_a = 6
 			light_instance.set_scale(Vector2(s,s))
 			light_instance.set_color(get_node("RegularPolygon/Polygon2D").get_color())
 			get_tree().get_root().get_node("Game/Lights").add_child(light_instance)

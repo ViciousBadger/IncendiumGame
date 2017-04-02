@@ -110,7 +110,7 @@ func create_part(id, pos, layer, index, parentsides):
 		var power = design.layers.size() - layer
 		part_instance.bullet_size = power * 2
 		part_instance.bullet_count = 1 + (power-1) * 3
-		part_instance.bullet_speed = 40 + 20 * power
+		part_instance.bullet_speed = 60 + 20 * power
 		part_instance.bullet_type = design.bullettypes[layer]
 
 		# part_instance.shoot_timer = 1.0 + (i / 3.0)
