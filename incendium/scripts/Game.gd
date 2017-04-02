@@ -152,7 +152,7 @@ func gen_boss():
 	design.regex = random_regex(1 + (abs(randi())%3), largest)
 	
 	design.base_size = layer_count * 20
-	design.size_dropoff = rand_range(0.5,0.8)
+	design.size_dropoff = 0.6
 	
 	design.base_health = 20 + (2.5 * bossnum)
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
