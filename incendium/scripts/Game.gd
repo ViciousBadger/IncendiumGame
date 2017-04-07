@@ -16,9 +16,9 @@ var last_boss_wr
 # Values for current and target fore- and background colors
 # Used for slowly fading into new colors
 var bgcol = Color(0,0,0)
-var target_bgcol = Color(0,0,0)
+var target_bgcol = Color(0.6,0.6,0.6)
 var fgcol = Color(0,0,0)
-var target_fgcol = Color(0,0,0)
+var target_fgcol = Color(1,1,1)
 
 # Number of bosses spawned, and how many layers the next boss should have
 var bossnum = 0
@@ -51,7 +51,10 @@ var regex_list = [
 # Starts the party
 func start_game():
 	playing = true
-	get_node("Player").set_hidden(false)
+	var player = preload("res://objects/Player.tscn").instance()
+	player.set_global_pos(Vector2(360,600))
+	add_child(player)
+	#get_node("Player").set_hidden(false)
 	gen_boss()
 
 func _ready():

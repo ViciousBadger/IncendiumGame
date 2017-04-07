@@ -1,40 +1,39 @@
-[gd_scene load_steps=24 format=1]
+[gd_scene load_steps=23 format=1]
 
 [ext_resource path="res://scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://bg_material.tres" type="CanvasItemMaterial" id=2]
 [ext_resource path="res://gfx/box.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/Background.gd" type="Script" id=4]
 [ext_resource path="res://objects/Smoke.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/Player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://gfx/border.png" type="Texture" id=7]
-[ext_resource path="res://sound/Explosion21.smp" type="Sample" id=8]
-[ext_resource path="res://sound/Hit_Hurt4.smp" type="Sample" id=9]
-[ext_resource path="res://sound/Laser_Shoot14.smp" type="Sample" id=10]
-[ext_resource path="res://music/bass.smp" type="Sample" id=11]
-[ext_resource path="res://music/cymbal.smp" type="Sample" id=12]
-[ext_resource path="res://music/kickdrum.smp" type="Sample" id=13]
-[ext_resource path="res://music/pad.smp" type="Sample" id=14]
-[ext_resource path="res://music/synth.smp" type="Sample" id=15]
-[ext_resource path="res://scripts/Music.gd" type="Script" id=16]
-[ext_resource path="res://scripts/UIUpdater.gd" type="Script" id=17]
-[ext_resource path="res://objects/BossEditor.tscn" type="PackedScene" id=18]
-[ext_resource path="res://uitheme.tres" type="Theme" id=19]
-[ext_resource path="res://uithemebig.tres" type="Theme" id=20]
-[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=21]
+[ext_resource path="res://gfx/border.png" type="Texture" id=6]
+[ext_resource path="res://sound/Explosion21.smp" type="Sample" id=7]
+[ext_resource path="res://sound/Hit_Hurt4.smp" type="Sample" id=8]
+[ext_resource path="res://sound/Laser_Shoot14.smp" type="Sample" id=9]
+[ext_resource path="res://music/bass.smp" type="Sample" id=10]
+[ext_resource path="res://music/cymbal.smp" type="Sample" id=11]
+[ext_resource path="res://music/kickdrum.smp" type="Sample" id=12]
+[ext_resource path="res://music/pad.smp" type="Sample" id=13]
+[ext_resource path="res://music/synth.smp" type="Sample" id=14]
+[ext_resource path="res://scripts/Music.gd" type="Script" id=15]
+[ext_resource path="res://scripts/UIUpdater.gd" type="Script" id=16]
+[ext_resource path="res://objects/BossEditor.tscn" type="PackedScene" id=17]
+[ext_resource path="res://uitheme.tres" type="Theme" id=18]
+[ext_resource path="res://uithemebig.tres" type="Theme" id=19]
+[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=20]
 
 [sub_resource type="SampleLibrary" id=1]
 
-samples/Explosion21 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 8 ) }
-samples/Hit_Hurt4 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 9 ) }
-samples/Laser_Shoot14 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 10 ) }
+samples/Explosion21 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 7 ) }
+samples/Hit_Hurt4 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 8 ) }
+samples/Laser_Shoot14 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 9 ) }
 
 [sub_resource type="SampleLibrary" id=2]
 
-samples/bass = { "db":0.0, "pitch":1.0, "sample":ExtResource( 11 ) }
-samples/cymbal = { "db":0.0, "pitch":1.0, "sample":ExtResource( 12 ) }
-samples/kickdrum = { "db":0.0, "pitch":1.0, "sample":ExtResource( 13 ) }
-samples/pad = { "db":0.0, "pitch":1.0, "sample":ExtResource( 14 ) }
-samples/synth = { "db":0.0, "pitch":1.0, "sample":ExtResource( 15 ) }
+samples/bass = { "db":0.0, "pitch":1.0, "sample":ExtResource( 10 ) }
+samples/cymbal = { "db":0.0, "pitch":1.0, "sample":ExtResource( 11 ) }
+samples/kickdrum = { "db":0.0, "pitch":1.0, "sample":ExtResource( 12 ) }
+samples/pad = { "db":0.0, "pitch":1.0, "sample":ExtResource( 13 ) }
+samples/synth = { "db":0.0, "pitch":1.0, "sample":ExtResource( 14 ) }
 
 [node name="Game" type="Node"]
 
@@ -50,6 +49,8 @@ texture = ExtResource( 3 )
 script/script = ExtResource( 4 )
 
 [node name="Smokes" type="Node" parent="."]
+
+editor/display_folded = true
 
 [node name="Smoke" parent="Smokes" instance=ExtResource( 5 )]
 
@@ -93,15 +94,10 @@ transform/scale = Vector2( 0.5, 0.5 )
 
 [node name="Lights" type="Node" parent="."]
 
-[node name="Player" parent="." instance=ExtResource( 6 )]
-
-visibility/visible = false
-transform/pos = Vector2( 360, 600 )
-
 [node name="Border" type="Sprite" parent="."]
 
 transform/pos = Vector2( 360, 360 )
-texture = ExtResource( 7 )
+texture = ExtResource( 6 )
 
 [node name="SFX" type="SamplePlayer" parent="."]
 
@@ -136,13 +132,13 @@ default/filter/gain = 1.0
 default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
-script/script = ExtResource( 16 )
+script/script = ExtResource( 15 )
 
 [node name="UIUpdater" type="Node" parent="."]
 
-script/script = ExtResource( 17 )
+script/script = ExtResource( 16 )
 
-[node name="BossEditor" parent="." instance=ExtResource( 18 )]
+[node name="BossEditor" parent="." instance=ExtResource( 17 )]
 
 visibility/visible = false
 
@@ -160,7 +156,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-theme/theme = ExtResource( 19 )
+theme/theme = ExtResource( 18 )
 margin/left = 616.0
 margin/top = 679.0
 margin/right = 699.0
@@ -177,7 +173,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-theme/theme = ExtResource( 19 )
+theme/theme = ExtResource( 18 )
 margin/left = 15.0
 margin/top = 680.0
 margin/right = 136.0
@@ -193,7 +189,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 0
 size_flags/vertical = 0
-theme/theme = ExtResource( 20 )
+theme/theme = ExtResource( 19 )
 margin/left = 262.0
 margin/top = 9.0
 margin/right = 455.0
@@ -210,7 +206,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-theme/theme = ExtResource( 19 )
+theme/theme = ExtResource( 18 )
 margin/left = 302.0
 margin/top = 75.0
 margin/right = 423.0
@@ -227,7 +223,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-theme/theme = ExtResource( 19 )
+theme/theme = ExtResource( 18 )
 margin/left = 578.0
 margin/top = 22.0
 margin/right = 699.0
@@ -238,6 +234,6 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MainMenu" parent="." instance=ExtResource( 21 )]
+[node name="MainMenu" parent="." instance=ExtResource( 20 )]
 
 

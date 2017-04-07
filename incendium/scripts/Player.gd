@@ -12,6 +12,7 @@ var angle = 0
 var dist = 200
 var shield_cooldown = 0
 var fire_timer = 0
+var bullet_type = 0
 var velocity = Vector2(0,0)
 
 const MAX_HEALTH = 100
@@ -119,6 +120,7 @@ func _process(delta):
 		get_tree().get_root().get_node("Game/SFX").play("Laser_Shoot14")
 		#bullet.get_node("RegularPolygon").size = 1
 		bullet.damage = 1
+		bullet.type = bullet_type
 		
 		var dir = atan2(towards_center.y,towards_center.x)
 		var len = 600
