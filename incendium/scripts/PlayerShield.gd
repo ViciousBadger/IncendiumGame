@@ -4,6 +4,7 @@
 extends Node2D
 
 const TIME = 3.0
+const MAXBULLETS = 16
 
 var poly
 
@@ -55,6 +56,7 @@ func _on_RegularPolygon_area_enter( area ):
 		area.get_node("Polygon2D").set_color(Color(1,1,1))
 		area.remove_from_group("damage_player")
 		area.add_to_group("damage_enemy")
-		done = true
-		get_tree().get_root().get_node(node_to_follow).bullet_type = bullet.type
+		t = max(0,t - TIME / MAXBULLETS)
+		#done = true
+		#get_tree().get_root().get_node(node_to_follow).bullet_type = bullet.type
 		#area.get_parent().velocity = -area#queue_free()

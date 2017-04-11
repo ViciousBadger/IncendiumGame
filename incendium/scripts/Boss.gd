@@ -104,7 +104,7 @@ func create_part(id, pos, layer, index, parentsides):
 		part_instance.color = design.start_color.linear_interpolate(design.end_color, a)
 		part_instance.id = id
 		part_map[id] = part_instance
-		part_instance.max_health = (design.base_health * pow(design.size_dropoff, layer)) / parentsides
+		part_instance.max_health = (design.base_health * pow(design.size_dropoff, layer))# / parentsides
 		part_instance.shoot_interval = lerp(0.3, 2, a) # 2 - (power * 0.45)
 		part_instance.shoot_timer = 1 + (index/parentsides) * part_instance.shoot_interval
 		var power = design.layers.size() - layer

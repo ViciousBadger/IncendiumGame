@@ -97,7 +97,7 @@ func _process(delta):
 					var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
 					
 					bullet_instance.type = bullet_type
-					bullet_instance.damage = bullet_size
+					bullet_instance.damage = bullet_size * 2
 					bullet_instance.velocity = bulletVelocity
 					bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
 					bullet_instance.get_node("RegularPolygon").size = bullet_size

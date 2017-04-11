@@ -35,17 +35,13 @@ const score_mult_time = 4
 # List of Nikolaj-curaged regexes for the boss generator to use
 # The letters a, b and c will each be replaced by a random number from 0 to the highest poly degree of the boss
 var regex_list = [
-#"a*b*",
-".*",
-#"(a|c)*b",
-#".*a.*",
-#"c*(aa|bb)*c*",
-#"b.*a",
-#"(c.b)*",
-#"ba*b.*",
-#"c*ba*",
-#"c*",
-#"a*b*c*"
+#".*",
+"a*b*",
+".*a.*",
+"c*(aa|bb)*c*",
+"c*ba*",
+"c*",
+"a*b*c*"
 ]
 
 # Starts the party
@@ -136,7 +132,7 @@ func spawn_boss(design):
 
 # Generates a random boss design
 func gen_boss():
-	var design = preload("res://scripts/datatypes/BossDesign.gd").new()
+	var design = preload("res://structs/BossDesign.gd").new()
 	
 	randomize() # Randomize random seed
 	
@@ -160,7 +156,7 @@ func gen_boss():
 	design.base_size = layer_count * 20
 	design.size_dropoff = 0.6
 	
-	design.base_health = 20 + (2.5 * bossnum)
+	design.base_health = 15 + (2.5 * bossnum)
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 
 	var speed = 1

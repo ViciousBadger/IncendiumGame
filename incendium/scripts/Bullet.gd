@@ -12,24 +12,25 @@ const BTYPE_CURVESHOT = 2
 const BTYPE_CURVESHOT_CCW = 3
 const BTYPE_SPLITTING = 4
 
+# Vars set from outside
 var velocity = Vector2(1000,0)
+var damage = 1
 var type = BTYPE_BASIC
+var mods = []
+
+# Timing/tweening
 var lifetime = 6
-
 var actiontime = 2
-
 var scale = 0
+
+# Light attached to the bullet
 var light_instance
 
-var damage = 1
-
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	set_scale(Vector2(0,0))
 	set_process(true)
 	
-	# Light
+	# Instance light
 	var light = preload("res://objects/Light.tscn")
 	light_instance = light.instance()
 	var s = get_node("RegularPolygon").size * 0.04
@@ -37,32 +38,28 @@ func _ready():
 	light_instance.set_color(get_node("RegularPolygon/Polygon2D").get_color())
 	get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
 	
+	# Bullets with 1 damage cant split
 	if type == BTYPE_SPLITTING && damage == 1:
 		type = BTYPE_BASIC
 
 func _process(delta):
+	# Update light pos
 	light_instance.set_global_pos(get_global_pos())
-	if type == BTYPE_ACCELERATING:
-		var length = velocity.length()
-		length += delta * 100
-		velocity = velocity.normalized() * length
-	if type == BTYPE_CURVESHOT or type == BTYPE_CURVESHOT_CCW:
-		var angle = atan2(velocity.y,velocity.x)
-		var length = velocity.length()
-		var inc = 0.005
-		if type == BTYPE_CURVESHOT_CCW: inc = -inc
-		angle += delta * length * 0.005
-		
-		velocity = Vector2(cos(angle),sin(angle)) * length
 	
+	for mod in mods:
+		mod.update(self, delta)
+	
+	# Move
 	translate(velocity * delta)
 	
+	# Tween scale
 	if scale < 1:
 		scale = min(1,lerp(scale,1,delta * 16))
 		set_scale(Vector2(scale,scale))
 	
 	lifetime -= delta
 	
+	# Bullet actions
 	if actiontime > 0:
 		actiontime -= delta
 		if actiontime <= 0:

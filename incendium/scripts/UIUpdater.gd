@@ -9,12 +9,15 @@ func _ready():
 
 func _process(delta):
 	# Player HP
-	var player = get_parent().get_node("Player")
-	if player != null:
+	if get_parent().has_node("Player"):
+		var player = get_parent().get_node("Player")
 		get_node(ui_path + "BottomLeftLabel").set_text("HP: " + str(player.health) + "/" + str(player.MAX_HEALTH))
 	
 	# Boss number
-	get_node(ui_path + "BottomRightLabel").set_text("Boss " + str(get_parent().bossnum))
+	var s = "Boss " + str(get_parent().bossnum)
+	if get_parent().last_boss_wr != null && get_parent().last_boss_wr.get_ref() != null:
+		s += " (" + get_parent().last_boss.design.regex + ")"
+	get_node(ui_path + "BottomRightLabel").set_text(s)
 	
 	# Score
 	displayed_score = lerp(displayed_score, get_parent().score, delta * 10)

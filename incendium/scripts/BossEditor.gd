@@ -5,7 +5,7 @@ extends Panel
 # var a=2
 # var b="textvar"
 
-var BossDesign = preload("res://scripts/datatypes/BossDesign.gd")
+var BossDesign = preload("res://structs/BossDesign.gd")
 
 var drawtimer = 0
 const drawtime = 0.2
