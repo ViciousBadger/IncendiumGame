@@ -12,7 +12,6 @@ var angle = 0
 var dist = 200
 var shield_cooldown = 0
 var fire_timer = 0
-var bullet_type = 0
 var velocity = Vector2(0,0)
 
 const MAX_HEALTH = 100
@@ -119,8 +118,7 @@ func _process(delta):
 		get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.9,1.1))
 		get_tree().get_root().get_node("Game/SFX").play("Laser_Shoot14")
 		#bullet.get_node("RegularPolygon").size = 1
-		bullet.damage = 1
-		bullet.type = bullet_type
+		bullet.stats.damage = 1
 		
 		var dir = atan2(towards_center.y,towards_center.x)
 		var len = 600
@@ -151,9 +149,9 @@ func _on_RegularPolygon_area_enter( area ):
 	if area.get_groups().has("damage_player"):
 		var bullet = area.get_parent()
 		bullet.queue_free()
-		var dmgtotake = bullet.damage * 2
+		var dmgtotake = bullet.stats.damage * 2
 		lose_health(dmgtotake)
-	if area.get_groups().has("damage_player_solid") && area.get_parent().enabled:
+	if area.get_groups().has("damage_player_solid"):
 		lose_health(100)
 
 func lose_health(hp):

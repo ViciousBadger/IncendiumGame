@@ -1,4 +1,3 @@
-
 extends Object
 
 var layers = [3,3,3,3]

@@ -7,11 +7,17 @@ extends Area2D
 # var a=2
 # var b="textvar"
 export(int, 3, 32) var sides = 3
-export var size = 100
+export var size = 100 
 export var circle_collision = false
 
+func set_size(newsize):
+	size = newsize
+	update_polygon()
+
 func _ready():
-	
+	update_polygon()
+
+func update_polygon():
 	# Create regular polygon vectors
 	var vectors = Array()
 	for i in range(0,sides):
@@ -29,6 +35,3 @@ func _ready():
 	# Set visual polygon look
 	get_node("Polygon2D").set_uv(vectors)
 	get_node("Polygon2D").set_polygon(vectors)
-	pass
-
-

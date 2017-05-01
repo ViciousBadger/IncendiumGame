@@ -99,7 +99,6 @@ func create_part(id, pos, layer, index, parentsides):
 		part_instance.get_node("RegularPolygon").sides = sides
 		part_instance.get_node("RegularPolygon").size = size
 	
-		part_instance.enabled = alive# && find != -1
 		part_instance.rot_speed = design.base_rot_speed + design.rot_speed_inc * layer
 		part_instance.color = design.start_color.linear_interpolate(design.end_color, a)
 		part_instance.id = id

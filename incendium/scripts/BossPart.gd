@@ -4,7 +4,6 @@
 extends Node2D
 
 # Set by Boss
-var enabled
 var parent_part
 var rot_speed
 var id
@@ -15,7 +14,7 @@ var bullet_count
 var bullet_speed
 var bullet_type
 var shoot_interval
-var usebeam = false
+var bullet_pattern = preload("res://bulletstuff/patterns/PtrnShotgun.gd").new()
 # Health
 var health
 var health_fade = 0.0
@@ -32,104 +31,93 @@ var outline_width = 0
 var a = 0
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	set_process(true)
-	if enabled:
-		get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b,0.8))
-	if !enabled:
-		get_node("RegularPolygon/Polygon2D").set_color(Color(0,0,0,0))
+	get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b,0.8))
 	health = max_health
 	last_pos = get_global_pos()
-	usebeam = bullet_type == -1
-	#usebeam = true
+	bullet_pattern.init(self)
 	
 	set_scale(Vector2(0,0))
 	
 func _process(delta):
-	rotate(delta * rot_speed)
-	
 	if scale < 1:
 		scale = min(1,lerp(scale, 1, delta * 4))
 	
+	# Update transform
+	rotate(delta * rot_speed)
 	set_pos(get_parent().get_part_pos(id))
 	set_scale(Vector2(1,1) * get_parent().get_part_scale(id) * scale * scale)
 	
+	# Health 'bar' stuff
 	if health_fade > 0:
 		health_fade -= delta * 4
 		if (health_fade < 0): health_fade = 0
 		update()
-	
 	health_size = lerp(health_size, (1.0 - float(health) / max_health), delta * 12)
 	
+	# Health auto regen
 	if health < max_health:
 		health += delta
 		update()
 	
+	# Calc velocity
 	velocity = (get_global_pos() - last_pos) * delta
 	last_pos = get_global_pos()
 	
-	var pos = get_global_pos()
-	
-	if enabled:
-		shoot_timer -= delta
+	shoot_timer -= delta
 	
 	if !get_parent().has_children(id):
 		a = lerp(a, 1, delta * 5)
 		update()
 	
-	if shoot_timer <= 0:
-		shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
-		if !get_parent().has_children(id):
-			scale = 0.95
-			for i in range(0,bullet_count):
-				if !usebeam:
-					var bullet_instance = preload("res://objects/Bullet.tscn").instance()
-					
-					# Calculate bullet direction
-					var velocityAngle
-					if velocity.x == 0 and velocity.y == 0:
-						# Use rotation if no velocity
-						velocityAngle = get_rot() * 3
-					else:
-						velocityAngle = atan2(velocity.y,velocity.x)
-					velocityAngle += (i / float(bullet_count)) * PI * 2
-					var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
-					
-					bullet_instance.type = bullet_type
-					bullet_instance.damage = bullet_size * 2
-					bullet_instance.velocity = bulletVelocity
-					bullet_instance.get_node("RegularPolygon/Polygon2D").set_color(Color(1,1,1).linear_interpolate(color,0.4))
-					bullet_instance.get_node("RegularPolygon").size = bullet_size
-					bullet_instance.get_node("RegularPolygon").remove_from_group("damage_enemy")
-					bullet_instance.get_node("RegularPolygon").add_to_group("damage_player")
-					bullet_instance.set_pos(get_global_pos())
-					get_tree().get_root().add_child(bullet_instance)
-				else:
-					var beam = preload("res://objects/Beam.tscn").instance()
-					beam.follow = weakref(self)
-					beam.set_pos(get_global_pos())
-					beam.get_node("Sprite").set_modulate(get_node("RegularPolygon/Polygon2D").get_color().linear_interpolate(Color(1,1,1),0.5))
-					
-					var velocityAngle
-					if velocity.x == 0 and velocity.y == 0:
-						# Use rotation if no velocity
-						velocityAngle = get_rot() * 3
-					else:
-						velocityAngle = atan2(velocity.x,velocity.y)
-					velocityAngle += (i / float(bullet_count)) * PI * 2
-					#var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed)
-					beam.set_rot(velocityAngle)
-					get_tree().get_root().add_child(beam)
+	if bullet_pattern != null && !get_parent().has_children(id):
+		bullet_pattern.update(delta)
+		
+	#if shoot_timer <= 0:
+	#	shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
+	#	if !get_parent().has_children(id):
+	#		scale = 0.95
+	#		for i in range(0,bullet_count):
+
+func fire_bullet(angle, speedmult):
+	scale = 0.95
+	var b = preload("res://objects/Bullet.tscn").instance()
+	# Calculate bullet direction
+	var velocityAngle
+	if velocity.x == 0 and velocity.y == 0:
+		# Use rotation if no velocity
+		velocityAngle = get_rot() * 3
+	else:
+		velocityAngle = atan2(velocity.y,velocity.x)
+	velocityAngle += angle
+	#velocityAngle += (i / float(bullet_count)) * PI * 2
+	var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed * speedmult)
+	
+	# Set bullet stats
+	b.stats.hostile = true
+	b.stats.damage = bullet_size * 2
+	b.stats.color = Color(1,1,1).linear_interpolate(color,0.4)
+	b.stats.size = bullet_size
+	b.velocity = bulletVelocity
+	
+	# K done
+	b.set_pos(get_global_pos())
+	get_tree().get_root().add_child(b)
 	
 func _on_RegularPolygon_area_enter(area):
-	if area.get_groups().has("damage_enemy") and !get_parent().has_children(id) and enabled and scale > 0.5:
+	# Take damage
+	if area.get_groups().has("damage_enemy") and !get_parent().has_children(id) and scale > 0.5:
 		area.get_parent().queue_free()
-		health -= area.get_parent().damage
+		health -= area.get_parent().stats.damage
 		health_fade = 1.0
+		
+		# Sound
 		get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.2,0.6) + (health / max_health))
 		get_tree().get_root().get_node("Game/SFX").play("Hit_Hurt4")
+		
+		# Dead?
 		if health <= 0:
+			# Explosion
 			for i in range(0,8):
 				var explosion_instance = preload("res://objects/Explosion.tscn").instance()
 				if i == 0:
@@ -141,7 +129,7 @@ func _on_RegularPolygon_area_enter(area):
 				get_tree().get_root().add_child(explosion_instance)
 				explosion_instance.set_global_pos(get_global_pos())
 			
-			get_parent().dead_map[id] = true
+			# Light
 			var light_instance = preload("res://objects/Light.tscn").instance()
 			var s = get_node("RegularPolygon").size * 0.008
 			light_instance.despawn_a = 6
@@ -151,11 +139,17 @@ func _on_RegularPolygon_area_enter(area):
 			light_instance.set_global_pos(get_global_pos())
 			light_instance.despawn()
 			
+			# Score
 			var game = get_tree().get_root().get_node("Game")
 			game.add_score(get_node("RegularPolygon").size)
 			
+			# Deadmap
+			get_parent().dead_map[id] = true
+			
+			# Done
 			queue_free()
 
+# Deprecated function for finding out if any child parts are active
 func any_active_child_parts():
 	for child in get_children():
 		if child.get("enabled") == true:
