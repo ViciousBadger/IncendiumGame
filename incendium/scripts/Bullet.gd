@@ -26,25 +26,28 @@ var scale = 0
 # Light attached to the bullet
 var light_instance
 
+onready var collider = get_node("Area2D")
+onready var sprite = get_node("Area2D/Sprite")
+
 func _ready():
 	set_process(true)
 	
 	set_scale(Vector2(0,0))
-	get_node("RegularPolygon").set_size(stats.size)
-	get_node("RegularPolygon/Polygon2D").set_color(stats.color)
+	collider.set_scale(Vector2(stats.size,stats.size) * 0.1)
+	sprite.set_modulate(stats.color)
 	
 	if stats.hostile:
-		get_node("RegularPolygon").add_to_group("damage_player")
+		collider.add_to_group("damage_player")
 	else:
-		get_node("RegularPolygon").add_to_group("damage_enemy")
+		collider.add_to_group("damage_enemy")
 	
 	# Instance light
-	var light = preload("res://objects/Light.tscn")
-	light_instance = light.instance()
-	var s = stats.size * 0.04
-	light_instance.set_scale(Vector2(s,s))
-	light_instance.set_color(get_node("RegularPolygon/Polygon2D").get_color())
-	get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
+	#var light = preload("res://objects/Light.tscn")
+	#light_instance = light.instance()
+	#var s = stats.size * 0.04
+	#light_instance.set_scale(Vector2(s,s))
+	#light_instance.set_color(sprite.get_modulate())
+	#get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
 	
 	# Bullets with 1 damage cant split
 	if type == BTYPE_SPLITTING && stats.damage == 1:
@@ -52,7 +55,7 @@ func _ready():
 
 func _process(delta):
 	# Update light pos
-	light_instance.set_global_pos(get_global_pos())
+	#light_instance.set_global_pos(get_global_pos())
 	
 	for mod in stats.mods:
 		mod.update(self, delta)
@@ -82,4 +85,4 @@ func _exit_tree():
 	expl.get_node("RegularPolygon/Polygon2D").set_color(Color(col.r,col.g,col.b,0.5))
 	get_tree().get_root().add_child(expl)
 	expl.set_global_pos(get_global_pos())
-	light_instance.despawn()
+	#light_instance.despawn()

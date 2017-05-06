@@ -53,7 +53,7 @@ func _on_RegularPolygon_area_enter( area ):
 		
 		
 		bullet.velocity = away_from_me.normalized() * speed * 2 #-bullet.velocity
-		area.get_node("Polygon2D").set_color(Color(1,1,1))
+		area.get_node("Sprite").set_modulate(Color(1,1,1))
 		area.remove_from_group("damage_player")
 		area.add_to_group("damage_enemy")
 		t = max(0,t - TIME / MAXBULLETS)
