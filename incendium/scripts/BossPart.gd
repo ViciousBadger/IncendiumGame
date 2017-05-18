@@ -96,7 +96,7 @@ func fire_bullet(angle, speedmult):
 	# Set bullet stats
 	b.stats.hostile = true
 	b.stats.damage = bullet_size * 2
-	b.stats.color = Color(1,1,1).linear_interpolate(color,0.4)
+	b.stats.color = Color(1,1,1).linear_interpolate(color,0.6)
 	b.stats.size = bullet_size
 	b.velocity = bulletVelocity
 	

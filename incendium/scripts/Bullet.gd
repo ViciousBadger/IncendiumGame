@@ -26,17 +26,20 @@ var scale = 0
 # Light attached to the bullet
 var light_instance
 
+onready var collider = get_node("Area2D")
+onready var sprite = get_node("Area2D/Sprite")
+
 func _ready():
 	set_process(true)
 	
 	set_scale(Vector2(0,0))
-	get_node("RegularPolygon").set_size(stats.size)
-	get_node("RegularPolygon/Polygon2D").set_color(stats.color)
+	collider.set_scale(Vector2(stats.size,stats.size) * 0.1)
+	sprite.set_modulate(stats.color)
 	
 	if stats.hostile:
-		get_node("RegularPolygon").add_to_group("damage_player")
+		collider.add_to_group("damage_player")
 	else:
-		get_node("RegularPolygon").add_to_group("damage_enemy")
+		collider.add_to_group("damage_enemy")
 	
 
 	
@@ -82,6 +85,6 @@ func _exit_tree():
 	light_instance = light.instance()
 	var s = stats.size * 0.04
 	light_instance.set_scale(Vector2(s,s))
-	light_instance.set_color(get_node("RegularPolygon/Polygon2D").get_color())
+	light_instance.set_color(sprite.get_modulate())
 	get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
 	light_instance.despawn()
