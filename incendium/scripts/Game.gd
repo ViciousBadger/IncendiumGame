@@ -44,6 +44,12 @@ var regex_list = [
 "a*b*c*"
 ]
 
+var pattern_list = [
+#preload("res://bulletstuff/patterns/PtrnBurst.gd"),
+#preload("res://bulletstuff/patterns/PtrnShotgun.gd"),
+preload("res://bulletstuff/patterns/PtrnSplitBurst.gd"),
+]
+
 # Starts the party
 func start_game():
 	playing = true
@@ -140,6 +146,7 @@ func gen_boss():
 	
 	var layers = []
 	var bullettypes = []
+	var bulletpatterns = []
 	var largest = 3;
 	for i in range(0,layer_count):
 		var l = floor(rand_range(3,6));
@@ -147,9 +154,11 @@ func gen_boss():
 			largest = l;
 		layers.append(l)
 		bullettypes.append(floor(rand_range(0,5)))
+		bulletpatterns.append(pattern_list[floor(rand_range(0,pattern_list.size()))])
 		#bullettypes.append(2)
 	design.layers = layers
 	design.bullettypes = bullettypes
+	design.bulletpatterns = bulletpatterns
 	
 	design.regex = ".*"#random_regex(1 + (abs(randi())%3), largest)
 	

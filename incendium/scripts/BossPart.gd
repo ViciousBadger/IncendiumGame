@@ -3,18 +3,24 @@
 
 extends Node2D
 
-# Set by Boss
+# Every var below this is set by Boss
+
+#Stuff
 var parent_part
 var rot_speed
 var id
 var color
 var max_health
-var bullet_size
-var bullet_count
+# Shooting
+var bullet_stats = preload("res://structs/BulletStats.gd").new()
 var bullet_speed
-var bullet_type
-var shoot_interval
+#var bullet_type
+var bullet_count
 var bullet_pattern = preload("res://bulletstuff/patterns/PtrnShotgun.gd").new()
+var shoot_interval
+
+# Every var below this is not set by Boss
+
 # Health
 var health
 var health_fade = 0.0
@@ -26,7 +32,6 @@ var last_pos
 var velocity
 var scale = 0.01
 var outline_width = 0
-
 # Outline alpha
 var a = 0
 
@@ -95,9 +100,9 @@ func fire_bullet(angle, speedmult):
 	
 	# Set bullet stats
 	b.stats.hostile = true
-	b.stats.damage = bullet_size * 2
+	b.stats.damage = bullet_stats.damage #bullet_size * 2
 	b.stats.color = Color(1,1,1).linear_interpolate(color,0.6)
-	b.stats.size = bullet_size
+	b.stats.size = bullet_stats.size
 	b.velocity = bulletVelocity
 	
 	# K done
