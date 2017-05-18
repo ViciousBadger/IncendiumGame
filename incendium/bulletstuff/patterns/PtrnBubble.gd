@@ -13,5 +13,7 @@ func update(delta):
 	if firetimer <= 0:
 		var spread = 0.8
 		for i in range(0,boss_part.bullet_count):
-			boss_part.fire_bullet(- spread/2 + (i / float(boss_part.bullet_count) * spread), 1)
+			var spread2 = -spread/2 + (i / float(boss_part.bullet_count) * spread)
+			var spd = abs(spread2)
+			boss_part.fire_bullet(spread2, 1 + spd)
 		firetimer = boss_part.shoot_interval
