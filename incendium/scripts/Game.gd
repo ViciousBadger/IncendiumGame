@@ -151,7 +151,7 @@ func gen_boss():
 	design.layers = layers
 	design.bullettypes = bullettypes
 	
-	design.regex = random_regex(1 + (abs(randi())%3), largest)
+	design.regex = ".*"#random_regex(1 + (abs(randi())%3), largest)
 	
 	design.base_size = layer_count * 20
 	design.size_dropoff = 0.6

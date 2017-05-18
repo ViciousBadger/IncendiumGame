@@ -4,7 +4,7 @@
 extends Light2D
 
 var a = 0
-var despawn_a = 3
+var despawn_a = 10
 var despawn = false
 
 func _ready():
@@ -18,7 +18,7 @@ func _process(delta):
 	if !despawn:
 		a = lerp(a, 1, delta * 2)
 	else:
-		a = lerp(a, 0, delta * 4)
+		a = lerp(a, 0, delta * 2)
 		if a <= 0.01:
 			queue_free()
 	set_energy(a)

@@ -19,10 +19,10 @@ func _ready():
 
 func _process(delta):
 	translate(velocity * scale * delta)
-	scale = lerp(scale, 0, delta * 4) #delta * 0.2
+	scale = lerp(scale, 0, delta * 3) #delta * 0.2
 	set_scale(Vector2(scale,scale))
-	var speed = velocity.length()
-	speed = lerp(speed, 0, delta * 4)
-	velocity = velocity.normalized() * speed
+	#var speed = velocity.length()
+	#speed = lerp(speed, 0, delta * 4)
+	#velocity = velocity.normalized() * speed
 	if scale <= 0.01:
 		queue_free()
