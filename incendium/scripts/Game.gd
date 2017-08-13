@@ -45,9 +45,12 @@ var regex_list = [
 ]
 
 var pattern_list = [
-#preload("res://bulletstuff/patterns/PtrnBurst.gd"),
-#preload("res://bulletstuff/patterns/PtrnShotgun.gd"),
-preload("res://bulletstuff/patterns/PtrnSplitBurst.gd"),
+preload("res://bulletstuff/patterns/PtrnBurst.gd"),
+preload("res://bulletstuff/patterns/PtrnShotgun.gd"),
+preload("res://bulletstuff/patterns/PtrnCartwheel.gd"),
+preload("res://bulletstuff/patterns/PtrnSprinkles.gd"),
+#preload("res://bulletstuff/patterns/PtrnBubble.gd"),
+#preload("res://bulletstuff/patterns/PtrnSplitBurst.gd"),
 ]
 
 # Starts the party

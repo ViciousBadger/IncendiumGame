@@ -14,7 +14,7 @@ var shield_cooldown = 0
 var fire_timer = 0
 var velocity = Vector2(0,0)
 
-const MAX_HEALTH = 100
+const MAX_HEALTH = 3
 var health = MAX_HEALTH
 
 var inv_time = 0
@@ -149,7 +149,8 @@ func _on_RegularPolygon_area_enter( area ):
 	if area.get_groups().has("damage_player"):
 		var bullet = area.get_parent()
 		bullet.queue_free()
-		var dmgtotake = bullet.stats.damage * 2
+		#var dmgtotake = bullet.stats.damage * 2
+		var dmgtotake = 1
 		lose_health(dmgtotake)
 	if area.get_groups().has("damage_player_solid"):
 		lose_health(100)

@@ -27,7 +27,7 @@ var scale = 0
 var light_instance
 
 onready var collider = get_node("Area2D")
-onready var sprite = get_node("Area2D/Sprite")
+onready var sprite = get_node("Area2D/Sprite1")
 
 func _ready():
 	set_process(true)
