@@ -90,8 +90,6 @@ script/script = ExtResource( 4 )
 
 [node name="Smokes" type="Node" parent="."]
 
-editor/display_folded = true
-
 [node name="Smoke" parent="Smokes" instance=ExtResource( 5 )]
 
 [node name="Smoke1" parent="Smokes" instance=ExtResource( 5 )]

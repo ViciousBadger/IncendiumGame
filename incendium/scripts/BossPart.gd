@@ -139,7 +139,7 @@ func _on_RegularPolygon_area_enter(area):
 			var s = get_node("RegularPolygon").size * 0.008
 			light_instance.despawn_a = 6
 			light_instance.set_scale(Vector2(s,s))
-			light_instance.set_color(get_node("RegularPolygon/Polygon2D").get_color())
+			light_instance.set_modulate(get_node("RegularPolygon/Polygon2D").get_color())
 			get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
 			light_instance.set_global_pos(get_global_pos())
 			light_instance.despawn()

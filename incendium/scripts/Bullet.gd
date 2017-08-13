@@ -41,7 +41,13 @@ func _ready():
 	else:
 		collider.add_to_group("damage_enemy")
 	
-
+	# Instance light
+	var light = preload("res://objects/Light.tscn")
+	light_instance = light.instance()
+	var s = stats.size * 0.04
+	light_instance.set_scale(Vector2(s,s))
+	light_instance.set_modulate(sprite.get_modulate())
+	get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
 	
 	# Bullets with 1 damage cant split
 	if type == BTYPE_SPLITTING && stats.damage == 1:
@@ -49,7 +55,7 @@ func _ready():
 
 func _process(delta):
 	# Update light pos
-	#light_instance.set_global_pos(get_global_pos())
+	light_instance.set_global_pos(get_global_pos())
 	
 	for mod in stats.mods:
 		mod.update(self, delta)
@@ -80,11 +86,4 @@ func _exit_tree():
 	get_tree().get_root().add_child(expl)
 	expl.set_global_pos(get_global_pos())
 	
-	# Instance light
-	var light = preload("res://objects/Light.tscn")
-	light_instance = light.instance()
-	var s = stats.size * 0.04
-	light_instance.set_scale(Vector2(s,s))
-	light_instance.set_color(sprite.get_modulate())
-	get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
 	light_instance.despawn()
