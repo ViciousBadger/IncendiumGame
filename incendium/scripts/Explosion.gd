@@ -10,16 +10,18 @@ extends Node2D
 var velocity = Vector2(0,0)
 var scale = 1
 
+onready var fadespd = rand_range(2, 5)
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
-	var maxspd = get_node("RegularPolygon").size * 20
+	var maxspd = get_node("RegularPolygon").size * 35
 	velocity += Vector2(rand_range(-maxspd,maxspd),rand_range(-maxspd,maxspd))
 
 func _process(delta):
 	translate(velocity * scale * delta)
-	scale = lerp(scale, 0, delta * 3) #delta * 0.2
+	scale = lerp(scale, 0, delta * fadespd) #delta * 0.2
 	set_scale(Vector2(scale,scale))
 	#var speed = velocity.length()
 	#speed = lerp(speed, 0, delta * 4)

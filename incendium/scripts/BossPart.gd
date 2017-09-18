@@ -117,8 +117,8 @@ func _on_RegularPolygon_area_enter(area):
 		health_fade = 1.0
 		
 		# Sound
-		get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.2,0.6) + (health / max_health))
-		get_tree().get_root().get_node("Game/SFX").play("Hit_Hurt4")
+		#get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.2,0.6) + (health / max_health))
+		#get_tree().get_root().get_node("Game/SFX").play("Hit_Hurt4")
 		
 		# Dead?
 		if health <= 0:
@@ -126,8 +126,8 @@ func _on_RegularPolygon_area_enter(area):
 			for i in range(0,get_node("RegularPolygon").size):
 				var explosion_instance = preload("res://objects/Explosion.tscn").instance()
 				if i == 0:
-					get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale((6 - get_node("RegularPolygon").size / 25) + rand_range(-0.5,0.5))
-					get_tree().get_root().get_node("Game/SFX").play("Explosion21")
+					get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(1 + rand_range(-0.5,0.5))
+					get_tree().get_root().get_node("Game/SFX").play("explode4")
 				explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 4
 				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(color)
 				explosion_instance.velocity = velocity * 100

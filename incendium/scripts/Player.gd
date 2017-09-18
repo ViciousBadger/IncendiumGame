@@ -3,7 +3,7 @@
 
 extends Node2D
 
-const SPEED = 420 / 1.42
+const SPEED = 300
 const ACCEL = 3000
 
 export var polar_controls = false
@@ -52,10 +52,20 @@ func _process(delta):
 		
 		if relative_pos.length() > velocity.length():
 			input_vec = relative_pos.normalized()
+			
+	# Shooting INPUT
+	var shooting = false
+	if use_mouse:
+		shooting = Input.is_mouse_button_pressed(BUTTON_LEFT)
+	else:
+		shooting = Input.is_key_pressed(KEY_SPACE) || Input.is_key_pressed(KEY_F)
 	
 	# Normal movement
 	if !polar_controls:
-		var target_velocity = input_vec.normalized() * SPEED
+		var movespd = SPEED
+		if shooting:
+			movespd *= 0.8
+		var target_velocity = input_vec.normalized() * movespd
 		
 		var towards_target = target_velocity - velocity
 		var dist_to_target = towards_target.length()
@@ -106,12 +116,6 @@ func _process(delta):
 		shield_cooldown -= delta
 	
 	# Shooting
-	var shooting = false
-	if use_mouse:
-		shooting = Input.is_mouse_button_pressed(BUTTON_LEFT)
-	else:
-		shooting = Input.is_key_pressed(KEY_SPACE) || Input.is_key_pressed(KEY_F)
-		
 	if shooting && fire_timer <= 0:
 		var bullet = preload("res://objects/Bullet.tscn").instance()
 		bullet.set_pos(get_pos())
