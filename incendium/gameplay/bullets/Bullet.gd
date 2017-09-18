@@ -23,6 +23,9 @@ var lifetime = 6
 var actiontime = 2
 var scale = 0
 
+# Vars for mods
+var stime = 2
+
 # Light attached to the bullet
 var light_instance
 

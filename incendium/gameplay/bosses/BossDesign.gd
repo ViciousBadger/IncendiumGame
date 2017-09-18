@@ -1,7 +1,7 @@
 extends Object
 
 var layers = [3,3,3,3]
-var bullettypes = [0,0,0,0]
+var bulletmods = []
 var bulletpatterns = []
 var regex = ".*"
 

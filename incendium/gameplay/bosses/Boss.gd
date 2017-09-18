@@ -111,9 +111,9 @@ func create_part(id, pos, layer, index, parentsides):
 		part_instance.bullet_stats.damage = power * 4
 		part_instance.bullet_count = 1 + (power-1) * 12
 		part_instance.bullet_speed = 80 + 60 * (power-1)
-		#part_instance.bullet_type = design.bullettypes[layer]
+		part_instance.bullet_stats.mods = [design.bulletmods[layer].new()]
 		part_instance.bullet_pattern = design.bulletpatterns[layer].new()
-
+		
 		# part_instance.shoot_timer = 1.0 + (i / 3.0)
 		part_instance.set_draw_behind_parent(true)
 		# Add to parent + set pos

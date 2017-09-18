@@ -53,6 +53,13 @@ preload("res://gameplay/bullets/patterns/PtrnSprinkles.gd"),
 #preload("res://bulletstuff/patterns/PtrnSplitBurst.gd"),
 ]
 
+var mod_list = [
+preload("res://gameplay/bullets/mods/ModAccel.gd"),
+preload("res://gameplay/bullets/mods/ModCurve.gd"),
+#preload("res://gameplay/bullets/mods/ModSine.gd"),
+preload("res://gameplay/bullets/mods/ModSplit.gd"),
+]
+
 # Starts the party
 func start_game():
 	playing = true
@@ -148,7 +155,7 @@ func gen_boss():
 	var layer_count = 4 #floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
 	
 	var layers = []
-	var bullettypes = []
+	var bulletmods = []
 	var bulletpatterns = []
 	var largest = 3;
 	for i in range(0,layer_count):
@@ -156,11 +163,10 @@ func gen_boss():
 		if (l>largest):
 			largest = l;
 		layers.append(l)
-		bullettypes.append(floor(rand_range(0,5)))
+		bulletmods.append(mod_list[floor(rand_range(0,mod_list.size()))])
 		bulletpatterns.append(pattern_list[floor(rand_range(0,pattern_list.size()))])
-		#bullettypes.append(2)
 	design.layers = layers
-	design.bullettypes = bullettypes
+	design.bulletmods = bulletmods
 	design.bulletpatterns = bulletpatterns
 	
 	design.regex = ".*"#random_regex(1 + (abs(randi())%3), largest)
