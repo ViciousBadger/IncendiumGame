@@ -14,7 +14,7 @@ const BTYPE_SPLITTING = 4
 var type = BTYPE_BASIC # TODO remove
 
 # Set from outside before _ready() to change stats
-var stats = preload("res://structs/BulletStats.gd").new()
+var stats = preload("res://gameplay/bullets/BulletStats.gd").new()
 
 var velocity = Vector2(1000,0)
 
@@ -42,7 +42,7 @@ func _ready():
 		collider.add_to_group("damage_enemy")
 	
 	# Instance light
-	var light = preload("res://objects/Light.tscn")
+	var light = preload("res://effects/Light.tscn")
 	light_instance = light.instance()
 	var s = stats.size * 0.04
 	light_instance.set_scale(Vector2(s,s))
@@ -78,7 +78,7 @@ func _process(delta):
 		
 func _exit_tree():
 	# Explode when removed
-	var expl = preload("res://objects/Explosion.tscn").instance()
+	var expl = preload("res://effects/Explosion.tscn").instance()
 	expl.velocity = -velocity * 0.5
 	expl.get_node("RegularPolygon").size = stats.size
 	var col = stats.color

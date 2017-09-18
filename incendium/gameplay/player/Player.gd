@@ -117,7 +117,7 @@ func _process(delta):
 	
 	# Shooting
 	if shooting && fire_timer <= 0:
-		var bullet = preload("res://objects/Bullet.tscn").instance()
+		var bullet = preload("res://gameplay/bullets/Bullet.tscn").instance()
 		bullet.set_pos(get_pos())
 		get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.9,1.1))
 		get_tree().get_root().get_node("Game/SFX").play("Laser_Shoot14")
@@ -143,7 +143,7 @@ func _process(delta):
 		shielding = Input.is_key_pressed(KEY_D)
 
 	if shielding && shield_cooldown <= 0:
-		var shield = preload("res://objects/PlayerShield.tscn").instance()
+		var shield = preload("res://gameplay/player/PlayerShield.tscn").instance()
 		shield.node_to_follow = get_path()
 		get_tree().get_root().add_child(shield)
 		shield.set_global_pos(get_global_pos())
@@ -168,7 +168,7 @@ func lose_health(hp):
 		get_parent().score_mult_timer = 0
 		if health <= 0:
 			for i in range(0,8):
-				var explosion_instance = preload("res://objects/Explosion.tscn").instance()
+				var explosion_instance = preload("res://effects/Explosion.tscn").instance()
 				explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size
 				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
 				# explosion_instance.velocity = Vector2(0,0)

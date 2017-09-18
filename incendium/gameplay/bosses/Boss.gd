@@ -94,7 +94,7 @@ func create_part(id, pos, layer, index, parentsides):
 			break
 	
 	if alive || id == "":
-		var part_instance = preload("res://objects/BossPart.tscn").instance()
+		var part_instance = preload("res://gameplay/bosses/BossPart.tscn").instance()
 		# Set values
 		part_instance.get_node("RegularPolygon").sides = sides
 		part_instance.get_node("RegularPolygon").size = size

@@ -12,11 +12,11 @@ var id
 var color
 var max_health
 # Shooting
-var bullet_stats = preload("res://structs/BulletStats.gd").new()
+var bullet_stats = preload("res://gameplay/bullets/BulletStats.gd").new()
 var bullet_speed
 #var bullet_type
 var bullet_count
-var bullet_pattern = preload("res://bulletstuff/patterns/PtrnShotgun.gd").new()
+var bullet_pattern = preload("res://gameplay/bullets/patterns/PtrnShotgun.gd").new()
 var shoot_interval
 
 # Every var below this is not set by Boss
@@ -86,7 +86,7 @@ func _process(delta):
 
 func fire_bullet(angle, speedmult):
 	scale = 0.95
-	var b = preload("res://objects/Bullet.tscn").instance()
+	var b = preload("res://gameplay/bullets/Bullet.tscn").instance()
 	# Calculate bullet direction
 	var velocityAngle
 	if velocity.x == 0 and velocity.y == 0:
@@ -124,7 +124,7 @@ func _on_RegularPolygon_area_enter(area):
 		if health <= 0:
 			# Explosion
 			for i in range(0,get_node("RegularPolygon").size):
-				var explosion_instance = preload("res://objects/Explosion.tscn").instance()
+				var explosion_instance = preload("res://effects/Explosion.tscn").instance()
 				if i == 0:
 					get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(1 + rand_range(-0.5,0.5))
 					get_tree().get_root().get_node("Game/SFX").play("explode4")
@@ -135,7 +135,7 @@ func _on_RegularPolygon_area_enter(area):
 				explosion_instance.set_global_pos(get_global_pos())
 			
 			# Light
-			var light_instance = preload("res://objects/Light.tscn").instance()
+			var light_instance = preload("res://effects/Light.tscn").instance()
 			var s = get_node("RegularPolygon").size * 0.008
 			light_instance.despawn_a = 6
 			light_instance.set_scale(Vector2(s,s))

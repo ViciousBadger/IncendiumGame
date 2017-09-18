@@ -45,10 +45,10 @@ var regex_list = [
 ]
 
 var pattern_list = [
-preload("res://bulletstuff/patterns/PtrnBurst.gd"),
-preload("res://bulletstuff/patterns/PtrnShotgun.gd"),
-preload("res://bulletstuff/patterns/PtrnCartwheel.gd"),
-preload("res://bulletstuff/patterns/PtrnSprinkles.gd"),
+preload("res://gameplay/bullets/patterns/PtrnBurst.gd"),
+preload("res://gameplay/bullets/patterns/PtrnShotgun.gd"),
+preload("res://gameplay/bullets/patterns/PtrnCartwheel.gd"),
+preload("res://gameplay/bullets/patterns/PtrnSprinkles.gd"),
 #preload("res://bulletstuff/patterns/PtrnBubble.gd"),
 #preload("res://bulletstuff/patterns/PtrnSplitBurst.gd"),
 ]
@@ -56,7 +56,7 @@ preload("res://bulletstuff/patterns/PtrnSprinkles.gd"),
 # Starts the party
 func start_game():
 	playing = true
-	var player = preload("res://objects/Player.tscn").instance()
+	var player = preload("res://gameplay/player/Player.tscn").instance()
 	player.set_global_pos(Vector2(360,600))
 	add_child(player)
 	#get_node("Player").set_hidden(false)
@@ -90,7 +90,7 @@ func _process(delta):
 		if OS.get_time_scale() < 1:
 			OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
 			if OS.get_time_scale() >= 1 and !has_node("Player") and lives > 0:
-				var p = preload("res://objects/Player.tscn").instance()
+				var p = preload("res://gameplay/player/Player.tscn").instance()
 				add_child(p)
 				p.set_global_pos(Vector2(360,600))
 				lives-=1
@@ -122,7 +122,7 @@ func add_score(amount):
 
 # Spawns a boss from a boss design object
 func spawn_boss(design):
-	var boss_instance = preload("res://objects/Boss.tscn").instance()
+	var boss_instance = preload("res://gameplay/bosses/Boss.tscn").instance()
 	last_boss = boss_instance
 	last_boss_wr = weakref(boss_instance)
 	
@@ -141,7 +141,7 @@ func spawn_boss(design):
 
 # Generates a random boss design
 func gen_boss():
-	var design = preload("res://structs/BossDesign.gd").new()
+	var design = preload("res://gameplay/bosses/BossDesign.gd").new()
 	
 	randomize() # Randomize random seed
 	

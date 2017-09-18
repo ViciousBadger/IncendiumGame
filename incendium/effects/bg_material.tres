@@ -1,6 +1,6 @@
 [gd_resource type="CanvasItemMaterial" load_steps=2 format=1]
 
-[ext_resource path="res://bg_shader.tres" type="Shader" id=1]
+[ext_resource path="res://effects/bg_shader.tres" type="Shader" id=1]
 
 [resource]
 

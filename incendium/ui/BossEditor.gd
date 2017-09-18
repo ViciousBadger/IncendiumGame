@@ -5,7 +5,7 @@ extends Panel
 # var a=2
 # var b="textvar"
 
-var BossDesign = preload("res://structs/BossDesign.gd")
+var BossDesign = preload("res://gameplay/bosses/BossDesign.gd")
 
 var drawtimer = 0
 const drawtime = 0.2
@@ -28,7 +28,7 @@ func _input(event):
 			_on_FightButton_pressed()
 
 func _on_FightButton_pressed():
-	var boss = preload("res://objects/Boss.tscn").instance()
+	var boss = preload("res://gameplay/bosses/Boss.tscn").instance()
 	
 	var boss = BossDesign.new()
 	boss.base_size = get_node("BaseSizeField").get_value()

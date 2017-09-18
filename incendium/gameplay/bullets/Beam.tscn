@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=1]
 
-[ext_resource path="res://scripts/Beam.gd" type="Script" id=1]
-[ext_resource path="res://gfx/box.png" type="Texture" id=2]
+[ext_resource path="res://gameplay/bullets/Beam.gd" type="Script" id=1]
+[ext_resource path="res://ui/box.png" type="Texture" id=2]
 
 [node name="Beam" type="Area2D" groups=[ "damage_player" ]]
 
