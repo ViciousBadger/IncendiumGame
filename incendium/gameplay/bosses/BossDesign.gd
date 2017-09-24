@@ -1,8 +1,6 @@
 extends Object
 
-var layers = [3,3,3,3]
-var bulletmods = []
-var bulletpatterns = []
+var layers = []
 var regex = ".*"
 
 var base_size = 100
@@ -15,3 +13,8 @@ var rot_speed_inc = - PI * 0.1
 
 var start_color = Color(0,0,1)
 var end_color = Color(0,1,0)
+
+func new_layer():
+	var l = new()
+	layers.append(l)
+	return l

@@ -14,9 +14,8 @@ var max_health
 # Shooting
 var bullet_stats = preload("res://gameplay/bullets/BulletStats.gd").new()
 var bullet_speed
-#var bullet_type
 var bullet_count
-var bullet_pattern = preload("res://gameplay/bullets/patterns/PtrnShotgun.gd").new()
+var bullet_patterns = []
 var shoot_interval
 
 # Every var below this is not set by Boss
@@ -40,7 +39,11 @@ func _ready():
 	get_node("RegularPolygon/Polygon2D").set_color(Color(color.r,color.g,color.b,0.8))
 	health = max_health
 	last_pos = get_global_pos()
-	bullet_pattern.init(self)
+	
+	var spd = 1
+	for p in bullet_patterns:
+		p.init(self, spd)
+		spd *= 0.8
 	
 	set_scale(Vector2(0,0))
 	
@@ -75,14 +78,9 @@ func _process(delta):
 		a = lerp(a, 1, delta * 5)
 		update()
 	
-	if bullet_pattern != null && !get_parent().has_children(id):
-		bullet_pattern.update(delta)
-		
-	#if shoot_timer <= 0:
-	#	shoot_timer = shoot_interval # + (angle_towards_center * 0.4)
-	#	if !get_parent().has_children(id):
-	#		scale = 0.95
-	#		for i in range(0,bullet_count):
+	if !get_parent().has_children(id):
+		for p in bullet_patterns:
+			p.update(delta)
 
 func fire_bullet(angle, speedmult):
 	scale = 0.95
@@ -99,11 +97,7 @@ func fire_bullet(angle, speedmult):
 	var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed * speedmult)
 	
 	# Set bullet stats
-	b.stats.hostile = true
-	b.stats.damage = bullet_stats.damage #bullet_size * 2
-	b.stats.color = Color(1,1,1).linear_interpolate(color,0.6)
-	b.stats.size = bullet_stats.size
-	#b.stats.mods = bullet_stats.mods
+	b.stats = bullet_stats.clone()
 	b.velocity = bulletVelocity
 	
 	# K done
