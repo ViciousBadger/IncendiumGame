@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://gameplay/bullets/Beam.gd" type="Script" id=1]
+[ext_resource path="res://ui/box.png" type="Texture" id=2]
+
+[node name="Beam" type="Area2D" groups=[ "damage_player" ]]
+
+input/pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( 0, 512 )
+transform/scale = Vector2( 8, 128 )
+texture = ExtResource( 2 )
+
+

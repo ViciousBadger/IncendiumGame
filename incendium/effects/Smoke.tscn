@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://effects/smoke.png" type="Texture" id=1]
+[ext_resource path="res://effects/Smoke.gd" type="Script" id=2]
+
+[node name="Smoke" type="Sprite" groups=[ "bgcolor" ]]
+
+visibility/blend_mode = 2
+visibility/light_mask = 2
+transform/scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 1 )
+modulate = Color( 1, 1, 1, 0.501961 )
+script/script = ExtResource( 2 )
+
+
