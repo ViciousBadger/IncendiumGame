@@ -4,10 +4,12 @@ var firetimer = 0
 var odd = false
 
 var boss_part
+var speed
 
-func init(bp):
+func init(bp, spd):
 	boss_part = bp
-	firetimer = bp.shoot_interval
+	speed = spd
+	firetimer = bp.shoot_interval / 2
 
 func update(delta):
 	firetimer -= delta
@@ -16,6 +18,6 @@ func update(delta):
 		if odd:
 			start = 1
 		for i in range(start,boss_part.bullet_count,2):
-			boss_part.fire_bullet((i / float(boss_part.bullet_count)) * PI * 2,1)
+			boss_part.fire_bullet((i / float(boss_part.bullet_count)) * PI * 2, speed)
 		firetimer = boss_part.shoot_interval / 2
 		odd = !odd

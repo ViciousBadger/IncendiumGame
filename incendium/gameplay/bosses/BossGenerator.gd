@@ -19,7 +19,7 @@ preload("res://gameplay/bullets/patterns/PtrnShotgun.gd"),
 preload("res://gameplay/bullets/patterns/PtrnCartwheel.gd"),
 preload("res://gameplay/bullets/patterns/PtrnSprinkles.gd"),
 #preload("res://bulletstuff/patterns/PtrnBubble.gd"),
-#preload("res://bulletstuff/patterns/PtrnSplitBurst.gd"),
+preload("res://gameplay/bullets/patterns/PtrnSplitBurst.gd"),
 ]
 
 var mod_list = [
