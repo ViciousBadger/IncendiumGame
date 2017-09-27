@@ -25,6 +25,7 @@ var health
 var health_fade = 0.0
 var health_size = 0
 # Shooting
+var active
 var shoot_timer = 2
 # Misc
 var last_pos
@@ -74,39 +75,15 @@ func _process(delta):
 	
 	shoot_timer -= delta
 	
-	if !get_parent().has_children(id):
+	active = !get_parent().has_children(id)
+	
+	if active:
 		a = lerp(a, 1, delta * 5)
 		update()
 	
-	if !get_parent().has_children(id):
-		for p in bullet_patterns:
-			p.update(delta)
-
-func fire_bullet(angle, speedmult):
-	scale = 0.95
-	var b = preload("res://gameplay/bullets/Bullet.tscn").instance()
-	# Calculate bullet direction
-	var velocityAngle
-	if velocity.x == 0 and velocity.y == 0:
-		# Use rotation if no velocity
-		velocityAngle = get_rot() * 3
-	else:
-		velocityAngle = atan2(velocity.y,velocity.x)
-	velocityAngle += angle
-	#velocityAngle += (i / float(bullet_count)) * PI * 2
-	var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (bullet_speed * speedmult)
-	
-	# Set bullet stats
-	b.stats = bullet_stats.clone()
-	b.velocity = bulletVelocity
-	
-	# K done
-	b.set_pos(get_global_pos())
-	get_tree().get_root().add_child(b)
-	
 func _on_RegularPolygon_area_enter(area):
 	# Take damage
-	if area.get_groups().has("damage_enemy") and !get_parent().has_children(id) and scale > 0.5:
+	if area.get_groups().has("damage_enemy") and active and scale > 0.5:
 		area.get_parent().queue_free()
 		health -= area.get_parent().stats.damage
 		health_fade = 1.0

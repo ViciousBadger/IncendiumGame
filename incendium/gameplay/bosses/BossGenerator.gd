@@ -41,12 +41,22 @@ func gen_boss_design():
 		var layer = design.new_layer()
 		#Polygon sides
 		layer.pgonsides = floor(rand_range(3,6))
-		if (l.pgonsides > largest): largest = layer.pgonsides;
+		if (layer.pgonsides > largest): largest = layer.pgonsides;
 		#Turrets
 		for turret_i in range(0,layer_count - layer_i):
 			var t = layer.new_turret()
 			t.pattern = pattern_list[floor(rand_range(0,pattern_list.size()))]
-			#TODO: Add bullet mods to turret
+			#TODO: Generate bullet mods
+			var power = layer_count - layer_i
+			t.size = power * 2
+			t.bullet_count = 1 + (power-1) * 3
+			t.bullet_speed = 80 + 60 * (power-1) + rand_range(-turret_i * 50, turret_i * 50)
+			t.bullet_angle = 0
+			if turret_i > 0: t.bullet_angle = rand_range(2, 2)
+			var a = layer_i / float(layer_count - 1)
+			t.shoot_interval = lerp(0.3, 2, a)
+			#TODO: Set initial shoot timer to make part shoot in succession
+			# part.shoot_timer = 1 + (index/parentsides) * part.shoot_interval
 	
 	design.regex = ".*"#random_regex(1 + (abs(randi())%3), largest)
 	

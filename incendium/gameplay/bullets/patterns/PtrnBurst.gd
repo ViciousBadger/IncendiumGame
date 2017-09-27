@@ -2,17 +2,15 @@ extends Object
 
 var firetimer = 0
 
-var boss_part
-var speed
+var firer
 
-func init(bp, spd):
-	boss_part = bp
-	speed = spd
-	firetimer = bp.shoot_interval
+func init(f):
+	firer = f
+	firetimer = f.get_shoot_interval()
 
 func update(delta):
 	firetimer -= delta
 	if firetimer <= 0:
-		for i in range(0,boss_part.bullet_count):
-			boss_part.fire_bullet((i / float(boss_part.bullet_count)) * PI * 2, speed)
-		firetimer = boss_part.shoot_interval
+		for i in range(0,firer.get_bullet_count()):
+			firer.fire_bullet((i / float(firer.get_bullet_count())) * PI * 2, 1)
+		firetimer = firer.get_shoot_interval()

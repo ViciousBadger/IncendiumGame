@@ -15,6 +15,6 @@ var start_color = Color(0,0,1)
 var end_color = Color(0,1,0)
 
 func new_layer():
-	var l = new()
+	var l = preload("./BossDesignLayer.gd").new()
 	layers.append(l)
 	return l

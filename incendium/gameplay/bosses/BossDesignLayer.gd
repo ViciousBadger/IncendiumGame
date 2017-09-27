@@ -4,6 +4,6 @@ var pgonsides
 var turrets = []
 
 func new_turret():
-	var t = new()
+	var t = preload("./BossDesignTurret.gd").new()
 	turrets.append(t)
 	return t

@@ -3,13 +3,11 @@ extends Object
 var firetimer = 0
 var odd = false
 
-var boss_part
-var speed
+var firer
 
-func init(bp, spd):
-	boss_part = bp
-	speed = spd
-	firetimer = bp.shoot_interval / 2
+func init(f):
+	firer = f
+	firetimer = firer.get_shoot_interval() / 2
 
 func update(delta):
 	firetimer -= delta
@@ -17,7 +15,7 @@ func update(delta):
 		var start = 0
 		if odd:
 			start = 1
-		for i in range(start,boss_part.bullet_count,2):
-			boss_part.fire_bullet((i / float(boss_part.bullet_count)) * PI * 2, speed)
-		firetimer = boss_part.shoot_interval / 2
+		for i in range(start,firer.get_bullet_count(),2):
+			firer.fire_bullet((i / float(firer.get_bullet_count())) * PI * 2, 1)
+		firetimer = firer.get_shoot_interval() / 2
 		odd = !odd

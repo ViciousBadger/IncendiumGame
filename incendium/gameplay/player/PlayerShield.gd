@@ -4,7 +4,7 @@
 extends Node2D
 
 const TIME = 3.0
-const MAXBULLETS = 16
+const MAXBULLETS = 32
 
 var poly
 
@@ -51,8 +51,7 @@ func _on_RegularPolygon_area_enter( area ):
 		
 		var speed = bullet.velocity.length()
 		
-		
-		bullet.velocity = away_from_me.normalized() * speed * 4 #-bullet.velocity
+		bullet.velocity = away_from_me.normalized() * speed * 2 #-bullet.velocity
 		area.get_node("Sprite").set_modulate(Color(1,1,1))
 		area.remove_from_group("damage_player")
 		area.add_to_group("damage_enemy")

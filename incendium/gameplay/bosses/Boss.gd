@@ -22,18 +22,15 @@ func _ready():
 	
 	create_part("", Vector2(0,0), 0, 0, 1)
 	
-	#var part_depth_map = {}
-	
 	var parts = part_map.values()
 	var highest = 0
+	
+	#Attempt to reorder parts
 	for part in parts:
 		var d = part.id.length()
 		if d > highest:
 			move_child(part,0)
-			#remove_child(part)
-			#add_child(part)
 			highest = d
-		#part_depth_map[part] = d
 	
 	set_process(true)
 	
@@ -49,9 +46,7 @@ func has_children(id):
 	# Outermost parts always return false
 	if(id.length() == design.layers.size()):
 		return false
-	#if(dead_map.has(id)):
-		#return false
-	var sides = design.layers[id.length()-1]
+	var sides = design.layers[id.length()-1].pgonsides
 	for i in range(sides): #Loop though all potential child parts of this part
 		var child_id = id + str(i)
 		if(has_children(child_id)):
@@ -59,7 +54,6 @@ func has_children(id):
 		if(part_map.has(child_id) && !dead_map.has(child_id)):
 			return true
 	return false
-	
 
 func get_part_pos(id):
 	if(map.has(id)):
@@ -69,7 +63,7 @@ func get_part_pos(id):
 	var c = id[-1].to_float()
 	var depth = id.length() - 1
 	var parent_pos = get_part_pos(id.substr(0,depth))
-	var theta = (design.base_rot_speed + depth * design.rot_speed_inc) * t + c / design.layers[depth] * 2 * PI
+	var theta = (design.base_rot_speed + depth * design.rot_speed_inc) * t + c / design.layers[depth].pgonsides * 2 * PI
 	var r = design.base_size * pow(design.size_dropoff, depth) * get_part_scale(id.substr(0,depth))
 	var pos = parent_pos + Vector2(r * cos(-theta), r*sin(-theta)) 
 	map.id = pos
@@ -78,10 +72,9 @@ func get_part_pos(id):
 func get_part_scale(id):
 	if id == "": return 1
 	return 1 #+ sin(t * id.length()) * 0.3
-	
 
 func create_part(id, pos, layer, index, parentsides):
-	var sides = design.layers[layer]
+	var sides = design.layers[layer].pgonsides
 	var a = layer / float(design.layers.size() - 1)
 	var size = design.base_size * pow(design.size_dropoff, layer)
 	
@@ -94,37 +87,26 @@ func create_part(id, pos, layer, index, parentsides):
 			break
 	
 	if alive || id == "":
-		var part_instance = preload("res://gameplay/bosses/BossPart.tscn").instance()
+		var part = preload("res://gameplay/bosses/BossPart.tscn").instance()
 		# Set values
-		part_instance.get_node("RegularPolygon").sides = sides
-		part_instance.get_node("RegularPolygon").size = size
+		part.get_node("RegularPolygon").sides = sides
+		part.get_node("RegularPolygon").size = size
 	
-		part_instance.rot_speed = design.base_rot_speed + design.rot_speed_inc * layer
-		part_instance.color = design.start_color.linear_interpolate(design.end_color, a)
-		part_instance.id = id
-		part_map[id] = part_instance
-		part_instance.max_health = (design.base_health * pow(design.size_dropoff, layer))# / parentsides
-		part_instance.shoot_interval = lerp(0.3, 2, a) # 2 - (power * 0.45)
-		part_instance.shoot_timer = 1 + (index/parentsides) * part_instance.shoot_interval
-		var power = design.layers.size() - layer
-		# Set all bullet stats
-		part_instance.bullet_stats.color = Color(1,1,1).linear_interpolate(part_instance.color,0.6)
-		part_instance.bullet_stats.damage = power * 4
-		part_instance.bullet_stats.hostile = true
-		#part_instance.bullet_stats.mods = [design.bulletmods[layer].new()]
-		part_instance.bullet_stats.size = power * 2
+		part.rot_speed = design.base_rot_speed + design.rot_speed_inc * layer
+		part.color = design.start_color.linear_interpolate(design.end_color, a)
+		part.id = id
+		part_map[id] = part
+		part.max_health = (design.base_health * pow(design.size_dropoff, layer))# / parentsides
 		
-		part_instance.bullet_count = 1 + (power-1) * 3
-		part_instance.bullet_speed = 80 + 60 * (power-1)
-		for p in design.bulletpatterns[layer]:
-			part_instance.bullet_patterns.append(p.new())
-		#part_instance.bullet_pattern = design.bulletpatterns[layer].new()
+		for tdesign in design.layers[layer].turrets:
+			var tinstance = preload("res://gameplay/bosses/BossTurret.tscn").instance()
+			tinstance.design = tdesign
+			part.add_child(tinstance)
 		
-		# part_instance.shoot_timer = 1.0 + (i / 3.0)
-		part_instance.set_draw_behind_parent(true)
+		part.set_draw_behind_parent(true)
 		# Add to parent + set pos
-		add_child(part_instance)
-		part_instance.set_pos(pos)
+		add_child(part)
+		part.set_pos(pos)
 		
 	# Create subparts
 	if layer < design.layers.size() - 1:

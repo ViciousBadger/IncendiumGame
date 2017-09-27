@@ -108,8 +108,6 @@ func spawn_boss(design):
 	bossnum += 1
 	
 	playing = true
-	
-
 
 # Unused broken regex generator
 func gen_regex(depth, layers):
