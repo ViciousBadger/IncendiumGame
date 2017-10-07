@@ -85,6 +85,9 @@ func create_part(id, pos, layer, index, parentsides):
 		if(s == id):
 			alive = true
 			break
+			
+	if layer > 0 && design.layers[layer-1].pgonexclude[index]:
+		alive = false
 	
 	if alive || id == "":
 		var part = preload("res://gameplay/bosses/BossPart.tscn").instance()

@@ -41,6 +41,10 @@ func gen_boss_design():
 		var layer = design.new_layer()
 		#Polygon sides
 		layer.pgonsides = floor(rand_range(3,6))
+		for i in range(layer.pgonsides):
+			var exclude = false
+			if (rand_range(0,1)) > 0.7: exclude = true
+			layer.pgonexclude.append(exclude)
 		if (layer.pgonsides > largest): largest = layer.pgonsides;
 		#Turrets
 		for turret_i in range(0,layer_count - layer_i):
