@@ -43,9 +43,12 @@ shortcut = null
 textures/normal = ExtResource( 3 )
 textures/pressed = ExtResource( 3 )
 textures/hover = ExtResource( 4 )
+params/resize_mode = 0
+params/stretch_mode = 0
 
 [node name="SettingsButton" type="TextureButton" parent="."]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -60,9 +63,12 @@ shortcut = null
 textures/normal = ExtResource( 3 )
 textures/pressed = ExtResource( 3 )
 textures/hover = ExtResource( 4 )
+params/resize_mode = 0
+params/stretch_mode = 0
 
 [node name="QuitButton" type="TextureButton" parent="."]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -77,6 +83,8 @@ shortcut = null
 textures/normal = ExtResource( 3 )
 textures/pressed = ExtResource( 3 )
 textures/hover = ExtResource( 4 )
+params/resize_mode = 0
+params/stretch_mode = 0
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 

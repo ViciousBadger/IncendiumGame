@@ -2,5 +2,20 @@
 
 [resource]
 
-_code = { "fragment":"uniform float t;\n//When testing, set t2 to be equal to TIME instead of t\nfloat t2 = t;\nfloat dist = 1 - distance(UV,vec2(0.5,0.5));\nvec2 pos_from_center = vec2(UV.x - 0.5, UV.y - 0.5);\nfloat rot = sin(t2*5 + pos_from_center.x * 80);\n\nfloat l = 0.5 + sin(dist * 40+rot * sin(t2 / 10) + t2 * 5) / 2;\nCOLOR = SRC_COLOR * vec4(l, l, l, 1);", "fragment_ofs":0, "light":"", "light_ofs":0, "vertex":"", "vertex_ofs":0 }
+_code = {
+"fragment": "uniform float t;
+//When testing, set t2 to be equal to TIME instead of t
+float t2 = t;
+float dist = 1 - distance(UV,vec2(0.5,0.5));
+vec2 pos_from_center = vec2(UV.x - 0.5, UV.y - 0.5);
+float rot = sin(t2*5 + pos_from_center.x * 80);
+
+float l = 0.5 + sin(dist * 40+rot * sin(t2 / 10) + t2 * 5) / 2;
+COLOR = SRC_COLOR * vec4(l, l, l, 0.5);",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
 
