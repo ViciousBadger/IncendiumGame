@@ -11,7 +11,7 @@ vec2 pos_from_center = vec2(UV.x - 0.5, UV.y - 0.5);
 float rot = sin(t2*5 + pos_from_center.x * 80);
 
 float l = 0.5 + sin(dist * 40+rot * sin(t2 / 10) + t2 * 5) / 2;
-COLOR = SRC_COLOR * vec4(l, l, l, 0.5);",
+COLOR = SRC_COLOR * vec4(l, l, l, 0.6);",
 "fragment_ofs": 0,
 "light": "",
 "light_ofs": 0,
