@@ -99,7 +99,7 @@ func create_part(id, pos, layer, index, parentsides):
 		part.color = design.start_color.linear_interpolate(design.end_color, a)
 		part.id = id
 		part_map[id] = part
-		part.max_health = (design.base_health * pow(design.size_dropoff, layer))# / parentsides
+		part.max_health = (design.base_health * pow(design.health_dropoff, layer))# / parentsides
 		
 		for tdesign in design.layers[layer].turrets:
 			var tinstance = preload("res://gameplay/bosses/BossTurret.tscn").instance()

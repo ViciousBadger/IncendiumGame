@@ -11,7 +11,9 @@ polar_controls = false
 [node name="RegularPolygon" parent="." instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 0.902496, 0 )
-size = 10
+collision/layers = 131072
+collision/mask = 786432
+size = 7
 circle_collision = false
 
 [connection signal="area_enter" from="RegularPolygon" to="." method="_on_RegularPolygon_area_enter"]

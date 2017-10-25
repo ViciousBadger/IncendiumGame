@@ -122,6 +122,7 @@ func _process(delta):
 		get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.9,1.1))
 		get_tree().get_root().get_node("Game/SFX").play("Laser_Shoot14")
 		#bullet.get_node("RegularPolygon").size = 1
+		bullet.stats.size = 3
 		bullet.stats.damage = 1
 		
 		var dir = atan2(towards_center.y,towards_center.x)

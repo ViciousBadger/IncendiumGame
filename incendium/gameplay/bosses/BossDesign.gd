@@ -7,6 +7,7 @@ var base_size = 100
 var size_dropoff = 0.6
 
 var base_health = 80
+var health_dropoff = 0.5
 
 var base_rot_speed = 0.3
 var rot_speed_inc = - PI * 0.1

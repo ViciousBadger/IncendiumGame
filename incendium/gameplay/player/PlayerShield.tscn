@@ -10,6 +10,8 @@ script/script = ExtResource( 1 )
 [node name="RegularPolygon" parent="." instance=ExtResource( 2 )]
 
 visibility/blend_mode = 1
+collision/layers = 0
+collision/mask = 524288
 sides = 32
 size = 48
 
