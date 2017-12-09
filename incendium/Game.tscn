@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=1]
+[gd_scene load_steps=23 format=1]
 
 [ext_resource path="res://gameplay/Game.gd" type="Script" id=1]
 [ext_resource path="res://effects/bg_videos/bg_video_player.gd" type="Script" id=2]
@@ -17,10 +17,9 @@
 [ext_resource path="res://music/4.smp" type="Sample" id=15]
 [ext_resource path="res://music/MusicNew.gd" type="Script" id=16]
 [ext_resource path="res://ui/UIUpdater.gd" type="Script" id=17]
-[ext_resource path="res://ui/BossEditor.tscn" type="PackedScene" id=18]
-[ext_resource path="res://ui/uitheme.tres" type="Theme" id=19]
-[ext_resource path="res://ui/uithemebig.tres" type="Theme" id=20]
-[ext_resource path="res://ui/MainMenu.tscn" type="PackedScene" id=21]
+[ext_resource path="res://ui/uitheme.tres" type="Theme" id=18]
+[ext_resource path="res://ui/uithemebig.tres" type="Theme" id=19]
+[ext_resource path="res://ui/MainMenu.tscn" type="PackedScene" id=20]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -197,10 +196,6 @@ script/script = ExtResource( 16 )
 
 script/script = ExtResource( 17 )
 
-[node name="BossEditor" parent="." instance=ExtResource( 18 )]
-
-visibility/visible = false
-
 [node name="GameUI" type="CanvasLayer" parent="."]
 
 editor/display_folded = true
@@ -215,7 +210,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-theme/theme = ExtResource( 19 )
+theme/theme = ExtResource( 18 )
 margin/left = 536.0
 margin/top = 679.0
 margin/right = 699.0
@@ -232,7 +227,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-theme/theme = ExtResource( 19 )
+theme/theme = ExtResource( 18 )
 margin/left = 15.0
 margin/top = 680.0
 margin/right = 136.0
@@ -248,7 +243,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 0
 size_flags/vertical = 0
-theme/theme = ExtResource( 20 )
+theme/theme = ExtResource( 19 )
 margin/left = 262.0
 margin/top = 9.0
 margin/right = 455.0
@@ -265,7 +260,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-theme/theme = ExtResource( 19 )
+theme/theme = ExtResource( 18 )
 margin/left = 302.0
 margin/top = 75.0
 margin/right = 423.0
@@ -282,7 +277,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-theme/theme = ExtResource( 19 )
+theme/theme = ExtResource( 18 )
 margin/left = 578.0
 margin/top = 22.0
 margin/right = 699.0
@@ -293,6 +288,6 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MainMenu" parent="." instance=ExtResource( 21 )]
+[node name="MainMenu" parent="." instance=ExtResource( 20 )]
 
 

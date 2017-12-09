@@ -1,9 +1,5 @@
 
-extends Panel
-
-# member variables here, example:
-# var a=2
-# var b="textvar"
+extends Node2D
 
 var BossDesign = preload("res://gameplay/bosses/BossDesign.gd")
 
@@ -11,8 +7,6 @@ var drawtimer = 0
 const drawtime = 0.2
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	set_process_input(true)
 	set_process(true)
 	
