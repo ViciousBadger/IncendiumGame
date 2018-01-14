@@ -1,83 +1,63 @@
 
-extends Node2D
+extends Node
 
 var BossDesign = preload("res://gameplay/bosses/BossDesign.gd")
 
-var drawtimer = 0
-const drawtime = 0.2
+var boss
+onready var design = BossDesign.new()
 
 func _ready():
 	set_process_input(true)
 	set_process(true)
+	design.new_layer()
+	design.new_layer()
+	design.new_layer()
+	design_changed()
 	
 func _process(delta):
-	if drawtime > 0:
-		drawtime -= delta
-		if drawtime <= 0:
-			update()
+	pass
 
 func _input(event):
 	if event.type == InputEvent.KEY:
 		if event.scancode == KEY_ENTER and event.pressed == true:
-			_on_FightButton_pressed()
+			pass # Test boss here
+			
+func hotswap():
+	print("fuck")
+	if boss != null:
+		boss.queue_free()
+		
+	var newboss = preload("res://gameplay/bosses/Boss.tscn").instance()
+	newboss.design = design
+	get_node("..").call_deferred("add_child", newboss)
+	newboss.set_pos(Vector2(360,360))
+	boss = newboss
 
-func _on_FightButton_pressed():
-	var boss = preload("res://gameplay/bosses/Boss.tscn").instance()
-	
-	var boss = BossDesign.new()
-	boss.base_size = get_node("BaseSizeField").get_value()
-	boss.base_health = get_node("BaseHealthField").get_value()
-	boss.size_dropoff = get_node("SideDropoffField").get_value() / 100
-	boss.base_rot_speed = get_node("BaseRotField").get_value()
-	boss.rot_speed_inc = get_node("RotIncField").get_value()
-	boss.start_color = get_node("StartColorField").get_color()
-	boss.end_color = get_node("EndColorField").get_color()
-	boss.regex = get_node("RegexField").get_text()
-	
-	get_node("..").spawn_boss(boss)
-	queue_free()
+func design_changed():
+	hotswap()
+	# Update all fields
+	f("BaseSize").set_value(design.base_size)
+	f("SizeDropoff").set_value(design.size_dropoff)
+	f("BaseHealth").set_value(design.base_health)
+	f("HealthDropoff").set_value(design.health_dropoff)
+	f("BaseRotSpeed").set_value(design.base_rot_speed)
+	f("RotSpeedInc").set_value(design.rot_speed_inc)
+	f("StartColor").set_color(design.start_color)
+	f("EndColor").set_color(design.end_color)
+	f("Regex").set_text(design.regex)
+	#f("").set_value(design.)
 
-var expr = RegEx.new()
+func f(name):
+	var fl = get_node("FieldLinks/" + name)
+	var path = fl.field
+	return fl.get_node(fl.field)
 
-func _draw():
-	expr.compile(get_node("RegexField").get_text())
-	draw_boss_part("")
-	
-func draw_boss_part(id):
-	var find = expr.find(id)
-	var alive = false
-	for s in expr.get_captures():
-		if(s == id):
-			alive = true
-			break
-	
-	if alive:
-		var col = get_node("StartColorField").get_color().linear_interpolate(get_node("EndColorField").get_color(),id.length() / 4.0)
-		var poly = Vector2Array()
-		var s = get_node("BaseSizeField").get_value() * pow(get_node("SideDropoffField").get_value() / 100, id.length())
-		var base_pos = Vector2(500,360) + get_part_pos(id)
-		for i in range(3):
-			var t = i / 3.0 * 2 * PI
-			poly.append(base_pos + Vector2(cos(t)*s,sin(t)*s))
-		draw_colored_polygon(poly, col)
-	if id.length() < 4:
-		for i in range(3):
-			draw_boss_part(id + str(i))
-
-func get_part_pos(id):
-	#if(map.has(id)):
-#		return map.id
-	if(id==""):
-		return Vector2(0, 0)
-	var c = id[-1].to_float()
-	var depth = id.length() - 1
-	var parent_pos = get_part_pos(id.substr(0,depth))
-	var theta = c / 3.0 * 2 * PI
-	var r = get_node("BaseSizeField").get_value() * pow(get_node("SideDropoffField").get_value() / 100, depth)
-	var pos = parent_pos + Vector2(r * cos(-theta), r*sin(-theta)) 
-	#map.id = pos
-	return pos
-
-func _on_RegexField_text_changed( text ):
-	#drawtime = drawtimer
-	update()
+func _on_BaseSizeField_value_changed( value ):
+	design.base_size = value
+	design_changed()
+func _on_StartColorField_color_changed( color ):
+	design.start_color = color
+	design_changed()
+func _on_EndColorField_color_changed( color ):
+	design.end_color = color
+	design_changed()

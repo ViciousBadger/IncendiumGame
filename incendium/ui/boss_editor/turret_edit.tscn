@@ -1,0 +1,356 @@
+[gd_scene format=1]
+
+[node name="TurretEdit" type="VBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 279.0
+margin/bottom = 184.0
+alignment = 0
+
+[node name="TitleRow" type="HBoxContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 279.0
+margin/bottom = 20.0
+alignment = 0
+
+[node name="TurretNumLabel" type="Label" parent="TitleRow"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 3.0
+margin/right = 258.0
+margin/bottom = 17.0
+text = "#1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="TurretRemoveButton" type="Button" parent="TitleRow"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 262.0
+margin/top = 0.0
+margin/right = 279.0
+margin/bottom = 20.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "-"
+flat = false
+
+[node name="PatternRow" type="HBoxContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 24.0
+margin/right = 279.0
+margin/bottom = 44.0
+alignment = 0
+
+[node name="Label" type="Label" parent="PatternRow"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 3.0
+margin/right = 175.0
+margin/bottom = 17.0
+text = "Pattern"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="OptionButton" type="OptionButton" parent="PatternRow"]
+
+rect/min_size = Vector2( 100, 0 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 179.0
+margin/top = 0.0
+margin/right = 279.0
+margin/bottom = 20.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+flat = false
+align = 0
+selected = -1
+items = [  ]
+
+[node name="BSizeRow" type="HBoxContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 48.0
+margin/right = 279.0
+margin/bottom = 72.0
+alignment = 0
+
+[node name="BSizeLabel" type="Label" parent="BSizeRow"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 5.0
+margin/right = 175.0
+margin/bottom = 19.0
+text = "Bullet size"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="BSizeField" type="SpinBox" parent="BSizeRow"]
+
+rect/min_size = Vector2( 100, 0 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 179.0
+margin/top = 0.0
+margin/right = 279.0
+margin/bottom = 24.0
+range/min = 1.0
+range/max = 10.0
+range/step = 1.0
+range/page = 0.0
+range/value = 2.0
+range/exp_edit = false
+range/rounded = false
+editable = true
+prefix = ""
+suffix = ""
+
+[node name="BCountRow" type="HBoxContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 76.0
+margin/right = 279.0
+margin/bottom = 100.0
+alignment = 0
+
+[node name="BCountLabel" type="Label" parent="BCountRow"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 5.0
+margin/right = 175.0
+margin/bottom = 19.0
+text = "Bullet count"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="BCountField" type="SpinBox" parent="BCountRow"]
+
+rect/min_size = Vector2( 100, 0 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 179.0
+margin/top = 0.0
+margin/right = 279.0
+margin/bottom = 24.0
+range/min = 1.0
+range/max = 32.0
+range/step = 1.0
+range/page = 0.0
+range/value = 1.0
+range/exp_edit = false
+range/rounded = false
+editable = true
+prefix = ""
+suffix = ""
+
+[node name="BSpeedRow" type="HBoxContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 104.0
+margin/right = 279.0
+margin/bottom = 128.0
+alignment = 0
+
+[node name="BSpeedLabel" type="Label" parent="BSpeedRow"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 5.0
+margin/right = 175.0
+margin/bottom = 19.0
+text = "Bullet speed"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="BSpeedField" type="SpinBox" parent="BSpeedRow"]
+
+rect/min_size = Vector2( 100, 0 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 179.0
+margin/top = 0.0
+margin/right = 279.0
+margin/bottom = 24.0
+range/min = 10.0
+range/max = 1000.0
+range/step = 10.0
+range/page = 0.0
+range/value = 80.0
+range/exp_edit = false
+range/rounded = false
+editable = true
+prefix = ""
+suffix = ""
+
+[node name="BAngleRow" type="HBoxContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 132.0
+margin/right = 279.0
+margin/bottom = 156.0
+alignment = 0
+
+[node name="BAngleLabel" type="Label" parent="BAngleRow"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 5.0
+margin/right = 175.0
+margin/bottom = 19.0
+text = "Firing angle"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="BAngleField" type="SpinBox" parent="BAngleRow"]
+
+rect/min_size = Vector2( 100, 0 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 179.0
+margin/top = 0.0
+margin/right = 279.0
+margin/bottom = 24.0
+range/min = -360.0
+range/max = 360.0
+range/step = 5.0
+range/page = 0.0
+range/value = 0.0
+range/exp_edit = false
+range/rounded = true
+editable = true
+prefix = ""
+suffix = "deg."
+
+[node name="BCountRow3" type="HBoxContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 160.0
+margin/right = 279.0
+margin/bottom = 184.0
+alignment = 0
+
+[node name="BCountLabel" type="Label" parent="BCountRow3"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 5.0
+margin/right = 175.0
+margin/bottom = 19.0
+text = "Firing interval"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="BCountField" type="SpinBox" parent="BCountRow3"]
+
+rect/min_size = Vector2( 100, 0 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 179.0
+margin/top = 0.0
+margin/right = 279.0
+margin/bottom = 24.0
+range/min = 0.2
+range/max = 3.0
+range/step = 0.2
+range/page = 0.0
+range/value = 1.0
+range/exp_edit = false
+range/rounded = false
+editable = true
+prefix = ""
+suffix = "s"
+
+

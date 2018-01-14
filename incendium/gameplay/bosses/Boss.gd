@@ -86,7 +86,7 @@ func create_part(id, pos, layer, index, parentsides):
 			alive = true
 			break
 			
-	if layer > 0 && design.layers[layer-1].pgonexclude[index]:
+	if layer > 0 && design.layers[layer-1].pgonexclude.size() > index && design.layers[layer-1].pgonexclude[index]:
 		alive = false
 	
 	if alive || id == "":

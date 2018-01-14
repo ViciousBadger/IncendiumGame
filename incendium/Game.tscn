@@ -19,7 +19,7 @@
 [ext_resource path="res://ui/UIUpdater.gd" type="Script" id=17]
 [ext_resource path="res://ui/uitheme.tres" type="Theme" id=18]
 [ext_resource path="res://ui/uithemebig.tres" type="Theme" id=19]
-[ext_resource path="res://ui/MainMenu.tscn" type="PackedScene" id=20]
+[ext_resource path="res://ui/BossEditor.tscn" type="PackedScene" id=20]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -288,6 +288,6 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MainMenu" parent="." instance=ExtResource( 20 )]
+[node name="BossEditor" parent="." instance=ExtResource( 20 )]
 
 

@@ -1,6 +1,6 @@
 extends Object
 
-var pgonsides
+var pgonsides = 3
 var pgonexclude = [] # Pgon #s maked 'true' will not get child boss parts
 var turrets = []
 
