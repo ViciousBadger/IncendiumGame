@@ -23,12 +23,15 @@ func _input(event):
 			pass # Test boss here
 			
 func hotswap():
-	print("fuck")
+	var t = 0
 	if boss != null:
+		t = boss.t
 		boss.queue_free()
 		
 	var newboss = preload("res://gameplay/bosses/Boss.tscn").instance()
 	newboss.design = design
+	newboss.start_anim = false
+	newboss.t = t
 	get_node("..").call_deferred("add_child", newboss)
 	newboss.set_pos(Vector2(360,360))
 	boss = newboss

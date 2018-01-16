@@ -6,6 +6,7 @@ extends Node2D
 
 #Fill out with an instance of BossDesign.gd
 var design
+var start_anim = true
 
 var expr
 var map
@@ -94,6 +95,8 @@ func create_part(id, pos, layer, index, parentsides):
 		# Set values
 		part.get_node("RegularPolygon").sides = sides
 		part.get_node("RegularPolygon").size = size
+		if !start_anim:
+			part.scale = 1
 	
 		part.rot_speed = design.base_rot_speed + design.rot_speed_inc * layer
 		part.color = design.start_color.linear_interpolate(design.end_color, a)

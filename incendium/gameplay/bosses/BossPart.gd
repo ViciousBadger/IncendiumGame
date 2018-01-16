@@ -53,7 +53,8 @@ func _process(delta):
 		scale = min(1,lerp(scale, 1, delta * 4))
 	
 	# Update transform
-	rotate(delta * rot_speed)
+	#rotate(delta * rot_speed)
+	set_rot(get_parent().t * rot_speed)
 	set_pos(get_parent().get_part_pos(id))
 	set_scale(Vector2(1,1) * get_parent().get_part_scale(id) * scale * scale)
 	
