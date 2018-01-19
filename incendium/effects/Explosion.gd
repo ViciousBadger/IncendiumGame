@@ -1,11 +1,7 @@
 # EXPLOSION class
-# a circle that gets smaller
+# just a circle that gets smaller
 
 extends Node2D
-
-# member variables here, example:
-# var a=2
-# var b="textvar"
 
 var velocity = Vector2(0,0)
 var scale = 1
@@ -13,11 +9,13 @@ var scale = 1
 onready var fadespd = rand_range(2, 5)
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	set_process(true)
 	var maxspd = get_node("RegularPolygon").size * 35
-	velocity += Vector2(rand_range(-maxspd,maxspd),rand_range(-maxspd,maxspd))
+	
+	var spd = rand_range(0,maxspd)
+	var angle = rand_range(0,PI*2)
+	
+	velocity += Vector2(cos(angle),sin(angle)) * spd
 
 func _process(delta):
 	translate(velocity * scale * delta)

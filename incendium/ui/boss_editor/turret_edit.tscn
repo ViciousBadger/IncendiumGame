@@ -14,7 +14,6 @@ alignment = 0
 
 [node name="TitleRow" type="HBoxContainer" parent="."]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
@@ -33,7 +32,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 3.0
-margin/right = 258.0
+margin/right = 255.0
 margin/bottom = 17.0
 text = "#1"
 percent_visible = 1.0
@@ -42,11 +41,12 @@ max_lines_visible = -1
 
 [node name="TurretRemoveButton" type="Button" parent="TitleRow"]
 
+rect/min_size = Vector2( 20, 0 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 262.0
+margin/left = 259.0
 margin/top = 0.0
 margin/right = 279.0
 margin/bottom = 20.0

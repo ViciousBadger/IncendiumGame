@@ -12,8 +12,8 @@ var health_dropoff = 0.5
 var base_rot_speed = 0.3
 var rot_speed_inc = - PI * 0.1
 
-var start_color = Color(0,0,1)
-var end_color = Color(0,1,0)
+var start_color = Color(0.5,0.5,0.5)
+var end_color = Color(1,1,1)
 
 func new_layer():
 	var l = preload("./BossDesignLayer.gd").new()
