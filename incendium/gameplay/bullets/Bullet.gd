@@ -50,7 +50,7 @@ func _ready():
 	var s = stats.size * 0.04
 	light_instance.set_scale(Vector2(s,s))
 	light_instance.set_modulate(sprite.get_modulate())
-	get_tree().get_root().get_node("Game/Lights").add_child(light_instance)
+	get_tree().get_root().get_node("Game/Background/Lights").add_child(light_instance)
 	
 	# Bullets with 1 damage cant split
 	if type == BTYPE_SPLITTING && stats.damage == 1:

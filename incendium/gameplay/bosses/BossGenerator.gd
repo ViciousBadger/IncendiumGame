@@ -34,7 +34,7 @@ func gen_boss_design():
 	
 	randomize() # Randomize random seed
 	
-	var layer_count = floor(rand_range(1,5)) #floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
+	var layer_count = 4 #floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
 	
 	var largest = 3;
 	for layer_i in range(0,layer_count):
@@ -103,3 +103,17 @@ func random_regex(size, larg):
 	string = string.replace("b",str(int(base+1)%int(larg)))
 	string = string.replace("c",str(int(base+2)%int(larg)))
 	return string
+	
+# Unused broken regex generator
+func gen_regex(depth, layers):
+	print(depth)
+	if depth == 0:
+		return str(floor(rand_range(0, layers[depth])))
+		
+	var option = floor(rand_range(0,3))
+	if option == 0:
+		return "(" + gen_regex(depth - 1, layers) + ")*"
+	if option == 1:
+		return "(" + gen_regex(depth - 1, layers) + ")+(" + gen_regex(depth - 1, layers) + ")"
+	if option == 2:
+		return "(" + gen_regex(depth - 1, layers) + ")(" + gen_regex(depth - 1, layers) + ")"

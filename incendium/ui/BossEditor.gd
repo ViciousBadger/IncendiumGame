@@ -61,8 +61,8 @@ func hotswap():
 	boss = weakref(newboss)
 	update_boss_parts(newboss)
 	
-	get_node("..").target_bgcol = design.start_color
-	get_node("..").target_fgcol = design.end_color
+	get_tree().get_root().get_node("Game").target_bgcol = design.start_color
+	get_tree().get_root().get_node("Game").target_fgcol = design.end_color
 	
 func update_boss_parts(boss):
 	for c in boss.get_children():
@@ -72,9 +72,12 @@ func update_boss_parts(boss):
 			print("part with id " + c.id + " active: " + str(c.active))
 	
 func test():
-	var player = preload("res://gameplay/player/Player.tscn").instance()
-	player.set_global_pos(Vector2(360,600))
-	get_node("..").add_child(player)
+	get_tree().get_root().get_node("Game").start_stage([design])
+	
+	if boss != null:
+		var b = boss.get_ref()
+		if b != null:
+			b.queue_free()
 	queue_free()
 	
 func get_turret(i):
