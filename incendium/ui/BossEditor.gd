@@ -120,6 +120,10 @@ func design_changed():
 	
 func update_fields():
 	updating_fields = true
+	# First make sure the layer index seleced is not beyond this design's layer count
+	if layeri >= design.layers.size():
+		layeri = design.layers.size() - 1
+	
 	# Template:
 	# f("").set_value(design.)
 	f("Boss/BaseSize").set_value(design.base_size)

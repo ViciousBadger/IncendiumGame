@@ -870,6 +870,8 @@ editor/display_folded = true
 
 [node name="Boss" type="Node" parent="FieldLinks"]
 
+editor/display_folded = true
+
 [node name="BaseSize" type="Node" parent="FieldLinks/Boss"]
 
 script/script = ExtResource( 4 )
@@ -925,6 +927,8 @@ fields_root = NodePath("../../../BaseContainer")
 field_name = "regex"
 
 [node name="Layers" type="Node" parent="FieldLinks"]
+
+editor/display_folded = true
 
 [node name="LayerIndex" type="Node" parent="FieldLinks/Layers"]
 

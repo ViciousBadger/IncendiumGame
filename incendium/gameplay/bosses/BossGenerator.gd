@@ -34,7 +34,7 @@ func gen_boss_design():
 	
 	randomize() # Randomize random seed
 	
-	var layer_count = 4 #floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
+	var layer_count = floor(rand_range(1,5)) #floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
 	
 	var largest = 3;
 	for layer_i in range(0,layer_count):
