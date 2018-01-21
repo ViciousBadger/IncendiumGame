@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://ui/BossEditor.gd" type="Script" id=1]
-[ext_resource path="res://ui/boss_editor/turret_edit.tscn" type="PackedScene" id=2]
-[ext_resource path="res://ui/boss_editor/field_link.gd" type="Script" id=3]
+[ext_resource path="res://ui/uitheme_editor.tres" type="Theme" id=2]
+[ext_resource path="res://ui/boss_editor/field.gd" type="Script" id=3]
+[ext_resource path="res://ui/boss_editor/field_link.gd" type="Script" id=4]
 
 [node name="BossEditor" type="CanvasLayer"]
 
@@ -11,6 +12,7 @@ offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 0.7, 0.7 )
 script/script = ExtResource( 1 )
+turret_edit_parent = NodePath("BaseContainer/TabContainer/Layers/Rows/Turrets")
 
 [node name="BaseContainer" type="VBoxContainer" parent="."]
 
@@ -18,6 +20,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
+theme/theme = ExtResource( 2 )
 margin/left = 0.0
 margin/top = 0.0
 margin/right = 287.0
@@ -40,16 +43,17 @@ tabs_visible = true
 
 [node name="Boss" type="ScrollContainer" parent="BaseContainer/TabContainer"]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 4.0
-margin/top = 32.0
-margin/right = 4.0
-margin/bottom = 4.0
+margin/left = 0.0
+margin/top = 24.0
+margin/right = 0.0
+margin/bottom = 0.0
 scroll/horizontal = false
 scroll/vertical = true
 
@@ -61,7 +65,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 222.0
 alignment = 0
 
@@ -73,7 +77,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 14.0
 text = "Size"
 align = 1
@@ -90,7 +94,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 18.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 42.0
 alignment = 0
 
@@ -131,6 +135,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = ""
+script/script = ExtResource( 3 )
+field_name = "base_size"
 
 [node name="VSeparator" type="VSeparator" parent="BaseContainer/TabContainer/Boss/Rows/SizeRow"]
 
@@ -140,7 +146,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 132.0
 margin/top = 0.0
-margin/right = 147.0
+margin/right = 155.0
 margin/bottom = 24.0
 
 [node name="SizeDropoffLabel" type="Label" parent="BaseContainer/TabContainer/Boss/Rows/SizeRow"]
@@ -150,9 +156,9 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 151.0
+margin/left = 159.0
 margin/top = 5.0
-margin/right = 201.0
+margin/right = 209.0
 margin/bottom = 19.0
 text = "Dropoff"
 percent_visible = 1.0
@@ -166,9 +172,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 205.0
+margin/left = 213.0
 margin/top = 0.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 24.0
 range/min = 1.0
 range/max = 100.0
@@ -180,6 +186,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = "%"
+script/script = ExtResource( 3 )
+field_name = "size_dropoff"
 
 [node name="HealthTitle" type="Label" parent="BaseContainer/TabContainer/Boss/Rows"]
 
@@ -189,7 +197,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 46.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 60.0
 text = "Health"
 align = 1
@@ -206,7 +214,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 64.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 88.0
 alignment = 0
 
@@ -247,6 +255,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = ""
+script/script = ExtResource( 3 )
+field_name = "base_health"
 
 [node name="VSeparator" type="VSeparator" parent="BaseContainer/TabContainer/Boss/Rows/HealthRow"]
 
@@ -256,7 +266,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 132.0
 margin/top = 0.0
-margin/right = 147.0
+margin/right = 155.0
 margin/bottom = 24.0
 
 [node name="HealthDropoffLabel" type="Label" parent="BaseContainer/TabContainer/Boss/Rows/HealthRow"]
@@ -266,9 +276,9 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 151.0
+margin/left = 159.0
 margin/top = 5.0
-margin/right = 201.0
+margin/right = 209.0
 margin/bottom = 19.0
 text = "Dropoff"
 percent_visible = 1.0
@@ -282,9 +292,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 205.0
+margin/left = 213.0
 margin/top = 0.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 24.0
 range/min = 1.0
 range/max = 100.0
@@ -296,6 +306,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = "%"
+script/script = ExtResource( 3 )
+field_name = "health_dropoff"
 
 [node name="RotationTile" type="Label" parent="BaseContainer/TabContainer/Boss/Rows"]
 
@@ -305,7 +317,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 92.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 106.0
 text = "Rotation"
 align = 1
@@ -322,7 +334,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 110.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 134.0
 alignment = 0
 
@@ -363,6 +375,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = ""
+script/script = ExtResource( 3 )
+field_name = "base_rot_speed"
 
 [node name="VSeparator" type="VSeparator" parent="BaseContainer/TabContainer/Boss/Rows/RotationRow"]
 
@@ -372,7 +386,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 132.0
 margin/top = 0.0
-margin/right = 147.0
+margin/right = 155.0
 margin/bottom = 24.0
 
 [node name="RotIncLabel" type="Label" parent="BaseContainer/TabContainer/Boss/Rows/RotationRow"]
@@ -382,9 +396,9 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 151.0
+margin/left = 159.0
 margin/top = 5.0
-margin/right = 201.0
+margin/right = 209.0
 margin/bottom = 19.0
 text = "Increm."
 percent_visible = 1.0
@@ -398,9 +412,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 205.0
+margin/left = 213.0
 margin/top = 0.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 24.0
 range/min = -5.0
 range/max = 5.0
@@ -412,6 +426,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = ""
+script/script = ExtResource( 3 )
+field_name = "rot_speed_inc"
 
 [node name="ColorTitle" type="Label" parent="BaseContainer/TabContainer/Boss/Rows"]
 
@@ -421,7 +437,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 138.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 152.0
 text = "Color"
 align = 1
@@ -431,13 +447,14 @@ max_lines_visible = -1
 
 [node name="ColorRow" type="HBoxContainer" parent="BaseContainer/TabContainer/Boss/Rows"]
 
+editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 156.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 176.0
 alignment = 0
 
@@ -474,6 +491,8 @@ shortcut = null
 flat = false
 color = Color( 1, 1, 1, 1 )
 edit_alpha = false
+script/script = ExtResource( 3 )
+field_name = "start_color"
 
 [node name="VSeparator" type="VSeparator" parent="BaseContainer/TabContainer/Boss/Rows/ColorRow"]
 
@@ -483,7 +502,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 132.0
 margin/top = 0.0
-margin/right = 147.0
+margin/right = 155.0
 margin/bottom = 20.0
 
 [node name="EndColorLabel" type="Label" parent="BaseContainer/TabContainer/Boss/Rows/ColorRow"]
@@ -493,9 +512,9 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 151.0
+margin/left = 159.0
 margin/top = 3.0
-margin/right = 201.0
+margin/right = 209.0
 margin/bottom = 17.0
 text = "Outer"
 percent_visible = 1.0
@@ -509,9 +528,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 205.0
+margin/left = 213.0
 margin/top = 0.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 20.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -519,6 +538,8 @@ shortcut = null
 flat = false
 color = Color( 1, 1, 1, 1 )
 edit_alpha = false
+script/script = ExtResource( 3 )
+field_name = "end_color"
 
 [node name="RegexTitle" type="Label" parent="BaseContainer/TabContainer/Boss/Rows"]
 
@@ -528,7 +549,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 180.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 194.0
 text = "Regex"
 align = 1
@@ -536,24 +557,55 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="RegexField" type="LineEdit" parent="BaseContainer/TabContainer/Boss/Rows"]
+[node name="RegexRow" type="HBoxContainer" parent="BaseContainer/TabContainer/Boss/Rows"]
 
 focus/ignore_mouse = false
-focus/stop_mouse = true
+focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 198.0
-margin/right = 279.0
+margin/right = 287.0
 margin/bottom = 222.0
+alignment = 0
+
+[node name="RegexField" type="LineEdit" parent="BaseContainer/TabContainer/Boss/Rows/RegexRow"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 231.0
+margin/bottom = 24.0
 text = ".*"
 placeholder/alpha = 0.6
 focus_mode = 2
 caret/caret_blink = false
 caret/caret_blink_speed = 0.65
+script/script = ExtResource( 3 )
+field_name = "regex"
+
+[node name="UpdateRegexButton" type="Button" parent="BaseContainer/TabContainer/Boss/Rows/RegexRow"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 235.0
+margin/top = 0.0
+margin/right = 287.0
+margin/bottom = 24.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Update"
+flat = false
 
 [node name="Layers" type="ScrollContainer" parent="BaseContainer/TabContainer"]
 
+editor/display_folded = true
 visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
@@ -577,7 +629,7 @@ size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 0.0
 margin/right = 279.0
-margin/bottom = 260.0
+margin/bottom = 76.0
 alignment = 0
 
 [node name="LayerSelect" type="HBoxContainer" parent="BaseContainer/TabContainer/Layers/Rows"]
@@ -624,6 +676,8 @@ align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+script/script = ExtResource( 3 )
+field_name = "layer_index"
 
 [node name="NextLayerButton" type="Button" parent="BaseContainer/TabContainer/Layers/Rows/LayerSelect"]
 
@@ -690,6 +744,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = "sides"
+script/script = ExtResource( 3 )
+field_name = "pgonsides"
 
 [node name="TurretsTitleRow" type="HBoxContainer" parent="BaseContainer/TabContainer/Layers/Rows"]
 
@@ -718,7 +774,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Button" type="Button" parent="BaseContainer/TabContainer/Layers/Rows/TurretsTitleRow"]
+[node name="NewTurretButton" type="Button" parent="BaseContainer/TabContainer/Layers/Rows/TurretsTitleRow"]
 
 rect/min_size = Vector2( 20, 0 )
 focus/ignore_mouse = false
@@ -744,10 +800,8 @@ size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 76.0
 margin/right = 279.0
-margin/bottom = 260.0
+margin/bottom = 76.0
 alignment = 0
-
-[node name="TurretEdit" parent="BaseContainer/TabContainer/Layers/Rows/Turrets" instance=ExtResource( 2 )]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BaseContainer"]
 
@@ -770,12 +824,28 @@ size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 141.0
+margin/right = 93.0
 margin/bottom = 20.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 text = "Save"
+flat = false
+
+[node name="RandomizeButton" type="Button" parent="BaseContainer/HBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 97.0
+margin/top = 0.0
+margin/right = 190.0
+margin/bottom = 20.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Randomize"
 flat = false
 
 [node name="TestButton" type="Button" parent="BaseContainer/HBoxContainer"]
@@ -784,7 +854,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 3
 size_flags/vertical = 2
-margin/left = 145.0
+margin/left = 194.0
 margin/top = 0.0
 margin/right = 287.0
 margin/bottom = 20.0
@@ -798,50 +868,81 @@ flat = false
 
 editor/display_folded = true
 
-[node name="BaseSize" type="Node" parent="FieldLinks"]
+[node name="Boss" type="Node" parent="FieldLinks"]
 
-script/script = ExtResource( 3 )
-field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/SizeRow/BaseSizeField")
+[node name="BaseSize" type="Node" parent="FieldLinks/Boss"]
 
-[node name="SizeDropoff" type="Node" parent="FieldLinks"]
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "base_size"
 
-script/script = ExtResource( 3 )
-field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/SizeRow/SizeDropoffField")
+[node name="SizeDropoff" type="Node" parent="FieldLinks/Boss"]
 
-[node name="BaseHealth" type="Node" parent="FieldLinks"]
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "size_dropoff"
 
-script/script = ExtResource( 3 )
-field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/HealthRow/BaseHealthField")
+[node name="BaseHealth" type="Node" parent="FieldLinks/Boss"]
 
-[node name="HealthDropoff" type="Node" parent="FieldLinks"]
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "base_health"
 
-script/script = ExtResource( 3 )
-field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/HealthRow/HealthDropoffField")
+[node name="HealthDropoff" type="Node" parent="FieldLinks/Boss"]
 
-[node name="BaseRotSpeed" type="Node" parent="FieldLinks"]
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "health_dropoff"
 
-script/script = ExtResource( 3 )
-field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/RotationRow/BaseRotField")
+[node name="BaseRotSpeed" type="Node" parent="FieldLinks/Boss"]
 
-[node name="RotSpeedInc" type="Node" parent="FieldLinks"]
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "base_rot_speed"
 
-script/script = ExtResource( 3 )
-field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/RotationRow/RotIncField")
+[node name="RotSpeedInc" type="Node" parent="FieldLinks/Boss"]
 
-[node name="StartColor" type="Node" parent="FieldLinks"]
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "rot_speed_inc"
 
-script/script = ExtResource( 3 )
-field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/ColorRow/StartColorField")
+[node name="StartColor" type="Node" parent="FieldLinks/Boss"]
 
-[node name="EndColor" type="Node" parent="FieldLinks"]
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "start_color"
 
-script/script = ExtResource( 3 )
-field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/ColorRow/EndColorField")
+[node name="EndColor" type="Node" parent="FieldLinks/Boss"]
 
-[node name="Regex" type="Node" parent="FieldLinks"]
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "end_color"
 
-script/script = ExtResource( 3 )
-field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/RegexField")
+[node name="Regex" type="Node" parent="FieldLinks/Boss"]
+
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "regex"
+
+[node name="Layers" type="Node" parent="FieldLinks"]
+
+[node name="LayerIndex" type="Node" parent="FieldLinks/Layers"]
+
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "layer_index"
+
+[node name="TurretCount" type="Node" parent="FieldLinks/Layers"]
+
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "turret_count"
+
+[node name="Pgonsides" type="Node" parent="FieldLinks/Layers"]
+
+script/script = ExtResource( 4 )
+fields_root = NodePath("../../../BaseContainer")
+field_name = "pgonsides"
 
 [connection signal="value_changed" from="BaseContainer/TabContainer/Boss/Rows/SizeRow/BaseSizeField" to="." method="_on_BaseSizeField_value_changed"]
 
@@ -858,6 +959,18 @@ field = NodePath("../../BaseContainer/TabContainer/Boss/Rows/RegexField")
 [connection signal="color_changed" from="BaseContainer/TabContainer/Boss/Rows/ColorRow/StartColorField" to="." method="_on_StartColorField_color_changed"]
 
 [connection signal="color_changed" from="BaseContainer/TabContainer/Boss/Rows/ColorRow/EndColorField" to="." method="_on_EndColorField_color_changed"]
+
+[connection signal="pressed" from="BaseContainer/TabContainer/Boss/Rows/RegexRow/UpdateRegexButton" to="." method="_on_UpdateRegexButton_pressed"]
+
+[connection signal="pressed" from="BaseContainer/TabContainer/Layers/Rows/LayerSelect/PrevLayerButton" to="." method="_on_PrevLayerButton_pressed"]
+
+[connection signal="pressed" from="BaseContainer/TabContainer/Layers/Rows/LayerSelect/NextLayerButton" to="." method="_on_NextLayerButton_pressed"]
+
+[connection signal="value_changed" from="BaseContainer/TabContainer/Layers/Rows/SidesRow/SidesField" to="." method="_on_SidesField_value_changed"]
+
+[connection signal="pressed" from="BaseContainer/TabContainer/Layers/Rows/TurretsTitleRow/NewTurretButton" to="." method="_on_NewTurretButton_pressed"]
+
+[connection signal="pressed" from="BaseContainer/HBoxContainer/RandomizeButton" to="." method="_on_RandomizeButton_pressed"]
 
 [connection signal="pressed" from="BaseContainer/HBoxContainer/TestButton" to="." method="_on_TestButton_pressed"]
 

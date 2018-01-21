@@ -8,3 +8,11 @@ func new_turret():
 	var t = preload("./BossDesignTurret.gd").new()
 	turrets.append(t)
 	return t
+	
+func clone():
+	var c = get_script().new()
+	c.pgonsides = pgonsides
+	c.pgonexclude = pgonexclude
+	for t in turrets:
+		c.turrets.append(t.clone())
+	return c

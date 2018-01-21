@@ -6,7 +6,6 @@ extends Node2D
 # Every var below this is set by Boss
 
 #Stuff
-var parent_part
 var rot_speed
 var id
 var color
@@ -25,6 +24,7 @@ var health
 var health_fade = 0.0
 var health_size = 0
 # Shooting
+var auto_active = true
 var active
 var shoot_timer = 2
 # Misc
@@ -76,10 +76,15 @@ func _process(delta):
 	
 	shoot_timer -= delta
 	
-	active = !get_parent().has_children(id)
+	if auto_active:
+		active = !get_parent().has_children(id)
 	
-	if active:
+	if active and a < 1:
 		a = lerp(a, 1, delta * 5)
+		update()
+		
+	if !active and a > 0:
+		a = 0
 		update()
 	
 func _on_RegularPolygon_area_enter(area):
@@ -154,4 +159,4 @@ func _draw():
 			var end = i+1
 			if end >= pgon.size(): end = 0
 			var col = Color(1,1,1,a).linear_interpolate(color, 0.5)
-			draw_line(pgon[start], pgon[end], col, 2)
+			draw_line(pgon[start], pgon[end], col, 3)

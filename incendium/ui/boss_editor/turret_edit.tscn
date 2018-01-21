@@ -1,4 +1,8 @@
-[gd_scene format=1]
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://ui/boss_editor/turret_edit.gd" type="Script" id=1]
+[ext_resource path="res://ui/boss_editor/field.gd" type="Script" id=2]
+[ext_resource path="res://ui/boss_editor/field_link.gd" type="Script" id=3]
 
 [node name="TurretEdit" type="VBoxContainer"]
 
@@ -11,6 +15,7 @@ margin/top = 0.0
 margin/right = 279.0
 margin/bottom = 184.0
 alignment = 0
+script/script = ExtResource( 1 )
 
 [node name="TitleRow" type="HBoxContainer" parent="."]
 
@@ -38,6 +43,8 @@ text = "#1"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+script/script = ExtResource( 2 )
+field_name = "turret_num"
 
 [node name="TurretRemoveButton" type="Button" parent="TitleRow"]
 
@@ -152,6 +159,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = ""
+script/script = ExtResource( 2 )
+field_name = "size"
 
 [node name="BCountRow" type="HBoxContainer" parent="."]
 
@@ -202,6 +211,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = ""
+script/script = ExtResource( 2 )
+field_name = "bullet_count"
 
 [node name="BSpeedRow" type="HBoxContainer" parent="."]
 
@@ -252,6 +263,8 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = ""
+script/script = ExtResource( 2 )
+field_name = "bullet_speed"
 
 [node name="BAngleRow" type="HBoxContainer" parent="."]
 
@@ -302,8 +315,10 @@ range/rounded = true
 editable = true
 prefix = ""
 suffix = "deg."
+script/script = ExtResource( 2 )
+field_name = "bullet_angle"
 
-[node name="BCountRow3" type="HBoxContainer" parent="."]
+[node name="BIntervalRow" type="HBoxContainer" parent="."]
 
 editor/display_folded = true
 focus/ignore_mouse = false
@@ -316,7 +331,7 @@ margin/right = 279.0
 margin/bottom = 184.0
 alignment = 0
 
-[node name="BCountLabel" type="Label" parent="BCountRow3"]
+[node name="BIntervalLabel" type="Label" parent="BIntervalRow"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -331,7 +346,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="BCountField" type="SpinBox" parent="BCountRow3"]
+[node name="BIntervalField" type="SpinBox" parent="BIntervalRow"]
 
 rect/min_size = Vector2( 100, 0 )
 focus/ignore_mouse = false
@@ -352,5 +367,57 @@ range/rounded = false
 editable = true
 prefix = ""
 suffix = "s"
+script/script = ExtResource( 2 )
+field_name = "shoot_interval"
+
+[node name="FieldLinks" type="Node" parent="."]
+
+[node name="TurretNum" type="Node" parent="FieldLinks"]
+
+script/script = ExtResource( 3 )
+fields_root = NodePath("../..")
+field_name = "turret_num"
+
+[node name="BSize" type="Node" parent="FieldLinks"]
+
+script/script = ExtResource( 3 )
+fields_root = NodePath("../..")
+field_name = "size"
+
+[node name="BCount" type="Node" parent="FieldLinks"]
+
+script/script = ExtResource( 3 )
+fields_root = NodePath("../..")
+field_name = "bullet_count"
+
+[node name="BSpeed" type="Node" parent="FieldLinks"]
+
+script/script = ExtResource( 3 )
+fields_root = NodePath("../..")
+field_name = "bullet_speed"
+
+[node name="BAngle" type="Node" parent="FieldLinks"]
+
+script/script = ExtResource( 3 )
+fields_root = NodePath("../..")
+field_name = "bullet_angle"
+
+[node name="BInterval" type="Node" parent="FieldLinks"]
+
+script/script = ExtResource( 3 )
+fields_root = NodePath("../..")
+field_name = "shoot_interval"
+
+[connection signal="pressed" from="TitleRow/TurretRemoveButton" to="." method="_on_TurretRemoveButton_pressed"]
+
+[connection signal="value_changed" from="BSizeRow/BSizeField" to="." method="_on_BSizeField_value_changed"]
+
+[connection signal="value_changed" from="BCountRow/BCountField" to="." method="_on_BCountField_value_changed"]
+
+[connection signal="value_changed" from="BSpeedRow/BSpeedField" to="." method="_on_BSpeedField_value_changed"]
+
+[connection signal="value_changed" from="BAngleRow/BAngleField" to="." method="_on_BAngleField_value_changed"]
+
+[connection signal="value_changed" from="BIntervalRow/BIntervalField" to="." method="_on_BIntervalField_value_changed"]
 
 
