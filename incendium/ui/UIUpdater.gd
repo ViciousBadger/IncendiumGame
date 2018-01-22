@@ -13,7 +13,7 @@ func _ready():
 	for b in bosses:
 		var icon = s_bossicon.instance()
 		bossprog.add_child(icon)
-		icon.set_col(b.start_color)
+		icon.set_col(b.start_color.linear_interpolate(Color(1,1,1),0.3))
 
 func _process(delta):
 	# Player HP
