@@ -4,6 +4,9 @@
 
 extends Node2D
 
+var part_s = preload("res://gameplay/bosses/boss_part.tscn")
+var turret_s = preload("res://gameplay/bosses/boss_turret.tscn")
+
 #Fill out with an instance of BossDesign.gd
 var design
 var start_anim = true
@@ -91,7 +94,7 @@ func create_part(id, pos, layer, index, parentsides):
 		alive = false
 	
 	if alive || id == "":
-		var part = preload("res://gameplay/bosses/BossPart.tscn").instance()
+		var part = part_s.instance()
 		# Set values
 		part.get_node("RegularPolygon").sides = sides
 		part.get_node("RegularPolygon").size = size
@@ -105,7 +108,7 @@ func create_part(id, pos, layer, index, parentsides):
 		part.max_health = (design.base_health * pow(design.health_dropoff, layer))# / parentsides
 		
 		for tdesign in design.layers[layer].turrets:
-			var tinstance = preload("res://gameplay/bosses/BossTurret.tscn").instance()
+			var tinstance = turret_s.instance()
 			tinstance.design = tdesign
 			part.add_child(tinstance)
 		

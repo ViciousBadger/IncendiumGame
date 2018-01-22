@@ -1,6 +1,6 @@
 extends Object
 
-var pattern = preload("res://gameplay/bullets/patterns/PtrnBurst.gd")
+var pattern = preload("res://gameplay/bullets/patterns/ptrn_burst.gd")
 # Bullet stats
 var mods = []
 var size = 2

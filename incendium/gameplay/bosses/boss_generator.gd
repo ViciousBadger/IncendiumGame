@@ -14,23 +14,23 @@ var regex_list = [
 ]
 
 var pattern_list = [
-preload("res://gameplay/bullets/patterns/PtrnBurst.gd"),
-preload("res://gameplay/bullets/patterns/PtrnShotgun.gd"),
-preload("res://gameplay/bullets/patterns/PtrnCartwheel.gd"),
-preload("res://gameplay/bullets/patterns/PtrnSprinkles.gd"),
-#preload("res://bulletstuff/patterns/PtrnBubble.gd"),
-preload("res://gameplay/bullets/patterns/PtrnSplitBurst.gd"),
+preload("res://gameplay/bullets/patterns/ptrn_burst.gd"),
+preload("res://gameplay/bullets/patterns/ptrn_shotgun.gd"),
+preload("res://gameplay/bullets/patterns/ptrn_cartwheel.gd"),
+preload("res://gameplay/bullets/patterns/ptrn_sprinkles.gd"),
+#preload("res://bulletstuff/patterns/ptrn_bubble.gd"),
+preload("res://gameplay/bullets/patterns/ptrn_split_burst.gd"),
 ]
 
 var mod_list = [
-preload("res://gameplay/bullets/mods/ModAccel.gd"),
-preload("res://gameplay/bullets/mods/ModCurve.gd"),
-#preload("res://gameplay/bullets/mods/ModSine.gd"),
-preload("res://gameplay/bullets/mods/ModSplit.gd"),
+preload("res://gameplay/bullets/mods/mod_accel.gd"),
+preload("res://gameplay/bullets/mods/mod_curve.gd"),
+#preload("res://gameplay/bullets/mods/mod_sine.gd"),
+preload("res://gameplay/bullets/mods/mod_split.gd"),
 ]
 
 func gen_boss_design():
-	var design = preload("res://gameplay/bosses/BossDesign.gd").new()
+	var design = preload("res://gameplay/bosses/boss_design.gd").new()
 	
 	randomize() # Randomize random seed
 	
@@ -68,7 +68,7 @@ func gen_boss_design():
 	design.size_dropoff = 0.6
 	
 	#design.base_health = 15 + (2.5 * bossnum)
-	design.base_health = 10
+	design.base_health = 40
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 
 	var speed = 1

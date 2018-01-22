@@ -3,6 +3,9 @@
 
 extends Node2D
 
+var light_s = preload("res://effects/light.tscn")
+var explosion_s = preload("res://effects/Explosion.tscn")
+
 # Bullet types
 const BTYPE_COUNT = 2
 
@@ -14,7 +17,7 @@ const BTYPE_SPLITTING = 4
 var type = BTYPE_BASIC # TODO remove
 
 # Set from outside before _ready() to change stats
-var stats = preload("res://gameplay/bullets/BulletStats.gd").new()
+var stats = preload("res://gameplay/bullets/bullet_stats.gd").new()
 
 var velocity = Vector2(1000,0)
 
@@ -45,8 +48,8 @@ func _ready():
 		collider.add_to_group("damage_enemy")
 	
 	# Instance light
-	var light = preload("res://effects/Light.tscn")
-	light_instance = light.instance()
+	
+	light_instance = light_s.instance()
 	var s = stats.size * 0.04
 	light_instance.set_scale(Vector2(s,s))
 	light_instance.set_modulate(sprite.get_modulate())
@@ -81,7 +84,7 @@ func _process(delta):
 		
 func _exit_tree():
 	# Explode when removed
-	var expl = preload("res://effects/Explosion.tscn").instance()
+	var expl = explosion_s.instance()
 	expl.velocity = -velocity * 0.5
 	expl.get_node("RegularPolygon").size = stats.size
 	var col = stats.color

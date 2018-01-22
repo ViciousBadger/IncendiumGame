@@ -1,11 +1,14 @@
 extends Node
 
+var player_s =  preload("res://gameplay/player/player.tscn")
+var boss_s = preload("res://gameplay/bosses/boss.tscn")
+
 # Designs for the bosses that make up this stage
 var bosses = []
 
 # As long as this is true, new bosses (and players) will be spawned
 var playing = false
-var gen = preload("res://gameplay/bosses/BossGenerator.gd").new()
+var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
 
 # Strong and weak references to last spawned boss
 # Weak reference is nessecary to check when the boss has been destroyed
@@ -35,9 +38,8 @@ func _ready():
 	ui_y = 0
 	
 	# Create our ol trusty player
-	var player = preload("res://gameplay/player/Player.tscn").instance()
-	player.set_global_pos(Vector2(360,600))
-	add_child(player)
+	spawn_player()
+	# And the first big bad boss
 	spawn_boss(bosses[0])
 	
 func _process(delta):
@@ -51,7 +53,7 @@ func _process(delta):
 	if OS.get_time_scale() < 1:
 		OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
 		if OS.get_time_scale() >= 1 and !has_node("Player") and lives > 0:
-			var p = preload("res://gameplay/player/Player.tscn").instance()
+			var p = player_s.instance()
 			add_child(p)
 			p.set_global_pos(Vector2(360,600))
 			lives -= 1
@@ -78,6 +80,11 @@ func add_score(amount):
 	score_mult += 1
 	#score_mult_timer = score_mult_time
 	
+func spawn_player():
+	var player = player_s.instance()
+	player.set_global_pos(Vector2(360,600))
+	add_child(player)
+	
 func spawn_next():
 	bossnum += 1
 	if bossnum < bosses.size():
@@ -87,7 +94,7 @@ func spawn_next():
 	
 # Spawns a boss from a boss design object
 func spawn_boss(design):
-	var boss_instance = preload("res://gameplay/bosses/Boss.tscn").instance()
+	var boss_instance = boss_s.instance()
 	last_boss = boss_instance
 	last_boss_wr = weakref(boss_instance)
 	

@@ -4,7 +4,7 @@
 extends Node
 
 var Stage = preload("res://gameplay/stage.tscn")
-var BossEditor = preload("res://ui/BossEditor.tscn")
+var BossEditor = preload("res://ui/boss_editor.tscn")
 
 # Values for current and target fore- and background colors
 # Used for slowly fading into new colors
@@ -19,7 +19,7 @@ func _ready():
 	set_process_input(true)
 	set_process(true)
 	
-	#var gen = preload("res://gameplay/bosses/BossGenerator.gd").new()
+	#var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
 	#start_stage([gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design()])
 	start_editor()
 

@@ -2,8 +2,8 @@
 extends Node
 
 # Includes
-var BossDesign = preload("res://gameplay/bosses/BossDesign.gd")
-var BossPart = preload("res://gameplay/bosses/BossPart.gd")
+var BossDesign = preload("res://gameplay/bosses/boss_design.gd")
+var BossPart = preload("res://gameplay/bosses/boss_part.gd")
 var TurretEdit = preload("res://ui/boss_editor/turret_edit.tscn")
 
 # Exposed vars
@@ -11,7 +11,7 @@ export(NodePath) var turret_edit_parent
 # Boss design being edited
 onready var design = BossDesign.new()
 # Boss generator
-var gen = preload("res://gameplay/bosses/BossGenerator.gd").new()
+var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
 # Weak ref to current boss 'preview'
 var boss
 # Layer # selected

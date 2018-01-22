@@ -5,12 +5,12 @@ var turreti = 0
 var updating_fields = false
 
 var pattern_list = [
-{"name": "Burst", "pattern": preload("res://gameplay/bullets/patterns/PtrnBurst.gd")},
-{"name": "Shotgun", "pattern": preload("res://gameplay/bullets/patterns/PtrnShotgun.gd")},
-{"name": "Cartwheel", "pattern": preload("res://gameplay/bullets/patterns/PtrnCartwheel.gd")},
-{"name": "Sprinkles", "pattern": preload("res://gameplay/bullets/patterns/PtrnSprinkles.gd")},
+{"name": "Burst", "pattern": preload("res://gameplay/bullets/patterns/ptrn_burst.gd")},
+{"name": "Shotgun", "pattern": preload("res://gameplay/bullets/patterns/ptrn_shotgun.gd")},
+{"name": "Cartwheel", "pattern": preload("res://gameplay/bullets/patterns/ptrn_cartwheel.gd")},
+{"name": "Sprinkles", "pattern": preload("res://gameplay/bullets/patterns/ptrn_sprinkles.gd")},
 #preload("res://bulletstuff/patterns/PtrnBubble.gd"),
-{"name": "Split burst", "pattern": preload("res://gameplay/bullets/patterns/PtrnSplitBurst.gd")},
+{"name": "Split burst", "pattern": preload("res://gameplay/bullets/patterns/ptrn_split_burst.gd")},
 ]
 
 func _ready():

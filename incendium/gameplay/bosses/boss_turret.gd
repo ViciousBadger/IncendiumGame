@@ -1,9 +1,11 @@
 extends Node2D
 
+var bullet_s = preload("res://gameplay/bullets/Bullet.tscn")
+
 # Node references
 onready var bosspart = get_node("..")
 
-var design = preload("res://gameplay/bosses/BossDesignTurret.gd").new()
+var design = preload("res://gameplay/bosses/boss_design_turret.gd").new()
 # Instance of bullet pattern to use
 var pattern
 
@@ -28,7 +30,7 @@ func get_bullet_count(): return design.bullet_count
 
 func fire_bullet(angle, speedmult):
 	bosspart.scale = 0.95
-	var b = preload("res://gameplay/bullets/Bullet.tscn").instance()
+	var b = bullet_s.instance()
 	
 	# Calculate bullet velocity
 	var velocityAngle

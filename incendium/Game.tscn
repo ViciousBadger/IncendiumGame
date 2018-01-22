@@ -1,21 +1,21 @@
 [gd_scene load_steps=19 format=1]
 
-[ext_resource path="res://gameplay/Game.gd" type="Script" id=1]
+[ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://effects/bg_videos/bg_video_player.gd" type="Script" id=2]
 [ext_resource path="res://effects/bg_material.tres" type="CanvasItemMaterial" id=3]
 [ext_resource path="res://ui/box.png" type="Texture" id=4]
-[ext_resource path="res://effects/Background.gd" type="Script" id=5]
-[ext_resource path="res://effects/Smoke.tscn" type="PackedScene" id=6]
+[ext_resource path="res://effects/background.gd" type="Script" id=5]
+[ext_resource path="res://effects/smoke.tscn" type="PackedScene" id=6]
 [ext_resource path="res://effects/border.png" type="Texture" id=7]
-[ext_resource path="res://sound/Explosion21.smp" type="Sample" id=8]
-[ext_resource path="res://sound/Hit_Hurt4.smp" type="Sample" id=9]
-[ext_resource path="res://sound/Laser_Shoot14.smp" type="Sample" id=10]
-[ext_resource path="res://sound/explode4.smp" type="Sample" id=11]
+[ext_resource path="res://test_sound/explode0.smp" type="Sample" id=8]
+[ext_resource path="res://test_sound/hit.smp" type="Sample" id=9]
+[ext_resource path="res://test_sound/shoot.smp" type="Sample" id=10]
+[ext_resource path="res://test_sound/explode1.smp" type="Sample" id=11]
 [ext_resource path="res://music/1.smp" type="Sample" id=12]
 [ext_resource path="res://music/2.smp" type="Sample" id=13]
 [ext_resource path="res://music/3.smp" type="Sample" id=14]
 [ext_resource path="res://music/4.smp" type="Sample" id=15]
-[ext_resource path="res://music/MusicNew.gd" type="Script" id=16]
+[ext_resource path="res://music/music_new.gd" type="Script" id=16]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -76,8 +76,6 @@ samples/4 = {
 script/script = ExtResource( 1 )
 
 [node name="Background" type="Node" parent="."]
-
-editor/display_folded = true
 
 [node name="BgVideo" type="VideoPlayer" parent="Background"]
 
@@ -155,8 +153,6 @@ transform/scale = Vector2( 0.5, 0.5 )
 [node name="Main" type="Node" parent="."]
 
 [node name="Foreground" type="Node" parent="."]
-
-editor/display_folded = true
 
 [node name="Border" type="Sprite" parent="Foreground"]
 
