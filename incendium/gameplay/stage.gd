@@ -38,10 +38,7 @@ func _ready():
 	var player = preload("res://gameplay/player/Player.tscn").instance()
 	player.set_global_pos(Vector2(360,600))
 	add_child(player)
-	if bosses.size() > 0:
-		spawn_boss(bosses[0])
-	else:
-		spawn_boss(gen.gen_boss_design())
+	spawn_boss(bosses[0])
 	
 func _process(delta):
 	# Score multiplier resetting
@@ -61,8 +58,7 @@ func _process(delta):
 	
 	if !last_boss_wr.get_ref():
 		# No boss, spawn a new one
-		spawn_boss(gen.gen_boss_design())
-		bossnum += 1
+		spawn_next()
 		# Good job player, have a health
 		var player = get_node("Player")
 		if player != null:
@@ -84,13 +80,10 @@ func add_score(amount):
 	
 func spawn_next():
 	bossnum += 1
-	if bosses.size() > 0:
-		if bossnum < bosses.size():
-			spawn_boss(bosses[bossnum])
-		else:
-			print("stage has been won")
+	if bossnum < bosses.size():
+		spawn_boss(bosses[bossnum])
 	else:
-		spawn_boss(gen.gen_boss_design())
+		print("stage has been won")
 	
 # Spawns a boss from a boss design object
 func spawn_boss(design):

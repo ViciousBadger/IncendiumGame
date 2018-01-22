@@ -68,7 +68,7 @@ func gen_boss_design():
 	design.size_dropoff = 0.6
 	
 	#design.base_health = 15 + (2.5 * bossnum)
-	design.base_health = 50
+	design.base_health = 10
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 
 	var speed = 1
