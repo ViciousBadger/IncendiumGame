@@ -4,7 +4,7 @@ extends Node
 # Includes
 var BossDesign = preload("res://gameplay/bosses/boss_design.gd")
 var BossPart = preload("res://gameplay/bosses/boss_part.gd")
-var TurretEdit = preload("res://ui/boss_editor/turret_edit.tscn")
+var TurretEdit = preload("res://ui/editor/turret_edit.tscn")
 
 # Exposed vars
 export(NodePath) var turret_edit_parent

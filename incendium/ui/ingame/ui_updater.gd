@@ -1,7 +1,7 @@
 
 extends Node
 
-var s_bossicon = preload("res://ui/stageprog/bossicon.tscn")
+var s_bossicon = preload("res://ui/ingame/stageprog/bossicon.tscn")
 
 var displayed_score = 0
 

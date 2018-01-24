@@ -1,7 +1,7 @@
 extends Node
 
 # Includes
-var Field = preload("res://ui/boss_editor/field.gd")
+var Field = preload("res://ui/editor/field.gd")
 
 # Exposed
 export(NodePath) var fields_root
