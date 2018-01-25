@@ -4,7 +4,7 @@
 extends Node2D
 
 var light_s = preload("res://effects/light.tscn")
-var explosion_s = preload("res://effects/Explosion.tscn")
+var explosion_s = preload("res://effects/explosion.tscn")
 
 # Bullet types
 const BTYPE_COUNT = 2

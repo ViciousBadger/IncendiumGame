@@ -11,7 +11,6 @@ script/script = ExtResource( 1 )
 "damage_player_solid",
 ] instance=ExtResource( 2 )]
 
-editor/display_folded = true
 visibility/behind_parent = true
 z/z = 10
 collision/layers = 262144
@@ -23,6 +22,8 @@ circle_collision = false
 texture/scale = Vector2( 2, 2 )
 
 [connection signal="area_enter" from="RegularPolygon" to="." method="_on_RegularPolygon_area_enter"]
+
+[connection signal="mouse_enter" from="RegularPolygon" to="." method="_on_RegularPolygon_mouse_enter"]
 
 
 [editable path="RegularPolygon"]

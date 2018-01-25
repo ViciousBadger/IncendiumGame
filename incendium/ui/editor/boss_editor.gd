@@ -44,14 +44,12 @@ func _input(event):
 func hotswap():
 	var t = 0
 	if boss != null:
-		print("boss not null")
 		var b = boss.get_ref()
 		if b != null:
-			print("boss ref not null either")
 			t = b.t
 			b.queue_free()
 	
-	var newboss = preload("res://gameplay/bosses/Boss.tscn").instance()
+	var newboss = preload("res://gameplay/bosses/boss.tscn").instance()
 	newboss.design = design.clone()
 	newboss.start_anim = false
 	newboss.t = t
@@ -69,7 +67,6 @@ func update_boss_parts(boss):
 		if c extends BossPart:
 			c.auto_active = false
 			c.active = c.id.length() == layeri
-			print("part with id " + c.id + " active: " + str(c.active))
 	
 func test():
 	get_tree().get_root().get_node("Game").start_stage([design])

@@ -1,6 +1,6 @@
 extends Node2D
 
-var bullet_s = preload("res://gameplay/bullets/Bullet.tscn")
+var bullet_s = preload("res://gameplay/bullets/bullet.tscn")
 
 # Node references
 onready var bosspart = get_node("..")

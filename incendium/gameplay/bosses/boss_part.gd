@@ -3,8 +3,8 @@
 
 extends Node2D
 
-var explosion_s = preload("res://effects/Explosion.tscn")
-var light_s = preload("res://effects/Light.tscn")
+var explosion_s = preload("res://effects/explosion.tscn")
+var light_s = preload("res://effects/light.tscn")
 
 # Every var below this is set by Boss
 
@@ -62,11 +62,15 @@ func _process(delta):
 	set_scale(Vector2(1,1) * get_parent().get_part_scale(id) * scale * scale)
 	
 	# Health 'bar' stuff
-	if health_fade > 0:
+	if (health == max_health && health_fade > 0) || (health < max_health && health_fade > 0.5):
 		health_fade -= delta * 4
 		if (health_fade < 0): health_fade = 0
 		update()
-	health_size = lerp(health_size, (1.0 - float(health) / max_health), delta * 12)
+
+	if health == max_health:
+		health_size = 1.0
+	else:
+		health_size = lerp(health_size, 1.0 - float(health) / max_health, delta * 12)
 	
 	# Health auto regen
 	if health < max_health:
@@ -92,48 +96,58 @@ func _process(delta):
 	
 func _on_RegularPolygon_area_enter(area):
 	# Take damage
-	if area.get_groups().has("damage_enemy") and active and scale > 0.5:
+	if area.get_groups().has("damage_enemy") and scale > 0.5:
 		area.get_parent().queue_free()
-		health -= area.get_parent().stats.damage
-		health_fade = 1.0
 		
-		# Sound
-		#get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.2,0.6) + (health / max_health))
-		#get_tree().get_root().get_node("Game/SFX").play("Hit_Hurt4")
+		if !active:
+			health_fade = 0.2
+			return
 		
-		# Dead?
-		if health <= 0:
-			# Explosion
-			for i in range(0,get_node("RegularPolygon").size):
-				var explosion_instance = explosion_s.instance()
-				if i == 0:
-					get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(1 + rand_range(-0.5,0.5))
-					get_tree().get_root().get_node("Game/SFX").play("explode4")
-				explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 4
-				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(color)
-				explosion_instance.velocity = velocity * 100
-				get_tree().get_root().add_child(explosion_instance)
-				explosion_instance.set_global_pos(get_global_pos())
-			
-			# Light
-			var light_instance = light_s.instance()
-			var s = get_node("RegularPolygon").size * 0.008
-			light_instance.despawn_a = 6
-			light_instance.set_scale(Vector2(s,s))
-			light_instance.set_modulate(get_node("RegularPolygon/Polygon2D").get_color())
-			get_tree().get_root().get_node("Game/Background/Lights").add_child(light_instance)
-			light_instance.set_global_pos(get_global_pos())
-			light_instance.despawn()
-			
-			# Score
-			var game = get_tree().get_root().get_node("Game")
-			game.add_score(get_node("RegularPolygon").size)
-			
-			# Deadmap
-			get_parent().dead_map[id] = true
-			
-			# Done
-			queue_free()
+		if health == max_health:
+			health_size = 0.0
+		damage(area.get_parent().stats.damage)
+		
+func damage(hp):
+	health -= hp
+	health_fade = 1.0
+	
+	# Sound
+	#get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(rand_range(0.2,0.6) + (health / max_health))
+	#get_tree().get_root().get_node("Game/SFX").play("Hit_Hurt4")
+	
+	# Dead?
+	if health <= 0:
+		# Explosion
+		for i in range(0,get_node("RegularPolygon").size):
+			var explosion_instance = explosion_s.instance()
+			if i == 0:
+				get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(1 + rand_range(-0.5,0.5))
+				get_tree().get_root().get_node("Game/SFX").play("explode4")
+			explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 4
+			explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(color)
+			explosion_instance.velocity = velocity * 100
+			get_tree().get_root().add_child(explosion_instance)
+			explosion_instance.set_global_pos(get_global_pos())
+		
+		# Light
+		var light_instance = light_s.instance()
+		var s = get_node("RegularPolygon").size * 0.008
+		light_instance.despawn_a = 6
+		light_instance.set_scale(Vector2(s,s))
+		light_instance.set_modulate(get_node("RegularPolygon/Polygon2D").get_color())
+		get_tree().get_root().get_node("Game/Background/Lights").add_child(light_instance)
+		light_instance.set_global_pos(get_global_pos())
+		light_instance.despawn()
+		
+		# Score
+		var game = get_tree().get_root().get_node("Game")
+		game.add_score(get_node("RegularPolygon").size)
+		
+		# Deadmap
+		get_parent().dead_map[id] = true
+		
+		# Done
+		queue_free()
 
 # Deprecated function for finding out if any child parts are active
 func any_active_child_parts():
@@ -149,11 +163,12 @@ func _draw():
 	var pgon = Vector2Array(get_node("RegularPolygon/Polygon2D").get_polygon())
 	
 	# Draw health polygon
-	if health < max_health and health > 0: # if health_fade > 0: 
+	#if health < max_health and health > 0: # if health_fade > 0: 
+	if true:
 		var hp_pgon = Vector2Array(pgon)
 		for i in range(0,hp_pgon.size()):
 			hp_pgon[i] = hp_pgon[i] * health_size
-		draw_colored_polygon(hp_pgon,Color(1,1,1,lerp(0.5,1,health_fade)))
+		draw_colored_polygon(hp_pgon,Color(1,1,1,health_fade))
 	
 	# Draw outline
 	if a > 0:
@@ -163,3 +178,6 @@ func _draw():
 			if end >= pgon.size(): end = 0
 			var col = Color(1,1,1,a).linear_interpolate(color, 0.5)
 			draw_line(pgon[start], pgon[end], col, 3)
+
+func _on_RegularPolygon_mouse_enter():
+	damage(99999)

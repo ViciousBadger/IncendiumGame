@@ -54,11 +54,11 @@ func gen_boss_design():
 			var power = layer_count - layer_i
 			t.size = 1 + power * 1
 			t.bullet_count = 1 + (power-1) * 3
-			t.bullet_speed = 80 + 30 * (power-1) + rand_range(-turret_i * 20, turret_i * 20)
+			t.bullet_speed = 120 + 30 * (power-1) + rand_range(-turret_i * 20, turret_i * 20)
 			t.bullet_angle = 0
 			if turret_i > 0: t.bullet_angle = rand_range(2, 2)
 			var a = layer_i / float(layer_count - 1)
-			t.shoot_interval = lerp(0.3, 1, a)
+			t.shoot_interval = lerp(0.5, 1.5, a)
 			#TODO: Set initial shoot timer to make part shoot in succession
 			# part.shoot_timer = 1 + (index/parentsides) * part.shoot_interval
 	
@@ -68,7 +68,8 @@ func gen_boss_design():
 	design.size_dropoff = 0.6
 	
 	#design.base_health = 15 + (2.5 * bossnum)
-	design.base_health = 35
+	design.base_health = 100
+	design.health_dropoff = 0.3
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 
 	var speed = 1

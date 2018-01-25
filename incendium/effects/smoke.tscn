@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=1]
 
 [ext_resource path="res://effects/smoke.png" type="Texture" id=1]
-[ext_resource path="res://effects/Smoke.gd" type="Script" id=2]
+[ext_resource path="res://effects/smoke.gd" type="Script" id=2]
 
 [node name="Smoke" type="Sprite" groups=[
 "bgcolor",

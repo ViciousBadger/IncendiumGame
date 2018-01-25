@@ -58,6 +58,28 @@ func has_children(id):
 		if(part_map.has(child_id) && !dead_map.has(child_id)):
 			return true
 	return false
+	
+func has_lost_children(id):
+	# Outermost parts always return true
+	if(id.length() == design.layers.size() - 1):
+		return true
+	# Innermost part needs all children killed first
+	var need_all = false
+	if id.length() == 0: need_all = true
+	
+	var sides = design.layers[id.length()-1].pgonsides
+	var foundsides = 0
+	var deadsides = 0
+	
+	for i in range(sides): #Loop though all potential child parts of this part
+		var child_id = id + str(i)
+		if part_map.has(child_id):
+			foundsides += 1
+			if dead_map.has(child_id):
+				if !need_all:
+					return true
+				deadsides +=1
+	return foundsides == 0 || deadsides >= foundsides
 
 func get_part_pos(id):
 	if(map.has(id)):
@@ -100,7 +122,6 @@ func create_part(id, pos, layer, index, parentsides):
 		part.get_node("RegularPolygon").size = size
 		if !start_anim:
 			part.scale = 1
-	
 		part.rot_speed = design.base_rot_speed + design.rot_speed_inc * layer
 		part.color = design.start_color.linear_interpolate(design.end_color, a)
 		part.id = id

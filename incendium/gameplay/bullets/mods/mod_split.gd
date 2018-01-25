@@ -5,7 +5,7 @@ func update(b, delta):
 	b.stime -= delta
 	if b.stime <= 0:
 		for i in range(0,2):
-			var newb = preload("res://gameplay/bullets/Bullet.tscn").instance()
+			var newb = preload("res://gameplay/bullets/bullet.tscn").instance()
 			newb.stats.hostile = b.stats.hostile
 			newb.stats.size = b.stats.size / 2
 			newb.stats.color = b.stats.color

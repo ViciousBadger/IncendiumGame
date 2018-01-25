@@ -9,6 +9,7 @@ var bullet_s = preload("res://gameplay/bullets/bullet.tscn")
 
 const SPEED = 300
 const ACCEL = 3000
+const SHOOTING_MULT = 0.6
 
 export var polar_controls = false
 var use_mouse = false
@@ -17,8 +18,9 @@ var dist = 200
 var shield_cooldown = 0
 var fire_timer = 0
 var velocity = Vector2(0,0)
+var speed_mult = 1
 
-const MAX_HEALTH = 3
+const MAX_HEALTH = 5
 var health = MAX_HEALTH
 
 var inv_time = 0
@@ -66,15 +68,16 @@ func _process(delta):
 	
 	# Normal movement
 	if !polar_controls:
-		var movespd = SPEED
+		var mult = 1
 		if shooting:
-			movespd *= 0.8
-		var target_velocity = input_vec.normalized() * movespd
+			mult = SHOOTING_MULT
+		
+		var target_velocity = input_vec.normalized() * SPEED * mult
 		
 		var towards_target = target_velocity - velocity
 		var dist_to_target = towards_target.length()
 		towards_target = towards_target.normalized()
-		towards_target *= min(ACCEL * delta, dist_to_target)
+		towards_target *= min(ACCEL * delta * mult, dist_to_target)
 		
 		velocity += towards_target
 		translate(velocity * delta)
@@ -132,7 +135,7 @@ func _process(delta):
 		var dir = atan2(towards_center.y,towards_center.x)
 		var len = 600
 		
-		var spread = 0.05
+		var spread = 0.15
 		var rot = rand_range(-spread,spread)
 		var final = dir + rot
 		
@@ -167,7 +170,7 @@ func _on_RegularPolygon_area_enter( area ):
 func lose_health(hp):
 	if inv_time <= 0:
 		health -= hp
-		inv_time = 1
+		#inv_time = 1
 		col = Color(1,0,0)
 		get_parent().score_mult = 1
 		get_parent().score_mult_timer = 0
