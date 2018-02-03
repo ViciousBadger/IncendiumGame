@@ -24,6 +24,7 @@ func _ready():
 	set_process_input(true)
 	set_process(true)
 	
+	#start_menu()
 	var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
 	start_stage([gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design()])
 	#start_editor()

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://ui/option_wheel.gd" type="Script" id=1]
+[ext_resource path="res://gameplay/regular_polygon.tscn" type="PackedScene" id=2]
+
+[node name="OptionWheel" type="Node2D"]
+
+transform/pos = Vector2( 360, 360 )
+script/script = ExtResource( 1 )
+options = StringArray( "Option one", "Option two", "Option three" )
+
+[node name="RegularPolygon" parent="." instance=ExtResource( 2 )]
+
+
