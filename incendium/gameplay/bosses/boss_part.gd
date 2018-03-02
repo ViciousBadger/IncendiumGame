@@ -180,4 +180,5 @@ func _draw():
 			draw_line(pgon[start], pgon[end], col, 3)
 
 func _on_RegularPolygon_mouse_enter():
-	damage(99999)
+	pass
+	#damage(99999)

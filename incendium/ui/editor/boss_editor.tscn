@@ -805,7 +805,6 @@ alignment = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BaseContainer"]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
@@ -816,7 +815,7 @@ margin/right = 287.0
 margin/bottom = 524.0
 alignment = 0
 
-[node name="SaveButton" type="Button" parent="BaseContainer/HBoxContainer"]
+[node name="LoadButton" type="Button" parent="BaseContainer/HBoxContainer"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -824,7 +823,23 @@ size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 93.0
+margin/right = 141.0
+margin/bottom = 20.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Load"
+flat = false
+
+[node name="SaveButton" type="Button" parent="BaseContainer/HBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 145.0
+margin/top = 0.0
+margin/right = 287.0
 margin/bottom = 20.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -832,15 +847,27 @@ shortcut = null
 text = "Save"
 flat = false
 
-[node name="RandomizeButton" type="Button" parent="BaseContainer/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="BaseContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 528.0
+margin/right = 287.0
+margin/bottom = 548.0
+alignment = 0
+
+[node name="RandomizeButton" type="Button" parent="BaseContainer/HBoxContainer2"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 3
 size_flags/vertical = 2
-margin/left = 97.0
+margin/left = 0.0
 margin/top = 0.0
-margin/right = 190.0
+margin/right = 141.0
 margin/bottom = 20.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -848,13 +875,41 @@ shortcut = null
 text = "Randomize"
 flat = false
 
-[node name="TestButton" type="Button" parent="BaseContainer/HBoxContainer"]
+[node name="ResetButton" type="Button" parent="BaseContainer/HBoxContainer2"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 3
 size_flags/vertical = 2
-margin/left = 194.0
+margin/left = 145.0
+margin/top = 0.0
+margin/right = 287.0
+margin/bottom = 20.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Reset"
+flat = false
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="BaseContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 552.0
+margin/right = 287.0
+margin/bottom = 572.0
+alignment = 0
+
+[node name="TestButton" type="Button" parent="BaseContainer/HBoxContainer1"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 0.0
 margin/top = 0.0
 margin/right = 287.0
 margin/bottom = 20.0
@@ -948,6 +1003,44 @@ script/script = ExtResource( 4 )
 fields_root = NodePath("../../../BaseContainer")
 field_name = "pgonsides"
 
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 133.0
+margin/top = 160.0
+margin/right = 864.0
+margin/bottom = 891.0
+popup/exclusive = true
+window/title = "Save a File"
+dialog/hide_on_ok = false
+mode = 4
+access = 0
+filters = StringArray(  )
+show_hidden_files = false
+
+[node name="LoadFileDialog" type="FileDialog" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 139.0
+margin/top = 162.0
+margin/right = 866.0
+margin/bottom = 889.0
+popup/exclusive = true
+window/title = "Open a File"
+dialog/hide_on_ok = false
+mode = 0
+access = 0
+filters = StringArray(  )
+show_hidden_files = false
+
 [connection signal="value_changed" from="BaseContainer/TabContainer/Boss/Rows/SizeRow/BaseSizeField" to="." method="_on_BaseSizeField_value_changed"]
 
 [connection signal="value_changed" from="BaseContainer/TabContainer/Boss/Rows/SizeRow/SizeDropoffField" to="." method="_on_SizeDropoffField_value_changed"]
@@ -974,8 +1067,18 @@ field_name = "pgonsides"
 
 [connection signal="pressed" from="BaseContainer/TabContainer/Layers/Rows/TurretsTitleRow/NewTurretButton" to="." method="_on_NewTurretButton_pressed"]
 
-[connection signal="pressed" from="BaseContainer/HBoxContainer/RandomizeButton" to="." method="_on_RandomizeButton_pressed"]
+[connection signal="pressed" from="BaseContainer/HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
 
-[connection signal="pressed" from="BaseContainer/HBoxContainer/TestButton" to="." method="_on_TestButton_pressed"]
+[connection signal="pressed" from="BaseContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+
+[connection signal="pressed" from="BaseContainer/HBoxContainer2/RandomizeButton" to="." method="_on_RandomizeButton_pressed"]
+
+[connection signal="pressed" from="BaseContainer/HBoxContainer2/ResetButton" to="." method="_on_ResetButton_pressed"]
+
+[connection signal="pressed" from="BaseContainer/HBoxContainer1/TestButton" to="." method="_on_TestButton_pressed"]
+
+[connection signal="file_selected" from="SaveFileDialog" to="." method="_on_SaveFileDialog_file_selected"]
+
+[connection signal="file_selected" from="LoadFileDialog" to="." method="_on_LoadFileDialog_file_selected"]
 
 

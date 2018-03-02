@@ -21,3 +21,30 @@ func clone():
 	c.bullet_angle = bullet_angle
 	c.shoot_interval = shoot_interval
 	return c
+	
+func fsave(f):
+	f.store_pascal_string(pattern.get_path())
+	
+	f.store_8(mods.size())
+	for m in mods:
+		f.store_pascal_string(m.get_path())
+	
+	f.store_8(size)
+	f.store_8(bullet_count)
+	f.store_real(bullet_speed)
+	f.store_real(bullet_angle)
+	f.store_real(shoot_interval)
+
+func fload(f):
+	pattern = load(f.get_pascal_string())
+	
+	mods.clear()
+	var mod_num = f.get_8()
+	for i in range(mod_num):
+		mods.append(load(f.get_pascal_string()))
+	
+	size = f.get_8()
+	bullet_count = f.get_8()
+	bullet_speed = f.get_real()
+	bullet_angle = f.get_real()
+	shoot_interval = f.get_real()

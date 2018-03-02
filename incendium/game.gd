@@ -18,6 +18,14 @@ var target_bgcol = Color(0.6,0.6,0.6)
 var fgcol = Color(0,0,0)
 var target_fgcol = Color(1,1,1)
 
+const NONE = 0
+const MENU = 1
+const EDITOR = 2
+const GAME = 3
+
+var prev = NONE
+var mode = NONE
+
 var stage_wr
 
 func _ready():
@@ -25,28 +33,52 @@ func _ready():
 	set_process(true)
 	
 	#start_menu()
-	var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
-	start_stage([gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design()])
-	#start_editor()
+	#var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
+	#start_stage([gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design()])
+	start_editor()
 
 func _process(delta):
 	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 3)
 	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 0.5)
 	get_node("Background/BgEffect").set_modulate(bgcol)
 
+func _input(event):
+	if event.type == InputEvent.KEY and event.is_pressed():
+		if event.scancode == KEY_ESCAPE:
+			if mode == GAME:
+				if prev == EDITOR:
+					start_editor()
+				else:
+					start_menu()
+			elif mode == EDITOR:
+				start_menu()
+			else:
+				get_tree().quit()
+			
+func clear():
+	for node in mainnode.get_children():
+		node.queue_free()
+	prev = mode
+
 func start_menu():
+	clear()
 	var m = Menu.instance()
 	mainnode.add_child(m)
+	mode = MENU
 
 func start_stage(bosses):
+	clear()
 	var s = Stage.instance()
 	s.bosses = bosses
 	mainnode.add_child(s)
 	stage_wr = weakref(s)
+	mode = GAME
 	
 func start_editor():
+	clear()
 	var e = BossEditor.instance()
 	mainnode.add_child(e)
+	mode = EDITOR
 	
 func add_score(num):
 	if stage_wr != null:

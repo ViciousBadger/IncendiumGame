@@ -35,3 +35,62 @@ func clone():
 	c.end_color = end_color
 	return c
 	
+func fsave(path):
+	var f = File.new()
+	f.open(path, f.WRITE)
+	f.store_8(0) # Version
+	
+	f.store_8(layers.size())
+	for l in layers:
+		l.fsave(f)
+	
+	f.store_pascal_string(regex)
+	
+	f.store_real(base_size)
+	f.store_real(size_dropoff)
+	
+	f.store_real(base_health)
+	f.store_real(health_dropoff)
+	
+	f.store_real(base_rot_speed)
+	f.store_real(rot_speed_inc)
+	
+	f.store_real(start_color.r)
+	f.store_real(start_color.g)
+	f.store_real(start_color.b)
+	f.store_real(end_color.r)
+	f.store_real(end_color.g)
+	f.store_real(end_color.b)
+	
+func fload(path):
+	var f = File.new()
+	f.open(path, f.READ)
+	var version = f.get_8()
+	print("Boss pattern version: " + str(version))
+	
+	layers.clear()
+	var num_layers = f.get_8()
+	for i in range(num_layers):
+		var l = new_layer()
+		l.fload(f)
+	
+	regex = f.get_pascal_string()
+	
+	base_size = f.get_real()
+	size_dropoff = f.get_real()
+	
+	base_health = f.get_real()
+	health_dropoff = f.get_real()
+	
+	base_rot_speed = f.get_real()
+	rot_speed_inc = f.get_real()
+	
+	start_color.r = f.get_real()
+	start_color.g = f.get_real()
+	start_color.b = f.get_real()
+	
+	end_color.r = f.get_real()
+	end_color.g = f.get_real()
+	end_color.b = f.get_real()
+	
+	f.close()

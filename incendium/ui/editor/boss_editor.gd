@@ -9,7 +9,7 @@ var TurretEdit = preload("res://ui/editor/turret_edit.tscn")
 # Exposed vars
 export(NodePath) var turret_edit_parent
 # Boss design being edited
-onready var design = BossDesign.new()
+var design
 # Boss generator
 var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
 # Weak ref to current boss 'preview'
@@ -25,10 +25,14 @@ var time_since_change = 0
 func _ready():
 	set_process_input(true)
 	set_process(true)
+	default_design()
+	design_changed()
+	
+func default_design():
+	design = BossDesign.new()
 	for i in range(4):
 		var l = design.new_layer()
 		var t = l.new_turret()
-	design_changed()
 	
 func _process(delta):
 	if time_since_change < hotswap_delay:
@@ -87,12 +91,22 @@ func remove_turret(i):
 # Buttons
 #
 
-func _on_TestButton_pressed():
-	test()
+func _on_SaveButton_pressed():
+	get_node("SaveFileDialog").popup()
+
+func _on_LoadButton_pressed():
+	get_node("LoadFileDialog").popup()
+	
+func _on_ResetButton_pressed():
+	default_design()
+	design_changed()
 
 func _on_RandomizeButton_pressed():
 	design = gen.gen_boss_design()
 	design_changed()
+
+func _on_TestButton_pressed():
+	test()
 	
 func _on_PrevLayerButton_pressed():
 	if layeri > 0:
@@ -110,6 +124,20 @@ func _on_NewTurretButton_pressed():
 	design.layers[layeri].new_turret()
 	design_changed()
 #
+
+
+#
+# Dialogs
+#
+
+func _on_SaveFileDialog_file_selected( path ):
+	design.fsave(path)
+
+func _on_LoadFileDialog_file_selected( path ):
+	design.fload(path)
+	design_changed()
+
+#
 # Field value get/set
 #
 
@@ -121,7 +149,9 @@ func design_changed():
 func update_fields():
 	updating_fields = true
 	# First make sure the layer index seleced is not beyond this design's layer count
-	if layeri >= design.layers.size():
+	if design.layers.size() == 0:
+		layeri = 0
+	elif layeri >= design.layers.size():
 		layeri = design.layers.size() - 1
 	
 	# Template:
@@ -195,4 +225,6 @@ func _on_UpdateRegexButton_pressed():
 func _on_SidesField_value_changed( value ):
 	design.layers[layeri].pgonsides = value
 	design_changed()
+
+
 
