@@ -823,7 +823,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 141.0
+margin/right = 93.0
 margin/bottom = 20.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -837,14 +837,30 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 3
 size_flags/vertical = 2
-margin/left = 145.0
+margin/left = 97.0
+margin/top = 0.0
+margin/right = 190.0
+margin/bottom = 20.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Save"
+flat = false
+
+[node name="SaveAsButton" type="Button" parent="BaseContainer/HBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 194.0
 margin/top = 0.0
 margin/right = 287.0
 margin/bottom = 20.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-text = "Save"
+text = "Save as.."
 flat = false
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="BaseContainer"]
@@ -1015,11 +1031,11 @@ margin/top = 160.0
 margin/right = 864.0
 margin/bottom = 891.0
 popup/exclusive = true
-window/title = "Save a File"
+window/title = "Save boss"
 dialog/hide_on_ok = false
 mode = 4
 access = 0
-filters = StringArray(  )
+filters = StringArray( "*.boss ; Boss files" )
 show_hidden_files = false
 
 [node name="LoadFileDialog" type="FileDialog" parent="."]
@@ -1034,12 +1050,44 @@ margin/top = 162.0
 margin/right = 866.0
 margin/bottom = 889.0
 popup/exclusive = true
-window/title = "Open a File"
+window/title = "Load boss"
 dialog/hide_on_ok = false
 mode = 0
 access = 0
-filters = StringArray(  )
+filters = StringArray( "*.boss ; Boss files" )
 show_hidden_files = false
+
+[node name="ConfirmRandomDialog" type="ConfirmationDialog" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 253.0
+margin/top = 474.0
+margin/right = 731.0
+margin/bottom = 532.0
+popup/exclusive = true
+window/title = "Randomize boss"
+dialog/text = "This will discard any unsaved changes to the current boss. Are you sure?"
+dialog/hide_on_ok = true
+
+[node name="ConfirmResetDialog" type="ConfirmationDialog" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 266.0
+margin/top = 470.0
+margin/right = 744.0
+margin/bottom = 528.0
+popup/exclusive = true
+window/title = "Reset boss"
+dialog/text = "This will discard any unsaved changes to the current boss. Are you sure?"
+dialog/hide_on_ok = true
 
 [connection signal="value_changed" from="BaseContainer/TabContainer/Boss/Rows/SizeRow/BaseSizeField" to="." method="_on_BaseSizeField_value_changed"]
 
@@ -1071,6 +1119,8 @@ show_hidden_files = false
 
 [connection signal="pressed" from="BaseContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
 
+[connection signal="pressed" from="BaseContainer/HBoxContainer/SaveAsButton" to="." method="_on_SaveAsButton_pressed"]
+
 [connection signal="pressed" from="BaseContainer/HBoxContainer2/RandomizeButton" to="." method="_on_RandomizeButton_pressed"]
 
 [connection signal="pressed" from="BaseContainer/HBoxContainer2/ResetButton" to="." method="_on_ResetButton_pressed"]
@@ -1080,5 +1130,9 @@ show_hidden_files = false
 [connection signal="file_selected" from="SaveFileDialog" to="." method="_on_SaveFileDialog_file_selected"]
 
 [connection signal="file_selected" from="LoadFileDialog" to="." method="_on_LoadFileDialog_file_selected"]
+
+[connection signal="confirmed" from="ConfirmRandomDialog" to="." method="_on_ConfirmRandomDialog_confirmed"]
+
+[connection signal="confirmed" from="ConfirmResetDialog" to="." method="_on_ConfirmResetDialog_confirmed"]
 
 

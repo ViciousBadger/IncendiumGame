@@ -58,6 +58,11 @@ func _input(event):
 func clear():
 	for node in mainnode.get_children():
 		node.queue_free()
+	
+	for node in get_tree().get_root().get_children():
+		if node extends preload("res://gameplay/bullets/bullet.gd"):
+			node.queue_free()
+	
 	prev = mode
 
 func start_menu():

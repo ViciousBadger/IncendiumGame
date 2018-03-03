@@ -6,10 +6,16 @@ var BossDesign = preload("res://gameplay/bosses/boss_design.gd")
 var BossPart = preload("res://gameplay/bosses/boss_part.gd")
 var TurretEdit = preload("res://ui/editor/turret_edit.tscn")
 
+# Autosaving paths
+const AUTOSAVE_BOSS = "user://autosave.boss"
+const AUTOSAVE_PATH = "user://autosave.path"
+
 # Exposed vars
 export(NodePath) var turret_edit_parent
 # Boss design being edited
 var design
+# Path to save to (if any)
+var save_path = null
 # Boss generator
 var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
 # Weak ref to current boss 'preview'
@@ -25,7 +31,19 @@ var time_since_change = 0
 func _ready():
 	set_process_input(true)
 	set_process(true)
-	default_design()
+	
+	# Load autosave is found
+	var d = Directory.new()
+	if d.file_exists(AUTOSAVE_BOSS):
+		design = BossDesign.new()
+		design.fload(AUTOSAVE_BOSS)
+		# Also try loading save path
+		if d.file_exists(AUTOSAVE_PATH):
+			var f = File.new()
+			f.open(AUTOSAVE_PATH, f.READ)
+			save_path = f.get_as_text()
+	else:
+		default_design()
 	design_changed()
 	
 func default_design():
@@ -41,10 +59,25 @@ func _process(delta):
 			hotswap()
 
 func _input(event):
-	if event.type == InputEvent.KEY:
-		if event.scancode == KEY_ENTER and event.pressed == true:
-			pass # Test boss here
-			
+	if event.type == InputEvent.KEY and event.pressed:
+		if event.scancode == KEY_ENTER:
+			_on_TestButton_pressed()
+		if event.scancode == KEY_S and event.control:
+			_on_SaveButton_pressed()
+				
+func _exit_tree():
+	# Autosave
+	design.fsave(AUTOSAVE_BOSS)
+	# Save boss path too
+	if save_path != null:
+		var f = File.new()
+		f.open(AUTOSAVE_PATH, f.WRITE)
+		f.store_string(save_path)
+	else:
+		var d = Directory.new()
+		if d.file_exists(AUTOSAVE_PATH):
+			d.remove(AUTOSAVE_PATH)
+
 func hotswap():
 	var t = 0
 	if boss != null:
@@ -72,15 +105,6 @@ func update_boss_parts(boss):
 			c.auto_active = false
 			c.active = c.id.length() == layeri
 	
-func test():
-	get_tree().get_root().get_node("Game").start_stage([design])
-	
-	if boss != null:
-		var b = boss.get_ref()
-		if b != null:
-			b.queue_free()
-	queue_free()
-	
 func get_turret(i):
 	return design.layers[layeri].turrets[i]
 	
@@ -91,22 +115,35 @@ func remove_turret(i):
 # Buttons
 #
 
+func _on_LoadButton_pressed():
+	if save_path != null:
+		get_node("LoadFileDialog").set_current_path(save_path)
+	get_node("LoadFileDialog").popup()
+
 func _on_SaveButton_pressed():
+	if save_path != null:
+		design.fsave(save_path)
+	else:
+		get_node("SaveFileDialog").popup()
+
+func _on_SaveAsButton_pressed():
+	if save_path != null:
+		get_node("SaveFileDialog").set_current_path(save_path)
 	get_node("SaveFileDialog").popup()
 
-func _on_LoadButton_pressed():
-	get_node("LoadFileDialog").popup()
-	
-func _on_ResetButton_pressed():
-	default_design()
-	design_changed()
-
 func _on_RandomizeButton_pressed():
-	design = gen.gen_boss_design()
-	design_changed()
+	get_node("ConfirmRandomDialog").popup()
+
+func _on_ResetButton_pressed():
+	get_node("ConfirmResetDialog").popup()
 
 func _on_TestButton_pressed():
-	test()
+	get_tree().get_root().get_node("Game").start_stage([design])
+	#if boss != null:
+	#	var b = boss.get_ref()
+	#	if b != null:
+	#		b.queue_free()
+	#queue_free()
 	
 func _on_PrevLayerButton_pressed():
 	if layeri > 0:
@@ -123,8 +160,6 @@ func _on_NextLayerButton_pressed():
 func _on_NewTurretButton_pressed():
 	design.layers[layeri].new_turret()
 	design_changed()
-#
-
 
 #
 # Dialogs
@@ -132,9 +167,21 @@ func _on_NewTurretButton_pressed():
 
 func _on_SaveFileDialog_file_selected( path ):
 	design.fsave(path)
+	save_path = path
 
 func _on_LoadFileDialog_file_selected( path ):
 	design.fload(path)
+	save_path = path
+	design_changed()
+
+func _on_ConfirmRandomDialog_confirmed():
+	design = gen.gen_boss_design()
+	save_path = null
+	design_changed()
+
+func _on_ConfirmResetDialog_confirmed():
+	default_design()
+	save_path = null
 	design_changed()
 
 #
