@@ -85,11 +85,11 @@ func _process(delta):
 func _exit_tree():
 	# Explode when removed
 	var expl = explosion_s.instance()
-	expl.velocity = -velocity * 0.5
-	expl.get_node("RegularPolygon").size = stats.size
-	var col = stats.color
-	expl.get_node("RegularPolygon/Polygon2D").set_color(Color(col.r,col.g,col.b,0.5))
 	get_tree().get_root().add_child(expl)
+	
+	expl.velocity = -velocity * 0.5
+	var col = stats.color
+	expl.init(stats.size, Color(col.r,col.g,col.b,0.5))
 	expl.set_global_pos(get_global_pos())
 	
 	light_instance.despawn()

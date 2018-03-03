@@ -176,12 +176,11 @@ func lose_health(hp):
 		get_parent().score_mult_timer = 0
 		if health <= 0:
 			for i in range(0,8):
-				var explosion_instance = explosion_s.instance()
-				explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size
-				explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(get_node("RegularPolygon/Polygon2D").get_color())
-				# explosion_instance.velocity = Vector2(0,0)
-				get_tree().get_root().add_child(explosion_instance)
-				explosion_instance.set_global_pos(get_global_pos())
+				var expl = explosion_s.instance()
+				get_tree().get_root().add_child(expl)
+				
+				expl.init(get_node("RegularPolygon").size, get_node("RegularPolygon/Polygon2D").get_color())
+				expl.set_global_pos(get_global_pos())
 			OS.set_time_scale(0.02)
 			queue_free()
 

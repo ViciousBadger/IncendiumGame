@@ -29,17 +29,18 @@ var mode = NONE
 var stage_wr
 
 func _ready():
+	randomize()
+	target_fgcol = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
+	fgcol = target_fgcol
+	target_bgcol = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1))
+	bgcol = target_bgcol
 	set_process_input(true)
 	set_process(true)
-	
-	#start_menu()
-	#var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
-	#start_stage([gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design(), gen.gen_boss_design()])
-	start_editor()
+	start_menu()
 
 func _process(delta):
-	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 3)
-	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 0.5)
+	bgcol = bgcol.linear_interpolate(target_bgcol,delta * 0.5)
+	fgcol = fgcol.linear_interpolate(target_fgcol,delta * 0.3)
 	get_node("Background/BgEffect").set_modulate(bgcol)
 
 func _input(event):

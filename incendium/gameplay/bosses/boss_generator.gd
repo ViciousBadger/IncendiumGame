@@ -32,8 +32,6 @@ preload("res://gameplay/bullets/mods/mod_split.gd"),
 func gen_boss_design():
 	var design = preload("res://gameplay/bosses/boss_design.gd").new()
 	
-	randomize() # Randomize random seed
-	
 	var layer_count = 4 #floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
 	
 	var largest = 3;

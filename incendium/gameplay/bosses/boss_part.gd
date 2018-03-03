@@ -117,17 +117,18 @@ func damage(hp):
 	
 	# Dead?
 	if health <= 0:
+		#Sound
+		get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(1 + rand_range(-0.5,0.5))
+		get_tree().get_root().get_node("Game/SFX").play("explode4")
+		
 		# Explosion
 		for i in range(0,get_node("RegularPolygon").size):
-			var explosion_instance = explosion_s.instance()
-			if i == 0:
-				get_tree().get_root().get_node("Game/SFX").set_default_pitch_scale(1 + rand_range(-0.5,0.5))
-				get_tree().get_root().get_node("Game/SFX").play("explode4")
-			explosion_instance.get_node("RegularPolygon").size = get_node("RegularPolygon").size / 4
-			explosion_instance.get_node("RegularPolygon/Polygon2D").set_color(color)
-			explosion_instance.velocity = velocity * 100
-			get_tree().get_root().add_child(explosion_instance)
-			explosion_instance.set_global_pos(get_global_pos())
+			var expl = explosion_s.instance()
+			get_tree().get_root().add_child(expl)
+			
+			expl.velocity = velocity * 100
+			expl.init(get_node("RegularPolygon").size / 4, color, true)
+			expl.set_global_pos(get_global_pos())
 		
 		# Light
 		var light_instance = light_s.instance()

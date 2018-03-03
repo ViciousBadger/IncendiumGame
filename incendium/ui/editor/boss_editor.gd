@@ -60,7 +60,7 @@ func _process(delta):
 
 func _input(event):
 	if event.type == InputEvent.KEY and event.pressed:
-		if event.scancode == KEY_ENTER:
+		if event.scancode == KEY_RETURN:
 			_on_TestButton_pressed()
 		if event.scancode == KEY_S and event.control:
 			_on_SaveButton_pressed()

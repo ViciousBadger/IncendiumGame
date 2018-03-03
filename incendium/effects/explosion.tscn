@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=1]
 
 [ext_resource path="res://effects/explosion.gd" type="Script" id=1]
-[ext_resource path="res://gameplay/regular_polygon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://effects/explosion.png" type="Texture" id=2]
 
 [node name="Explosion" type="Node2D"]
 
 visibility/behind_parent = true
 script/script = ExtResource( 1 )
 
-[node name="RegularPolygon" parent="." instance=ExtResource( 2 )]
+[node name="Sprite" type="Sprite" parent="."]
 
-sides = 16
+texture = ExtResource( 2 )
 
 
