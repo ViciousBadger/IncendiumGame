@@ -43,7 +43,6 @@ func _process(delta):
 	map = {}
 	if get_child_count() == 0:
 		# Boss is a goner
-		OS.set_time_scale(0.2)
 		queue_free()
 	
 func has_children(id):

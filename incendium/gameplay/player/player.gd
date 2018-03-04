@@ -5,6 +5,7 @@ extends Node2D
 
 var player_shield_s = preload("res://gameplay/player/player_shield.tscn")
 var explosion_s = preload("res://effects/explosion.tscn")
+var light_s = preload("res://effects/light.tscn")
 var bullet_s = preload("res://gameplay/bullets/bullet.tscn")
 
 const SPEED = 300
@@ -175,13 +176,20 @@ func lose_health(hp):
 		get_parent().score_mult = 1
 		get_parent().score_mult_timer = 0
 		if health <= 0:
-			for i in range(0,8):
+			for i in range(0, 32):
 				var expl = explosion_s.instance()
+				expl.velocity = velocity
 				get_tree().get_root().add_child(expl)
-				
-				expl.init(get_node("RegularPolygon").size, get_node("RegularPolygon/Polygon2D").get_color())
+				expl.init(8, Color(1,1,1))
 				expl.set_global_pos(get_global_pos())
-			OS.set_time_scale(0.02)
+			
+			var l = light_s.instance()
+			l.despawn_a = 4
+			l.set_scale(Vector2(1,1) * 0.5)
+			l.set_modulate(Color(1,1,1))
+			get_tree().get_root().get_node("Game/Background/Lights").add_child(l)
+			l.set_global_pos(get_global_pos())
+			l.despawn()
 			queue_free()
 
 func _on_RegularPolygon_area_exit( area ):

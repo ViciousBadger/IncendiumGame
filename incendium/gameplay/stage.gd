@@ -10,10 +10,11 @@ var bosses = []
 var playing = false
 var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
 
-# Strong and weak references to last spawned boss
-# Weak reference is nessecary to check when the boss has been destroyed
-var last_boss
+# Weak reference to last spawned boss
 var last_boss_wr
+
+# Slowdown once bosses or players die
+var slow = 1
 
 # Number of bosses spawned
 var bossnum = 0
@@ -49,31 +50,22 @@ func _process(delta):
 	#	if score_mult_timer <= 0:
 	#		score_mult = 1
 	
-	#TODO: do this more reliably (what if something else changes time scale?)
-	if OS.get_time_scale() < 1:
-		OS.set_time_scale(min(OS.get_time_scale() + delta, 1))
-		if OS.get_time_scale() >= 1 and !has_node("Player") and lives > 0:
-			var p = player_s.instance()
-			add_child(p)
-			p.set_global_pos(Vector2(360,600))
+	if slow < 1:
+		slow = min(slow + delta, 1)
+		OS.set_time_scale(slow)
+		if slow >= 1 and !has_node("Player") and lives > 0:
+			spawn_player()
 			lives -= 1
-	
-	if !last_boss_wr.get_ref():
-		# No boss, spawn a new one
-		spawn_next()
-		# Good job player, have a health
-		var player = get_node("Player")
-		if player != null:
-			player.health = min(player.health + 1, player.MAX_HEALTH)
-			
+
 	get_node("GameUI").set_offset(Vector2(0, lerp(get_node("GameUI").get_offset().y, ui_y, delta * 10)))
 
 func _input(event):
 	if event.type == InputEvent.KEY:
 		if event.scancode == KEY_R and event.pressed == true:
 			# Instakill boss (protip: dont keep this in the release)
-			if last_boss != null:
-				last_boss.queue_free()
+			var b = last_boss_wr.get_ref()
+			if b != null:
+				b.queue_free()
 				
 func add_score(amount):
 	score += amount * score_mult
@@ -83,19 +75,12 @@ func add_score(amount):
 func spawn_player():
 	var player = player_s.instance()
 	player.set_global_pos(Vector2(360,600))
+	player.connect("exit_tree", self, "_on_player_dead")
 	add_child(player)
-	
-func spawn_next():
-	bossnum += 1
-	if bossnum < bosses.size():
-		spawn_boss(bosses[bossnum])
-	else:
-		print("stage has been won")
 	
 # Spawns a boss from a boss design object
 func spawn_boss(design):
 	var boss_instance = boss_s.instance()
-	last_boss = boss_instance
 	last_boss_wr = weakref(boss_instance)
 	
 	boss_instance.design = design.clone()
@@ -106,5 +91,30 @@ func spawn_boss(design):
 	
 	add_child(boss_instance)
 	boss_instance.set_pos(Vector2(360,360))
+	boss_instance.connect("exit_tree", self, "_on_boss_dead")
 	
 	playing = true
+
+func slow(spd):
+	if slow > spd:
+		slow = spd
+		
+func _on_player_dead():
+	slow(0.02)
+
+func _on_boss_dead():
+	bossnum += 1
+	if bossnum < bosses.size():
+		spawn_boss(bosses[bossnum])
+		# Good job player, have a health
+		var player = get_node("Player")
+		if player != null:
+			player.health = min(player.health + 1, player.MAX_HEALTH)
+	else:
+		print("stage done")
+	slow(0.2)
+	
+func _exit_tree():
+	if slow < 1:
+		OS.set_time_scale(1)
+	
