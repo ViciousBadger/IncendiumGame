@@ -44,8 +44,12 @@ func _ready():
 	
 	if stats.hostile:
 		collider.add_to_group("damage_player")
+		#collider.set_collision_mask_bit(0, false)
+		collider.set_collision_mask(0)
 	else:
 		collider.add_to_group("damage_enemy")
+		#collider.set_collision_mask_bit(1, false)
+		collider.set_collision_mask(0)
 	
 	# Instance light
 	

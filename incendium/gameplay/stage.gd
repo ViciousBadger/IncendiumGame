@@ -65,14 +65,21 @@ func _input(event):
 			# Instakill boss (protip: dont keep this in the release)
 			var b = last_boss_wr.get_ref()
 			if b != null:
-				b.queue_free()
+				b.kill()
 				
 func add_score(amount):
 	score += amount * score_mult
 	score_mult += 1
 	#score_mult_timer = score_mult_time
 	
+func clear_bullets():
+	# Clear bullets
+	for node in get_tree().get_root().get_children():
+		if node extends preload("res://gameplay/bullets/bullet.gd"):
+			node.queue_free()
+	
 func spawn_player():
+	clear_bullets()
 	var player = player_s.instance()
 	player.set_global_pos(Vector2(360,600))
 	player.connect("exit_tree", self, "_on_player_dead")
@@ -80,6 +87,7 @@ func spawn_player():
 	
 # Spawns a boss from a boss design object
 func spawn_boss(design):
+	clear_bullets()
 	var boss_instance = boss_s.instance()
 	last_boss_wr = weakref(boss_instance)
 	
@@ -91,7 +99,7 @@ func spawn_boss(design):
 	
 	add_child(boss_instance)
 	boss_instance.set_pos(Vector2(360,360))
-	boss_instance.connect("exit_tree", self, "_on_boss_dead")
+	boss_instance.connect("dead", self, "_on_boss_dead")
 	
 	playing = true
 
@@ -101,6 +109,8 @@ func slow(spd):
 		
 func _on_player_dead():
 	slow(0.02)
+	if lives <= 0:
+		get_node("GameUI").end_stage()
 
 func _on_boss_dead():
 	bossnum += 1
@@ -111,7 +121,7 @@ func _on_boss_dead():
 		if player != null:
 			player.health = min(player.health + 1, player.MAX_HEALTH)
 	else:
-		print("stage done")
+		get_node("GameUI").end_stage()
 	slow(0.2)
 	
 func _exit_tree():

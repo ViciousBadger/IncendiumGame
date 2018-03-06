@@ -10,6 +10,7 @@ var labels = []
 var rot = 0
 
 var len = 0
+var s = 0
 
 onready var game = get_tree().get_root().get_node("Game")
 
@@ -17,6 +18,7 @@ func _ready():
 	set_process(true)
 	set_process_input(true)
 	get_node("RegularPolygon").sides = options.size()
+	set_scale(Vector2(0,0))
 	for o in options:
 		var label = Label.new()
 		label.set_text(o)
@@ -50,8 +52,13 @@ func _process(delta):
 		l.set_global_pos(get_global_pos() - l.get_size()/2 - Vector2(cos(rot_final),sin(rot_final)) * len2)
 		i += 1
 	
+	if s < 1:
+		s = lerp(s,1,delta*5)
+		set_scale(Vector2(1,1) * s)
+	
 	get_node("RegularPolygon").set_rot(-rot)
-	get_node("RegularPolygon/Polygon2D").set_color(game.fgcol.linear_interpolate(Color(1,1,1), 0.5))
+	if game != null:
+		get_node("RegularPolygon/Polygon2D").set_color(game.fgcol.linear_interpolate(Color(1,1,1), 0.5))
 	
 func _input(event):
 	if event.is_action_pressed("ui_left"):

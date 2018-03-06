@@ -4,8 +4,16 @@ extends Node
 var s_bossicon = preload("res://ui/ingame/stageprog/bossicon.tscn")
 
 var displayed_score = 0
+var stage_done = false
 
 onready var bossprog = get_node("BossProg")
+
+func end_stage():
+	stage_done = true
+	get_node("BottomRightLabel").hide()
+	get_node("ScoreMultLabel").hide()
+	get_node("BossProg").hide()
+	get_node("TopRightLabel").hide()
 
 func _ready():
 	set_process(true)
@@ -41,4 +49,8 @@ func _process(delta):
 	
 	# Lives
 	get_node("TopRightLabel").set_text("Lives: " + str(get_parent().lives))
+	
+	if stage_done:
+		var sl = get_node("ScoreLabel")
+		sl.set_pos(sl.get_pos().linear_interpolate(Vector2(720/2,720/2) - sl.get_size()/2, delta * 10))
 	

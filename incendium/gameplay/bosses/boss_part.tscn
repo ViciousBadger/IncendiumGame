@@ -13,8 +13,8 @@ script/script = ExtResource( 1 )
 
 visibility/behind_parent = true
 z/z = 10
-collision/layers = 262144
-collision/mask = 655360
+collision/layers = 2
+collision/mask = 5
 circle_collision = false
 
 [node name="Polygon2D" parent="RegularPolygon"]
@@ -22,6 +22,8 @@ circle_collision = false
 texture/scale = Vector2( 2, 2 )
 
 [connection signal="area_enter" from="RegularPolygon" to="." method="_on_RegularPolygon_area_enter"]
+
+[connection signal="input_event" from="RegularPolygon" to="." method="_on_RegularPolygon_input_event"]
 
 [connection signal="mouse_enter" from="RegularPolygon" to="." method="_on_RegularPolygon_mouse_enter"]
 

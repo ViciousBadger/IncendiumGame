@@ -139,11 +139,6 @@ func _on_ResetButton_pressed():
 
 func _on_TestButton_pressed():
 	get_tree().get_root().get_node("Game").start_stage([design])
-	#if boss != null:
-	#	var b = boss.get_ref()
-	#	if b != null:
-	#		b.queue_free()
-	#queue_free()
 	
 func _on_PrevLayerButton_pressed():
 	if layeri > 0:

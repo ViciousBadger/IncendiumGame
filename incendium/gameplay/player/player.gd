@@ -175,6 +175,13 @@ func lose_health(hp):
 		col = Color(1,0,0)
 		get_parent().score_mult = 1
 		get_parent().score_mult_timer = 0
+		
+		var l = light_s.instance()
+		get_tree().get_root().get_node("Game/Background/Lights").add_child(l)
+		l.despawn_a = 4
+		l.set_global_pos(get_global_pos())
+		l.despawn()
+		
 		if health <= 0:
 			for i in range(0, 32):
 				var expl = explosion_s.instance()
@@ -183,14 +190,15 @@ func lose_health(hp):
 				expl.init(8, Color(1,1,1))
 				expl.set_global_pos(get_global_pos())
 			
-			var l = light_s.instance()
 			l.despawn_a = 4
 			l.set_scale(Vector2(1,1) * 0.5)
 			l.set_modulate(Color(1,1,1))
-			get_tree().get_root().get_node("Game/Background/Lights").add_child(l)
-			l.set_global_pos(get_global_pos())
-			l.despawn()
+			
 			queue_free()
+		else:
+			l.despawn_a = 0.5
+			l.set_scale(Vector2(1,1) * 0.1)
+			l.set_modulate(Color(1,0,0))
 
 func _on_RegularPolygon_area_exit( area ):
 	pass

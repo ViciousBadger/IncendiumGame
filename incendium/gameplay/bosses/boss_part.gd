@@ -3,6 +3,8 @@
 
 extends Node2D
 
+signal dead
+
 var explosion_s = preload("res://effects/explosion.tscn")
 var light_s = preload("res://effects/light.tscn")
 
@@ -148,6 +150,7 @@ func damage(hp):
 		get_parent().dead_map[id] = true
 		
 		# Done
+		emit_signal("dead")
 		queue_free()
 
 # Deprecated function for finding out if any child parts are active
@@ -162,14 +165,13 @@ func any_active_child_parts():
 
 func _draw():
 	var pgon = Vector2Array(get_node("RegularPolygon/Polygon2D").get_polygon())
-	
 	# Draw health polygon
 	#if health < max_health and health > 0: # if health_fade > 0: 
-	if true:
+	if health_fade > 0 and health_size > 0.01:
 		var hp_pgon = Vector2Array(pgon)
 		for i in range(0,hp_pgon.size()):
 			hp_pgon[i] = hp_pgon[i] * health_size
-		draw_colored_polygon(hp_pgon,Color(1,1,1,health_fade))
+		draw_colored_polygon(hp_pgon, Color(1, 1, 1, health_fade))
 	
 	# Draw outline
 	if a > 0:
@@ -183,3 +185,7 @@ func _draw():
 func _on_RegularPolygon_mouse_enter():
 	pass
 	#damage(99999)
+
+func _on_RegularPolygon_input_event( viewport, event, shape_idx ):
+	if event.type == InputEvent.MOUSE_BUTTON and event.button_index == BUTTON_LEFT and event.pressed:
+		damage(9999)
