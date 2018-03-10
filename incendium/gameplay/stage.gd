@@ -74,7 +74,7 @@ func add_score(amount):
 	
 func clear_bullets():
 	# Clear bullets
-	for node in get_tree().get_root().get_children():
+	for node in get_tree().get_root().get_node("Game/Bullets").get_children():
 		if node extends preload("res://gameplay/bullets/bullet.gd"):
 			node.queue_free()
 	

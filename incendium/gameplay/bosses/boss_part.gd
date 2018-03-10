@@ -131,6 +131,9 @@ func damage(hp):
 			expl.velocity = velocity * 5000
 			expl.init(get_node("RegularPolygon").size / 4, color, true)
 			expl.set_global_pos(get_global_pos())
+
+		# Screen shake
+		#get_tree().get_root().get_node("Game/Camera2D").shake(get_node("RegularPolygon").size * 0.3)
 		
 		# Light
 		var light_instance = light_s.instance()

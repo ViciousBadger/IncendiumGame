@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=1]
+[gd_scene load_steps=22 format=1]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://pauser.gd" type="Script" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://music/3.smp" type="Sample" id=16]
 [ext_resource path="res://music/4.smp" type="Sample" id=17]
 [ext_resource path="res://music/music_new.gd" type="Script" id=18]
+[ext_resource path="res://gameplay/camera.gd" type="Script" id=19]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -202,6 +203,8 @@ transform/scale = Vector2( 0.5, 0.5 )
 
 [node name="Foreground" type="Node" parent="."]
 
+editor/display_folded = true
+
 [node name="Border" type="Sprite" parent="Foreground"]
 
 transform/pos = Vector2( 360, 360 )
@@ -269,5 +272,26 @@ default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
 script/script = ExtResource( 18 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+transform/pos = Vector2( 360, 360 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = false
+drag_margin/v_enabled = false
+smoothing/enable = false
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+script/script = ExtResource( 19 )
 
 
