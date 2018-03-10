@@ -196,12 +196,44 @@ transform/scale = Vector2( 0.5, 0.5 )
 
 [node name="Main" type="Node" parent="."]
 
+[node name="Explosions" type="Node" parent="."]
+
+[node name="Bullets" type="Node" parent="."]
+
 [node name="Foreground" type="Node" parent="."]
 
 [node name="Border" type="Sprite" parent="Foreground"]
 
 transform/pos = Vector2( 360, 360 )
 texture = ExtResource( 9 )
+
+[node name="Bottom" type="Sprite" parent="Foreground"]
+
+transform/pos = Vector2( 360, 1440 )
+transform/scale = Vector2( 450, 180 )
+texture = ExtResource( 6 )
+modulate = Color( 0, 0, 0, 1 )
+
+[node name="Top" type="Sprite" parent="Foreground"]
+
+transform/pos = Vector2( 360, -720 )
+transform/scale = Vector2( 450, 180 )
+texture = ExtResource( 6 )
+modulate = Color( 0, 0, 0, 1 )
+
+[node name="Left" type="Sprite" parent="Foreground"]
+
+transform/pos = Vector2( -720, 360 )
+transform/scale = Vector2( 180, 90 )
+texture = ExtResource( 6 )
+modulate = Color( 0, 0, 0, 1 )
+
+[node name="Right" type="Sprite" parent="Foreground"]
+
+transform/pos = Vector2( 1440, 360 )
+transform/scale = Vector2( 180, 90 )
+texture = ExtResource( 6 )
+modulate = Color( 0, 0, 0, 1 )
 
 [node name="SFX" type="SamplePlayer" parent="."]
 

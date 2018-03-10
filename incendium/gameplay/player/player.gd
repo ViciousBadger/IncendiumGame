@@ -141,7 +141,7 @@ func _process(delta):
 		var final = dir + rot
 		
 		bullet.velocity = Vector2(cos(final),sin(final)) * len
-		get_tree().get_root().add_child(bullet,false)
+		get_tree().get_root().get_node("Game/Bullets").add_child(bullet,false)
 		fire_timer = 0.05
 	
 	# Shield
@@ -186,7 +186,7 @@ func lose_health(hp):
 			for i in range(0, 32):
 				var expl = explosion_s.instance()
 				expl.velocity = velocity
-				get_tree().get_root().add_child(expl)
+				get_tree().get_root().get_node("Game/Explosions").add_child(expl)
 				expl.init(8, Color(1,1,1))
 				expl.set_global_pos(get_global_pos())
 			

@@ -62,4 +62,4 @@ func fire_bullet(angle, speedmult):
 	
 	# K done
 	b.set_pos(get_global_pos())
-	get_tree().get_root().add_child(b)
+	get_tree().get_root().get_node("Game/Bullets").add_child(b)

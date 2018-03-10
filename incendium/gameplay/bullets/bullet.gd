@@ -89,7 +89,7 @@ func _process(delta):
 func _exit_tree():
 	# Explode when removed
 	var expl = explosion_s.instance()
-	get_tree().get_root().add_child(expl)
+	get_tree().get_root().get_node("Game/Explosions").add_child(expl)
 	
 	expl.velocity = -velocity * 0.5
 	var col = stats.color

@@ -126,9 +126,9 @@ func damage(hp):
 		# Explosion
 		for i in range(0,get_node("RegularPolygon").size):
 			var expl = explosion_s.instance()
-			get_tree().get_root().add_child(expl)
+			get_tree().get_root().get_node("Game/Explosions").add_child(expl)
 			
-			expl.velocity = velocity * 100
+			expl.velocity = velocity * 5000
 			expl.init(get_node("RegularPolygon").size / 4, color, true)
 			expl.set_global_pos(get_global_pos())
 		

@@ -14,6 +14,6 @@ func update(b, delta):
 			if i == 1: angleoffset = 0.3
 			var angle = atan2(b.velocity.y,b.velocity.x) + angleoffset
 			newb.velocity = Vector2(cos(angle),sin(angle)) * b.velocity.length()
-			b.get_tree().get_root().add_child(newb)
+			b.get_tree().get_root().get_node("Game/Bullets").add_child(newb)
 			newb.set_global_pos(b.get_global_pos())
 		b.queue_free()
