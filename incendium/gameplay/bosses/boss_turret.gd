@@ -33,21 +33,32 @@ func fire_bullet(angle, speedmult):
 	var b = bullet_s.instance()
 	
 	# Calculate bullet velocity
-	var velocityAngle
-	if velocity.x == 0 and velocity.y == 0:
-		# Use rotation if no velocity
-		velocityAngle = get_global_rot() * 3
+	#var velocity_angle
+	#if velocity.x == 0 and velocity.y == 0:
+	#	# Use rotation if no velocity
+	#	velocity_angle = get_global_rot() * 3
+	#else:
+	#	velocity_angle = atan2(velocity.y, velocity.x)
+	#velocity_angle += angle + design.bullet_angle # Add on angle from pattern and design
+	#var bullet_velocity = Vector2(cos(velocity_angle),sin(velocity_angle)).normalized() * (design.bullet_speed * speedmult)
+	
+	var center = Vector2(720/2,720/2)
+	
+	var velocity_angle
+	if get_global_pos() == center:
+		velocity_angle = get_global_rot() * 3
 	else:
-		velocityAngle = atan2(velocity.y, velocity.x)
-	velocityAngle += angle + design.bullet_angle # Add on angle from pattern and design
-	var bulletVelocity = Vector2(cos(velocityAngle),sin(velocityAngle)).normalized() * (design.bullet_speed * speedmult)
+		var from_center = get_global_pos() - center
+		velocity_angle = atan2(from_center.y, from_center.x)
+	velocity_angle += angle + design.bullet_angle # Add on angle from pattern and design
+	var bullet_velocity = Vector2(cos(velocity_angle),sin(velocity_angle)).normalized() * design.bullet_speed * speedmult
 	
 	# Set bullet stats
 	b.stats.hostile = true
 	b.stats.mods = design.mods
 	b.stats.color = bosspart.color
 	b.stats.size = design.size
-	b.velocity = bulletVelocity
+	b.velocity = bullet_velocity
 	
 	# K done
 	b.set_pos(get_global_pos())

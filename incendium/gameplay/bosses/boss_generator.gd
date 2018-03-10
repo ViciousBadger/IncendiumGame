@@ -29,10 +29,13 @@ preload("res://gameplay/bullets/mods/mod_curve.gd"),
 preload("res://gameplay/bullets/mods/mod_split.gd"),
 ]
 
-func gen_boss_design():
+func gen_boss_design(difficulty):
 	var design = preload("res://gameplay/bosses/boss_design.gd").new()
 	
-	var layer_count = 4 #floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
+	var layer_count = 4
+	if difficulty == 0:
+		layer_count = 3
+	#var layer_count = 4 #floor(rand_range(3,5)) + floor(bossdepth / 2) # bossdepth # floor(rand_range(3,5))
 	
 	var largest = 3;
 	for layer_i in range(0,layer_count):
@@ -56,7 +59,7 @@ func gen_boss_design():
 			t.bullet_angle = 0
 			if turret_i > 0: t.bullet_angle = rand_range(2, 2)
 			var a = layer_i / float(layer_count - 1)
-			t.shoot_interval = lerp(0.5, 1.5, a)
+			t.shoot_interval = lerp(max(0.1, 0.5 - 0.1 * difficulty), 1.5 - 0.1 * difficulty, a)
 			#TODO: Set initial shoot timer to make part shoot in succession
 			# part.shoot_timer = 1 + (index/parentsides) * part.shoot_interval
 	
@@ -66,7 +69,7 @@ func gen_boss_design():
 	design.size_dropoff = 0.6
 	
 	#design.base_health = 15 + (2.5 * bossnum)
-	design.base_health = 100
+	design.base_health = 80 + 30 * difficulty
 	design.health_dropoff = 0.3
 	#TODO: Health and health dropoff (Should be based on difficulty, and probably affected by the total amount of boss parts)
 

@@ -170,7 +170,7 @@ func _on_LoadFileDialog_file_selected( path ):
 	design_changed()
 
 func _on_ConfirmRandomDialog_confirmed():
-	design = gen.gen_boss_design()
+	design = gen.gen_boss_design(2)
 	save_path = null
 	design_changed()
 

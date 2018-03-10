@@ -198,8 +198,6 @@ transform/scale = Vector2( 0.5, 0.5 )
 
 [node name="Foreground" type="Node" parent="."]
 
-editor/display_folded = true
-
 [node name="Border" type="Sprite" parent="Foreground"]
 
 transform/pos = Vector2( 360, 360 )

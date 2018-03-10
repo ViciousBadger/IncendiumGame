@@ -25,7 +25,7 @@ func _on_OptionWheel_option_picked( name ):
 		var gen = preload("res://gameplay/bosses/boss_generator.gd").new()
 		var bosses = []
 		for i in range(5):
-			bosses.append(gen.gen_boss_design())
+			bosses.append(gen.gen_boss_design(i))
 		game.start_stage(bosses)
 	elif name == "Edit":
 		game.start_editor()

@@ -12,7 +12,7 @@ polar_controls = false
 
 transform/pos = Vector2( 0.902496, 0 )
 collision/mask = 6
-size = 7
+size = 5
 circle_collision = false
 
 [connection signal="area_enter" from="RegularPolygon" to="." method="_on_RegularPolygon_area_enter"]
