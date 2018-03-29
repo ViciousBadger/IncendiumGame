@@ -53,7 +53,9 @@ func _process(delta):
 		i += 1
 	
 	if s < 1:
-		s = lerp(s,1,delta*5)
+		s = lerp(s,1,delta*10)
+		if s > 1:
+			s = 1
 		set_scale(Vector2(1,1) * s)
 	
 	get_node("RegularPolygon").set_rot(-rot)

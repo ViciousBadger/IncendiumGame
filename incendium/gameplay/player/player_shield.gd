@@ -36,8 +36,8 @@ func _process(delta):
 	poly.set_color(Color(1,1,1,a))
 	set_scale(Vector2(s,s))
 	
-	var node = get_tree().get_root().get_node(node_to_follow)
-	if node != null:
+	if get_tree().get_root().has_node(node_to_follow):
+		var node = get_tree().get_root().get_node(node_to_follow)
 		set_global_pos(node.get_global_pos())
 	else:
 		done = true
@@ -50,12 +50,14 @@ func _on_RegularPolygon_area_enter( area ):
 		var away_from_me = area.get_global_pos() - get_global_pos()
 		
 		var speed = bullet.velocity.length()
+		if speed < 600:
+			speed = 600
 		
-		bullet.velocity = away_from_me.normalized() * speed * 2 #-bullet.velocity
+		bullet.velocity = away_from_me.normalized() * speed #-bullet.velocity
 		area.get_node("Sprite").set_modulate(Color(1,1,1))
 		area.remove_from_group("damage_player")
 		area.add_to_group("damage_enemy")
-		t = max(0,t - TIME / MAXBULLETS)
+		t = max(0, t - TIME / MAXBULLETS)
 		#done = true
 		#get_tree().get_root().get_node(node_to_follow).bullet_type = bullet.type
 		#area.get_parent().velocity = -area#queue_free()

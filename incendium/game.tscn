@@ -85,7 +85,7 @@ offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 
-[node name="Pauser" type="ColorFrame" parent="TopLayer"]
+[node name="PauseFader" type="ColorFrame" parent="TopLayer"]
 
 process/pause_mode = 2
 visibility/blend_mode = 2
@@ -102,7 +102,7 @@ margin/bottom = 0.0
 color = Color( 1, 1, 1, 0.313726 )
 script/script = ExtResource( 2 )
 
-[node name="Fader" type="ColorFrame" parent="TopLayer"]
+[node name="StartFader" type="ColorFrame" parent="TopLayer"]
 
 anchor/right = 1
 anchor/bottom = 1

@@ -3,10 +3,12 @@
 
 extends Node
 
+var pause_s = preload("res://ui/pause_menu.tscn")
+
 # Includes
 var Menu = preload("res://ui/main/main_menu.tscn")
 var Stage = preload("res://gameplay/stage.tscn")
-var BossEditor = preload("res://ui/editor/boss_editor.tscn")
+var Editor = preload("res://ui/editor/editor.tscn")
 
 # Node references
 onready var mainnode = get_node("Main")
@@ -27,6 +29,7 @@ var prev = NONE
 var mode = NONE
 
 var stage_wr
+var pause_wr
 
 func _ready():
 	randomize()
@@ -46,16 +49,55 @@ func _process(delta):
 func _input(event):
 	if event.type == InputEvent.KEY and event.is_pressed():
 		if event.scancode == KEY_ESCAPE:
-			if mode == GAME:
-				if prev == EDITOR:
-					start_editor()
-				else:
-					start_menu()
-			elif mode == EDITOR:
-				start_menu()
-			else:
+			if mode == MENU:
 				get_tree().quit()
-			
+			else:
+				var removed = false
+				if pause_wr != null:
+					var p = pause_wr.get_ref()
+					if p != null:
+						p.queue_free()
+						removed = true
+				
+				if !removed:
+					var p = pause_s.instance()
+					
+					if mode == GAME:
+						if prev == EDITOR:
+							p.get_node("OptionWheel").options[2] = "Editor"
+						else:
+							p.get_node("OptionWheel").options[2] = "Menu"
+					elif mode == EDITOR:
+						p.get_node("OptionWheel").options[2] = "Menu"
+					
+					get_node("TopLayer").add_child(p)
+					p.get_node("OptionWheel").connect("option_picked", self, "_on_pause_option_picked")
+					pause_wr = weakref(p)
+
+func unpause():
+	var removed = false
+	if pause_wr != null:
+		var p = pause_wr.get_ref()
+		if p != null:
+			p.queue_free()
+			removed = true
+	if !removed:
+		get_tree().set_pause(false)
+
+func _on_pause_option_picked(name):
+	if name == "Resume":
+		unpause()
+	elif name == "Settings":
+		pass
+	elif name == "Quit":
+		get_tree().quit()
+	elif name == "Editor":
+		unpause()
+		start_editor()
+	elif name == "Menu":
+		unpause()
+		start_menu()
+
 func clear():
 	for node in mainnode.get_children():
 		node.queue_free()
@@ -83,7 +125,7 @@ func start_stage(bosses):
 	
 func start_editor():
 	clear()
-	var e = BossEditor.instance()
+	var e = Editor.instance()
 	mainnode.add_child(e)
 	mode = EDITOR
 	

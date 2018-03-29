@@ -134,8 +134,13 @@ params/stretch_mode = 0
 
 [node name="OptionWheel" parent="Fader" instance=ExtResource( 7 )]
 
-options = StringArray( "Play", "Edit", "Exit" )
+options = StringArray( "Play", "Edit", "Settings", "Exit" )
+
+[node name="RegularPolygon" parent="Fader/OptionWheel"]
+
+sides = 4
 
 [connection signal="option_picked" from="Fader/OptionWheel" to="." method="_on_OptionWheel_option_picked"]
 
 
+[editable path="Fader/OptionWheel"]

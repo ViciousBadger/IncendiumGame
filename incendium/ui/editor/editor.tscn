@@ -1,0 +1,153 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://ui/editor/editor.gd" type="Script" id=1]
+[ext_resource path="res://ui/editor/breadcrumbs.gd" type="Script" id=2]
+
+[node name="Editor" type="CanvasLayer"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+script/script = ExtResource( 1 )
+
+[node name="Breadcrumbs" type="Panel" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 0
+size_flags/vertical = 0
+margin/left = 10.0
+margin/top = 10.0
+margin/right = 709.0
+margin/bottom = 49.0
+script/script = ExtResource( 2 )
+
+[node name="HBox" type="HBoxContainer" parent="Breadcrumbs"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 0
+size_flags/vertical = 3
+margin/left = 8.0
+margin/top = 8.0
+margin/right = 8.0
+margin/bottom = 8.0
+alignment = 0
+
+[node name="Editor" type="LinkButton" parent="Breadcrumbs/HBox"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 4.0
+margin/right = 110.0
+margin/bottom = 18.0
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+text = "Incendium Editor"
+
+[node name="Editor-Project" type="Label" parent="Breadcrumbs/HBox"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 114.0
+margin/top = 4.0
+margin/right = 122.0
+margin/bottom = 18.0
+text = ">"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Project" type="LinkButton" parent="Breadcrumbs/HBox"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 126.0
+margin/top = 4.0
+margin/right = 171.0
+margin/bottom = 18.0
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+text = "Project"
+
+[node name="Project-Stage" type="Label" parent="Breadcrumbs/HBox"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 175.0
+margin/top = 4.0
+margin/right = 183.0
+margin/bottom = 18.0
+text = ">"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Stage" type="LinkButton" parent="Breadcrumbs/HBox"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 187.0
+margin/top = 4.0
+margin/right = 221.0
+margin/bottom = 18.0
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+text = "Stage"
+
+[node name="Stage-Boss" type="Label" parent="Breadcrumbs/HBox"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 225.0
+margin/top = 4.0
+margin/right = 233.0
+margin/bottom = 18.0
+text = ">"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Boss" type="LinkButton" parent="Breadcrumbs/HBox"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 237.0
+margin/top = 4.0
+margin/right = 268.0
+margin/bottom = 18.0
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+text = "Boss"
+
+[connection signal="pressed" from="Breadcrumbs/HBox/Editor" to="." method="_on_Breadcrumbs_Editor_pressed"]
+
+[connection signal="pressed" from="Breadcrumbs/HBox/Project" to="." method="_on_Breadcrumbs_Project_pressed"]
+
+[connection signal="pressed" from="Breadcrumbs/HBox/Stage" to="." method="_on_Breadcrumbs_Stage_pressed"]
+
+[connection signal="pressed" from="Breadcrumbs/HBox/Boss" to="." method="_on_Breadcrumbs_Boss_pressed"]
+
+
