@@ -127,9 +127,9 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Boss" type="LinkButton" parent="Breadcrumbs/HBox"]
+[node name="Boss" type="Label" parent="Breadcrumbs/HBox"]
 
-focus/ignore_mouse = false
+focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
@@ -137,17 +137,15 @@ margin/left = 237.0
 margin/top = 4.0
 margin/right = 268.0
 margin/bottom = 18.0
-toggle_mode = false
-enabled_focus_mode = 0
-shortcut = null
 text = "Boss"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [connection signal="pressed" from="Breadcrumbs/HBox/Editor" to="." method="_on_Breadcrumbs_Editor_pressed"]
 
 [connection signal="pressed" from="Breadcrumbs/HBox/Project" to="." method="_on_Breadcrumbs_Project_pressed"]
 
 [connection signal="pressed" from="Breadcrumbs/HBox/Stage" to="." method="_on_Breadcrumbs_Stage_pressed"]
-
-[connection signal="pressed" from="Breadcrumbs/HBox/Boss" to="." method="_on_Breadcrumbs_Boss_pressed"]
 
 

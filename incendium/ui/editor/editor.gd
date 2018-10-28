@@ -23,7 +23,3 @@ func _on_Breadcrumbs_Project_pressed():
 func _on_Breadcrumbs_Stage_pressed():
 	crumb_array.resize(2)
 	crumbs_updated()
-
-func _on_Breadcrumbs_Boss_pressed():
-	crumb_array.resize(3)
-	crumbs_updated()

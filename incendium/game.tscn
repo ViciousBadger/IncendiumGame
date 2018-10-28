@@ -119,8 +119,6 @@ script/script = ExtResource( 3 )
 
 [node name="Background" type="Node" parent="."]
 
-editor/display_folded = true
-
 [node name="BgVideo" type="VideoPlayer" parent="Background"]
 
 focus/ignore_mouse = false
@@ -151,7 +149,6 @@ script/script = ExtResource( 7 )
 [node name="Smoke" type="Node" parent="Background"]
 
 process/pause_mode = 2
-editor/display_folded = true
 
 [node name="Smoke" parent="Background/Smoke" instance=ExtResource( 8 )]
 
