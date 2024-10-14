@@ -136,7 +136,7 @@ func _process(delta):
 		var dir = atan2(towards_center.y,towards_center.x)
 		var len = 600
 		
-		var spread = 0.15
+		var spread = 0.05
 		var rot = rand_range(-spread,spread)
 		var final = dir + rot
 		

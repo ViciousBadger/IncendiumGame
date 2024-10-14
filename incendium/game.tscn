@@ -149,6 +149,7 @@ script/script = ExtResource( 7 )
 [node name="Smoke" type="Node" parent="Background"]
 
 process/pause_mode = 2
+editor/display_folded = true
 
 [node name="Smoke" parent="Background/Smoke" instance=ExtResource( 8 )]
 
@@ -199,8 +200,6 @@ transform/scale = Vector2( 0.5, 0.5 )
 [node name="Bullets" type="Node" parent="."]
 
 [node name="Foreground" type="Node" parent="."]
-
-editor/display_folded = true
 
 [node name="Border" type="Sprite" parent="Foreground"]
 
